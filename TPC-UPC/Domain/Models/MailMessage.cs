@@ -5,7 +5,17 @@ using System.Threading.Tasks;
 
 namespace TPC_UPC.Domain.Models
 {
-    public class Career
+    public class MailMessage
     {
+        public int Id { get; set; }
+
+        //pk coordinator
+        public int CoordinatorId { get; set; }
+        public Coordinator Coordinator { get; set; }
+
+        public string message { get; set; }
+        public string documentlink { get; set; }
+
+
     }
 }

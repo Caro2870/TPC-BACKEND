@@ -7,5 +7,9 @@ namespace TPC_UPC.Domain.Models
 {
     public class University
     {
+        public int Id { get; set; }
+        public string UniversityName { get; set; }
+
+        
     }
 }
