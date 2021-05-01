@@ -20,6 +20,7 @@ namespace TPC_UPC.Domain.Models
 
         // un User tiene MUCHOS suggestion 
         public IList<Suggestion> Products { get; set; } = new List<Suggestion>();
-
+        
+        public List<NotificationType> NotificationTypes { get; set; } = new List<NotificationType>();
     }
 }
