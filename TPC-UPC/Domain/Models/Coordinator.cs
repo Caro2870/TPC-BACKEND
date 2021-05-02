@@ -8,6 +8,7 @@ namespace TPC_UPC.Domain.Models
     public class Coordinator
     {
         //PKFK ?? REVISAR
+        //ES LAS DOS COSAS P
         public int Id { get; set; }
         public User User { get; set; }
 
@@ -16,6 +17,7 @@ namespace TPC_UPC.Domain.Models
         public int FacultyId { get; set; }
         public Faculty Faculty { get; set; }
 
+        public List<Training> Trainings = new List<Training>();
 
 
     }

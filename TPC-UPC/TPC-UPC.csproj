@@ -12,8 +12,8 @@
   <ItemGroup>
     <Folder Include="Domain\Repositories\" />
     <Folder Include="Domain\Persistence\" />
-    <Folder Include="Domain\Services\" />
     <Folder Include="Resources\" />
+    <Folder Include="Services\" />
   </ItemGroup>
 
 </Project>
