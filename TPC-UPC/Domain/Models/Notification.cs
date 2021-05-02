@@ -1,0 +1,17 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace TPC_UPC.Domain.Models
+{
+    public class Notification
+    {
+        public int Id { get; set; }
+        public int NotificationTypeId { get; set; }
+        public NotificationType NotificationType { get; set; }
+        public string Link { get; set; }
+        public DateTime SendDate { get; set; }
+        public List<NotificationType> NotificationTypes = new List<NotificationType>();
+    }
+}
