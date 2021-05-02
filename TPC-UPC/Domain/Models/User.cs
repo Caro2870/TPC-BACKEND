@@ -11,7 +11,7 @@ namespace TPC_UPC.Domain.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Mail { get; set; }
-        public long PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; }
 
 
         //un user tiene un account //FK
@@ -19,8 +19,10 @@ namespace TPC_UPC.Domain.Models
         public Account Account { get; set; }
 
         // un User tiene MUCHOS suggestion 
-        public IList<Suggestion> Products { get; set; } = new List<Suggestion>();
-        
-        public List<NotificationType> NotificationTypes { get; set; } = new List<NotificationType>();
+        public IList<Suggestion> Suggestions { get; set; } = new List<Suggestion>();
+
+        //uno
+        public Coordinator Coordinator { get; set; }
+
     }
 }
