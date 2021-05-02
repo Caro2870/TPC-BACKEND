@@ -12,6 +12,6 @@ namespace TPC_UPC.Domain.Models
 
         public string Description { get; set; }
 
-        public IList<Coordinator> Products { get; set; } = new List<Coordinator>();
+        public IList<Coordinator> Coordinators { get; set; } = new List<Coordinator>();
     }
 }

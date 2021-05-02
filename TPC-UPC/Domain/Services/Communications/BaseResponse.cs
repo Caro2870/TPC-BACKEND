@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace TPC_UPC.Services.Communications
+namespace TPC_UPC.Domain.Services.Communications
 {
 	public abstract class BaseResponse<T>
 	{
