@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 namespace TPC_UPC.Resources
 {
-    public class CoordinatorResource : UserResource
+    public class SaveNotificationTypeResource
     {
-        public FacultyResource Faculty { get; set; }
+        public string Description { get; set; }
     }
 }

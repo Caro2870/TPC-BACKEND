@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 namespace TPC_UPC.Resources
 {
-    public class CoordinatorResource : UserResource
+    public class SaceCoordinatorResource : SaveUserResource
     {
-        public FacultyResource Faculty { get; set; }
+        public SaveFacultyResource FacultyResource { get; set; }
     }
 }

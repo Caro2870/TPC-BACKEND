@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 
 namespace TPC_UPC.Resources
 {
-    public class CoordinatorResource : UserResource
+    public class CareerResource
     {
-        public FacultyResource Faculty { get; set; }
+        public int Id { get; set; }
+        public string CareerName { get; set; }
     }
 }
