@@ -5,7 +5,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using TPC_UPC.Resources;
 using TPC_UPC.Domain.Models;
-
 namespace TPC_UPC.Mapping
 {
     public class ResourceToModelProfile : Profile
