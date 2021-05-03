@@ -9,13 +9,13 @@ namespace TPC_UPC.Domain.Models
     {
         public int Id { get; set; }
                 
-        public string message { get; set; }
-        public string documentlink { get; set; }
+        public string Message { get; set; }
+        public string DocumentLink { get; set; }
 
 
         //pk coordinator
         public int CoordinatorId { get; set; }
         public Coordinator Coordinator { get; set; }
-
+        
     }
 }
