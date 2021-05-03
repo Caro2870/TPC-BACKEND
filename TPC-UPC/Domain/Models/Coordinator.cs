@@ -5,20 +5,15 @@ using System.Threading.Tasks;
 
 namespace TPC_UPC.Domain.Models
 {
-    public class Coordinator
+    public class Coordinator : User
     {
-        //PKFK ?? REVISAR
-        public int Id { get; set; }
-        public User User { get; set; }
-
-
         //fK
         public int FacultyId { get; set; }
         public Faculty Faculty { get; set; }
 
         //uno muchos mensajes
         public IList<MailMessage> MailMessages  { get; set; } = new List<MailMessage>();
-
+        public IList<Training> Trainings = new List<Training>();
 
 
 
