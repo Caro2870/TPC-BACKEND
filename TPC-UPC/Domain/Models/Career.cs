@@ -9,5 +9,7 @@ namespace TPC_UPC.Domain.Models
     {
         public int Id;
         public string CareerName { get; set; }
+
+        public IList<Student> Students { get; set; } = new List<Student>();
     }
 }
