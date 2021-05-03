@@ -14,5 +14,8 @@ namespace TPC_UPC.Resources
         [Required]
         [StringLength(30, MinimumLength = 5)]
         public string Password { get; set; }  //dudas
+
+        [Required]
+        public int UniversityId { get; set; }
     }
 }

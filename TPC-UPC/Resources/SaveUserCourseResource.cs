@@ -1,17 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations;
+
 namespace TPC_UPC.Resources
 {
-    public class SaveSuggestionResource
+    public class SaveUserCourseResource
     {
-
         [Required]
-        [StringLength(500)]
-        public string Message { get; set; }
-
+        public int CourseId { get; set; }
         [Required]
         public int UserId { get; set; }
     }

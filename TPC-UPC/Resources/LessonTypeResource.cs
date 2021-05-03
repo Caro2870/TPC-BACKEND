@@ -5,11 +5,10 @@ using System.Threading.Tasks;
 
 namespace TPC_UPC.Resources
 {
-    //muestra a los demas
-    public class SuggestionResource
+    public class LessonTypeResource
     {
         public int Id { get; set; }
-        public UserResource User { get; set; }
-        public string Message { get; set; }
+        public string LessonTypeName { get; set; }
+        public int StudentsQuantity { get; set; }
     }
 }
