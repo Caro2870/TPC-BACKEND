@@ -9,6 +9,7 @@ namespace TPC_UPC.Domain.Models
     {
         public int Id { get; set;  }
         public string Description { get; set; }
+
         public IList<Notification> Notifications { get; set; } = new List<Notification>();
     }
 }

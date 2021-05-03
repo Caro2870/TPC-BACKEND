@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace TPC_UPC.Domain.Models
 {
-    public class User
+    public abstract class User
     {
         public int Id { get; set; }
         public string FirstName { get; set; }
@@ -21,8 +21,9 @@ namespace TPC_UPC.Domain.Models
         // un User tiene MUCHOS suggestion 
         public IList<Suggestion> Suggestions { get; set; } = new List<Suggestion>();
 
-        //uno
-        public Coordinator Coordinator { get; set; }
+        public List<UserCourse> UserCourses { get; set; }
+
+        public List<NotificationUser> NotificationUsers { get; set; }
 
     }
 }

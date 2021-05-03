@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace Supermarket.API.Extensions
+namespace TPC_UPC.API.Extensions
 {
     public static class StringExtensions
     {

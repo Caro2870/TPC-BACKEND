@@ -5,13 +5,12 @@ using System.Threading.Tasks;
 
 namespace TPC_UPC.Domain.Models
 {
-    public class Training
+    public class Training : Meeting
     {
-        public int Id { get; set; }
 
         public int CoordinatorId { get; set; }
         public Coordinator Coordinator { get; set; }
 
-        public List<TrainingTutor> TrainingTutors = new List<TrainingTutor>();
+        public List<TrainingTutor> TrainingTutors { get; set; }
     }
 }

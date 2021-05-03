@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Supermarket.API.Extensions;
+using TPC_UPC.API.Extensions;
 using TPC_UPC.Domain.Models;
 
 namespace TPC_UPC.Domain.Persistence.Contexts

@@ -5,10 +5,8 @@ using System.Threading.Tasks;
 
 namespace TPC_UPC.Domain.Models
 {
-    public class Lesson
+    public class Lesson : Meeting
     {
-        public int Id { get; set; }
-
         public int TutorId { get; set; }
         public Tutor Tutor { get; set; }
 
@@ -17,8 +15,9 @@ namespace TPC_UPC.Domain.Models
         
         public int CourseId { get; set; }
         public Course Course { get; set; }
+
         public int Vacants { get; set; }
 
-        public List<LessonStudent> LessonStudents = new List<LessonStudent>();
+        public List<LessonStudent> LessonStudents { get; set; }
     }
 }

@@ -12,7 +12,7 @@ namespace TPC_UPC.Domain.Models
 
         //relacion uno
 
-        public Account Account { get; set; }
+        public IList<Account> Accounts { get; set; } = new List<Account>();
         
     }
 }
