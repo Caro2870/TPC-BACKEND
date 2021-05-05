@@ -14,7 +14,13 @@ namespace TPC_UPC.Services
     {
         private readonly IMeetingRepository _meetingRepository;
         private readonly IUnitOfWork _unitOfWork;
-        
+
+        public MeetingService(IMeetingRepository meetingRepository, IUnitOfWork unitOfWork)
+        {
+            _meetingRepository = meetingRepository;
+            _unitOfWork = unitOfWork;
+        }
+
         public async Task<MeetingResponse> DeleteAsync(int id)
         {
             var existingMeeting = await _meetingRepository.FindById(id);
@@ -51,9 +57,14 @@ namespace TPC_UPC.Services
             return await _meetingRepository.ListAsync();
         }
 
+        public async Task<IEnumerable<Schedule>> ListByMeetingIdAsync(int meetingId)
+        {
+            return await _meetingRepository.ListByMeetingIdAsync(meetingId);
+        }
+
         public async Task<IEnumerable<Meeting>> ListByScheduleIdAsync(int scheduleId)
         {
-            //return await _meetingRepository.ListByScheduleIdAsync(scheduleId);
+            return await _meetingRepository.ListByScheduleIdAsync(scheduleId);
         }
 
         public async Task<MeetingResponse> SaveAsync(Meeting meeting)

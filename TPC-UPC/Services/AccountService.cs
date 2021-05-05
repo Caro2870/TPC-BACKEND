@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TPC_UPC.Domain.Models;
+using TPC_UPC.Domain.Persistence.Repositories;
 using TPC_UPC.Domain.Services;
 using TPC_UPC.Domain.Services.Communications;
 
@@ -11,34 +12,89 @@ namespace TPC_UPC.Services
 {
     public class AccountService : IAccountService
     {
-        public Task<AccountResponse> DeleteAsync(int id)
+        private readonly IAccountRepository _accountRepository;
+        private readonly IUnitOfWork _unitOfWork;
+
+        public AccountService(IAccountRepository accountRepository, IUnitOfWork unitOfWork)
         {
-            throw new NotImplementedException();
+            _accountRepository = accountRepository;
+            _unitOfWork = unitOfWork;
         }
 
-        public Task<AccountResponse> GetByIdAsync(int id)
+        public async Task<AccountResponse> DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            var existingAccount = await _accountRepository.FindById(id);
+
+            if (existingAccount == null)
+                return new AccountResponse("Account not found");
+
+            try
+            {
+                _accountRepository.Remove(existingAccount);
+                await _unitOfWork.CompleteAsync();
+
+                return new AccountResponse(existingAccount);
+            }
+            catch (Exception ex)
+            {
+                return new AccountResponse($"An error ocurred while deleting the account: {ex.Message}");
+            }
         }
 
-        public Task<IEnumerable<Account>> ListAsync()
+        public async Task<AccountResponse> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var existingAccount = await _accountRepository.FindById(id);
+
+            if (existingAccount == null)
+                return new AccountResponse("Account not found");
+            return new AccountResponse(existingAccount);
         }
 
-        public Task<IEnumerable<Account>> ListByUniversityIdAsync(int universityId)
+        public async Task<IEnumerable<Account>> ListAsync()
         {
-            throw new NotImplementedException();
+            return await _accountRepository.ListAsync();
         }
 
-        public Task<AccountResponse> SaveAsync(Account account)
+        public async Task<IEnumerable<Account>> ListByUniversityIdAsync(int universityId)
         {
-            throw new NotImplementedException();
+            return await _accountRepository.ListByUniversityIdAsync(universityId);
         }
 
-        public Task<AccountResponse> UpdateASync(int id, Account account)
+        public async Task<AccountResponse> SaveAsync(Account account)
         {
-            throw new NotImplementedException();
+            try
+            {
+                await _accountRepository.AddAsync(account);
+                await _unitOfWork.CompleteAsync();
+
+                return new AccountResponse(account);
+            }
+            catch (Exception ex)
+            {
+                return new AccountResponse($"An error ocurred while saving the account: {ex.Message}");
+            }
+        }
+
+        public async Task<AccountResponse> UpdateASync(int id, Account account)
+        {
+            var existingAccount = await _accountRepository.FindById(id);
+
+            if (existingAccount == null)
+                return new AccountResponse("Account not found");
+
+            existingAccount.AccountName = account.AccountName;
+
+            try
+            {
+                _accountRepository.Update(existingAccount);
+                await _unitOfWork.CompleteAsync();
+
+                return new AccountResponse(existingAccount);
+            }
+            catch (Exception ex)
+            {
+                return new AccountResponse($"An error ocurred while updating the account: {ex.Message}");
+            }
         }
     }
 }

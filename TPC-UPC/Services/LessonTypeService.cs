@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TPC_UPC.Domain.Models;
+using TPC_UPC.Domain.Persistence.Repositories;
 using TPC_UPC.Domain.Services;
 using TPC_UPC.Domain.Services.Communications;
 
@@ -11,29 +12,84 @@ namespace TPC_UPC.Services
 {
     public class LessonTypeService : ILessonTypeService
     {
-        public Task<LessonTypeResponse> DeleteAsync(int id)
+        public readonly ILessonTypeRepository _lessonTypeRepository;
+        private readonly IUnitOfWork _unitOfWork;
+
+        public LessonTypeService(ILessonTypeRepository lessonTypeRepository, IUnitOfWork unitOfWork)
         {
-            throw new NotImplementedException();
+            _lessonTypeRepository = lessonTypeRepository;
+            _unitOfWork = unitOfWork;
         }
 
-        public Task<LessonTypeResponse> GetByIdAsync(int lessontypeId)
+        public async Task<LessonTypeResponse> DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            var existingLessonType = await _lessonTypeRepository.FindById(id);
+
+            if (existingLessonType == null)
+                return new LessonTypeResponse("LessonType not found");
+
+            try
+            {
+                _lessonTypeRepository.Remove(existingLessonType);
+                await _unitOfWork.CompleteAsync();
+
+                return new LessonTypeResponse(existingLessonType);
+            }
+            catch (Exception ex)
+            {
+                return new LessonTypeResponse($"An error ocurred while deleting the lesson type: {ex.Message}");
+            }
         }
 
-        public Task<IEnumerable<LessonType>> ListAsync()
+        public async Task<LessonTypeResponse> GetByIdAsync(int lessontypeId)
         {
-            throw new NotImplementedException();
+            var existingLessonType = await _lessonTypeRepository.FindById(lessontypeId);
+
+            if (existingLessonType == null)
+                return new LessonTypeResponse("LessonType not found");
+            return new LessonTypeResponse(existingLessonType);
         }
 
-        public Task<LessonTypeResponse> SaveAsync(LessonType lessontype)
+        public async Task<IEnumerable<LessonType>> ListAsync()
         {
-            throw new NotImplementedException();
+            return await _lessonTypeRepository.ListAsync();
         }
 
-        public Task<LessonTypeResponse> UpdateAsync(int id, LessonType lessontype)
+        public async Task<LessonTypeResponse> SaveAsync(LessonType lessontype)
         {
-            throw new NotImplementedException();
+            try
+            {
+                await _lessonTypeRepository.AddAsync(lessontype);
+                await _unitOfWork.CompleteAsync();
+
+                return new LessonTypeResponse(lessontype);
+            }
+            catch (Exception ex)
+            {
+                return new LessonTypeResponse($"An error ocurred while saving the lesson type: {ex.Message}");
+            }
+        }
+
+        public async Task<LessonTypeResponse> UpdateAsync(int id, LessonType lessontype)
+        {
+            var existingLessonType = await _lessonTypeRepository.FindById(id);
+
+            if (existingLessonType == null)
+                return new LessonTypeResponse("LessonType not found");
+
+            existingLessonType.LessonTypeName = lessontype.LessonTypeName;
+
+            try
+            {
+                _lessonTypeRepository.Update(existingLessonType);
+                await _unitOfWork.CompleteAsync();
+
+                return new LessonTypeResponse(existingLessonType);
+            }
+            catch (Exception ex)
+            {
+                return new LessonTypeResponse($"An error ocurred while updating the lesson type: {ex.Message}");
+            }
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TPC_UPC.Domain.Models;
+using TPC_UPC.Domain.Persistence.Repositories;
 using TPC_UPC.Domain.Services;
 using TPC_UPC.Domain.Services.Communications;
 
@@ -11,39 +12,98 @@ namespace TPC_UPC.Services
 {
     public class CourseService : ICourseService
     {
-        public Task<CourseResponse> DeleteAsync(int id)
+        private readonly ICourseRepository _courseRepository;
+        private readonly ILessonRepository _lessonRepository;//new
+        private readonly ILessonStudentRepository _lessonStudentRepository;//new
+        private readonly IUnitOfWork _unitOfWork;
+
+        public CourseService(ICourseRepository courseRepository, ILessonRepository lessonRepository, ILessonStudentRepository lessonStudentRepository, IUnitOfWork unitOfWork)
         {
-            throw new NotImplementedException();
+            _courseRepository = courseRepository;
+            _lessonRepository = lessonRepository;
+            _lessonStudentRepository = lessonStudentRepository;
+            _unitOfWork = unitOfWork;
         }
 
-        public Task<CourseResponse> GetByIdAsync(int courseId)
+        public async Task<CourseResponse> DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            var existingCourse = await _courseRepository.FindById(id);
+
+            if (existingCourse == null)
+                return new CourseResponse("Course not found");
+
+            try
+            {
+                _courseRepository.Remove(existingCourse);
+                await _unitOfWork.CompleteAsync();
+
+                return new CourseResponse(existingCourse);
+            }
+            catch (Exception ex)
+            {
+                return new CourseResponse($"An error ocurred while deleting the category: {ex.Message}");
+            }
         }
 
-        public Task<IEnumerable<Course>> ListAsync()
+        public async Task<CourseResponse> GetByIdAsync(int courseId)
         {
-            throw new NotImplementedException();
+            var existingCourse = await _courseRepository.FindById(courseId);
+
+            if (existingCourse == null)
+                return new CourseResponse("Course not found");
+            return new CourseResponse(existingCourse);
         }
 
-        public Task<IEnumerable<Course>> ListByStudentIdAsync(int studentId)
+        public async Task<IEnumerable<Course>> ListAsync()
         {
-            throw new NotImplementedException();
+            return await _courseRepository.ListAsync();
         }
 
-        public Task<IEnumerable<Course>> ListByTutorIdAsync(int tutorId)
+        public async Task<IEnumerable<Course>> ListByStudentIdAsync(int studentId)
         {
-            throw new NotImplementedException();
+            return await _lessonStudentRepository.ListByStudentIdAsync(studentId);
         }
 
-        public Task<CourseResponse> SaveAsync(Course course)
+        public async Task<IEnumerable<Course>> ListByTutorIdAsync(int tutorId)
         {
-            throw new NotImplementedException();
+            return await _lessonRepository.ListByTutorIdAsync(tutorId);
         }
 
-        public Task<CourseResponse> UpdateAsync(int id, Course course)
+        public async Task<CourseResponse> SaveAsync(Course course)
         {
-            throw new NotImplementedException();
+            try
+            {
+                await _courseRepository.AddAsync(course);
+                await _unitOfWork.CompleteAsync();
+
+                return new CourseResponse(course);
+            }
+            catch (Exception ex)
+            {
+                return new CourseResponse($"An error ocurred while saving the course: {ex.Message}");
+            }
+        }
+
+        public async Task<CourseResponse> UpdateAsync(int id, Course course)
+        {
+            var existingCourse = await _courseRepository.FindById(id);
+
+            if (existingCourse == null)
+                return new CourseResponse("Course not found");
+
+            existingCourse.Name = course.Name;
+
+            try
+            {
+                _courseRepository.Update(existingCourse);
+                await _unitOfWork.CompleteAsync();
+
+                return new CourseResponse(existingCourse);
+            }
+            catch (Exception ex)
+            {
+                return new CourseResponse($"An error ocurred while updating the course: {ex.Message}");
+            }
         }
     }
 }

@@ -13,8 +13,15 @@ namespace TPC_UPC.Services
     public class ScheduleService : IScheduleService
     {
         private readonly IScheduleRepository _scheduleRepository;
-        private readonly IMeetingRepository _meetingRepository;
+        private readonly IMeetingRepository _meetingRepository;//new
         private readonly IUnitOfWork _unitOfWork;
+
+        public ScheduleService(IScheduleRepository scheduleRepository, IMeetingRepository meetingRepository, IUnitOfWork unitOfWork)
+        {
+            _scheduleRepository = scheduleRepository;
+            _meetingRepository = meetingRepository;
+            _unitOfWork = unitOfWork;
+        }
 
         public async Task<ScheduleResponse> DeleteAsync(int id)
         {
@@ -54,7 +61,7 @@ namespace TPC_UPC.Services
 
         public async Task<IEnumerable<Schedule>> ListByMeetingIdAsync(int meetingId)
         {
-            //return await _scheduleRepository.ListByMeetingIdAsync(meetingId);
+            return await _meetingRepository.ListByMeetingIdAsync(meetingId);
         }
 
         public async Task<ScheduleResponse> SaveAsync(Schedule schedule)

@@ -18,5 +18,7 @@ namespace TPC_UPC.Domain.Services
         //ADDED
         Task<IEnumerable<Meeting>> ListAsync();
         Task<IEnumerable<Meeting>> ListByScheduleIdAsync(int scheduleId);
+        //new
+        Task<IEnumerable<Schedule>> ListByMeetingIdAsync(int meetingId);
     }
 }
