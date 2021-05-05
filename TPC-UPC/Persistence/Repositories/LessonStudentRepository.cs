@@ -65,5 +65,10 @@ using TPC_UPC.Domain.Models;
  		{
  			_context.LessonStudents.Update(lessonStudent);
  		}
- 	}
+
+        public Task<IEnumerable<LessonStudent>> ListByStudentIdAsync(int studentId)
+        {
+            throw new NotImplementedException();
+        }
+    }
  }
