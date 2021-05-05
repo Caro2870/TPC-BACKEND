@@ -5,12 +5,12 @@ using System;
  using TPC_UPC.Domain.Models;
  namespace TPC_UPC.Domain.Persistence.Repositories
  {
- public interface IUserRepository
+ public interface ITutorRepository
  {
- Task<IEnumerable<User>> ListAsync();
- Task AddAsync(User User);
- Task<User> FindById(int id);
- void Update(User User);
- void Remove(User User);
+ Task<IEnumerable<Tutor>> ListAsync();
+ Task AddAsync(Tutor Tutor);
+ Task<Tutor> FindById(int id);
+ void Update(Tutor Tutor);
+ void Remove(Tutor Tutor);
  }
  }
