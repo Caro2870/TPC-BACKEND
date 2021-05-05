@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Supermarket.API.Extensions;
+using TPC_UPC.API.Extensions;
 using TPC_UPC.Domain.Models;
 
 namespace TPC_UPC.Domain.Persistence.Contexts
@@ -37,9 +37,9 @@ namespace TPC_UPC.Domain.Persistence.Contexts
             // relations
 
             builder.Entity<University>().
-                HasOne(a => a.Account)
+                HasMany(a => a.Accounts)
                 .WithOne(b => b.University)
-                .HasForeignKey<Account>(b => b.UniversityId);
+                .HasForeignKey(b => b.UniversityId);
 
             //seed data
 
@@ -96,21 +96,21 @@ namespace TPC_UPC.Domain.Persistence.Contexts
                 .HasForeignKey(p => p.UserId);
 
 
-                         
 
-            builder.Entity<User>().
-               HasOne(a => a.Coordinator)
-               .WithOne(b => b.User)
-               .HasForeignKey<User>(b => b.Id);
+
+            //builder.Entity<User>().
+            //   HasOne(a => a.Coordinator)
+            //   .WithOne(b => b.User)
+            //   .HasForeignKey<User>(b => b.Id); la herencia no c maneja asi
 
 
 
             //Seed Data
-            builder.Entity<User>().HasData
-                (
-                new User { Id = 101, FirstName = "Carolina", LastName = "Villegas", Mail = "carol.vi28@gmail.com", PhoneNumber = "+51 920 236 307" },
-                 new User { Id = 102, FirstName = "Jessica", LastName = "Fernandez", Mail = "Jessica@gmail.com", PhoneNumber = "+51 923 126 407" }
-                );
+            //builder.Entity<User>().HasData
+            //    (
+            //    new User { Id = 101, FirstName = "Carolina", LastName = "Villegas", Mail = "carol.vi28@gmail.com", PhoneNumber = "+51 920 236 307" },
+            //     new User { Id = 102, FirstName = "Jessica", LastName = "Fernandez", Mail = "Jessica@gmail.com", PhoneNumber = "+51 923 126 407" }
+            //); la clase padre no puede instanciar objetos sola, necesita a la hija para eso
 
 
 
@@ -177,15 +177,15 @@ namespace TPC_UPC.Domain.Persistence.Contexts
             //Constraints
             builder.Entity<MailMessage>().HasKey(p => p.Id);   //PK
             builder.Entity<MailMessage>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();  //GeneraKey
-            builder.Entity<MailMessage>().Property(p => p.message).IsRequired().HasMaxLength(30);
-            builder.Entity<MailMessage>().Property(p => p.documentlink).IsRequired().HasMaxLength(30);
+            builder.Entity<MailMessage>().Property(p => p.Message).IsRequired().HasMaxLength(30);
+            builder.Entity<MailMessage>().Property(p => p.DocumentLink).IsRequired().HasMaxLength(30);
 
 
             //Seed Data
             builder.Entity<MailMessage>().HasData
                 (
-                new MailMessage { Id = 101, message = "AAAAAAAAAAA", documentlink = "holatengosueñoodioaqui.pdf" },
-                 new MailMessage { Id = 102, message = "Cienciaaasdas", documentlink = "NoOoOoOoOo.doc" }
+                new MailMessage { Id = 101, Message = "AAAAAAAAAAA", DocumentLink = "holatengosueñoodioaqui.pdf" },
+                 new MailMessage { Id = 102, Message = "Cienciaaasdas", DocumentLink = "NoOoOoOoOo.doc" }
                 );
 
         }
