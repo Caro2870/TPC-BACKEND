@@ -11,20 +11,39 @@ namespace TPC_UPC.Services
 {
     public class CareerService : ICareerService
     {
-        private readonly ICareerService _careerService;
+        private readonly ICareerRepository _careerRepository;
         private IUnitOfWork _unitOfWork;
-        public CareerService(ICareerService object1, IUnitOfWork object2)
+        public CareerService(ICareerRepository object1, IUnitOfWork object2)
         {
-            this._careerService = object1;
+            this._careerRepository = object1;
             this._unitOfWork = object2;
         }
 
-        Task<IEnumerable<Career>> ListAsync() { }
+        Task<IEnumerable<Career>> ListAsync() {
+            throw new NotImplementedException();
+        }
 
         //CRUD
-        Task<CarrerResponse> GetByIdAsync(int id) { }
-        Task<CarrerResponse> SaveAsync(Career career) { }
-        Task<CarrerResponse> UpdateASync(int id, Career career) { }
-        Task<CarrerResponse> DeleteAsync(int id) { }
+        Task<CarrerResponse> GetByIdAsync(int id) {
+            throw new NotImplementedException();
+        }
+        Task<CarrerResponse> SaveAsync(Career career) {
+            try
+            {
+                await _careerRepository.AddAsync(career);
+                await _unitOfWork.CompleteAsync();
+                return new CarrerResponse(career);
+            }
+            catch (Exception e)
+            {
+                return new CarrerResponse($"An error ocurred while saving {e.Message}");
+            }
+        }
+        Task<CarrerResponse> UpdateASync(int id, Career career) {
+            throw new NotImplementedException();
+        }
+        Task<CarrerResponse> DeleteAsync(int id) {
+            throw new NotImplementedException();
+        }
     }
 }

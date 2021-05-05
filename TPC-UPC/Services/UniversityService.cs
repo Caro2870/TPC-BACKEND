@@ -22,7 +22,7 @@ namespace TPC_UPC.Services
         
         Task<IEnumerable<University>> ListAsync() 
         {
-            throw NotImplementedException();
+            throw new NotImplementedException();
         }
         Task<UniversityResponse> GetByIdAsync(int id) { }
         Task<UniversityResponse> SaveAsync(University university)
@@ -39,10 +39,10 @@ namespace TPC_UPC.Services
             }
         }
         Task<UniversityResponse> UpdateASync(int id, University university) {
-            throw NotImplementedException();
+            throw new NotImplementedException();
         }
         Task<UniversityResponse> DeleteAsync(int id) {
-            throw NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }

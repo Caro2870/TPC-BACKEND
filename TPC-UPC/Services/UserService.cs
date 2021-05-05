@@ -11,21 +11,44 @@ namespace TPC_UPC.Services
 {
     public class UserService : IUserService
     {
-        private readonly IUserService _userService;
+        private readonly IUserRepository _userRepository;
         private IUnitOfWork _unitOfWork;
-        public UserService(IUserService object1, IUnitOfWork object2)
+        public UserService(IUserRepository object1, IUnitOfWork object2)
         {
-            this._userService = object1;
+            this._userRepository = object1;
             this._unitOfWork = object2;
         }
 
-        Task<IEnumerable<User>> ListAsync() { }
-        Task<IEnumerable<User>> ListByAccountIdAsync(int accountId) { }
-        Task<IEnumerable<User>> ListBySuggestionIdAsync(int suggestionId) { }
+        Task<IEnumerable<User>> ListAsync() {
+            throw new NotImplementedException();
+        }
+        Task<IEnumerable<User>> ListByAccountIdAsync(int accountId) {
+            throw new NotImplementedException();
+        }
+        Task<IEnumerable<User>> ListBySuggestionIdAsync(int suggestionId) {
+            throw new NotImplementedException();
+        }
         //CRUD
-        Task<UserResponse> GetByIdAsync(int id) { }
-        Task<UserResponse> SaveAsync(User user) { }
-        Task<UserResponse> UpdateASync(int id, User user) { }
-        Task<UserResponse> DeleteAsync(int id) { }
+        Task<UserResponse> GetByIdAsync(int id) {
+            throw new NotImplementedException();
+        }
+        Task<UserResponse> SaveAsync(User user) {
+            try
+            {
+                await _userRepository.AddAsync(user);
+                await _unitOfWork.CompleteAsync();
+                return new UserResponse(user);
+            }
+            catch (Exception e)
+            {
+                return new UserResponse($"An error ocurred while saving {e.Message}");
+            }
+        }
+        Task<UserResponse> UpdateASync(int id, User user) {
+            throw new NotImplementedException();
+        }
+        Task<UserResponse> DeleteAsync(int id) {
+            throw new NotImplementedException();
+        }
     }
 }
