@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TPC_UPC.API.Extensions;
 using TPC_UPC.Domain.Models;
 using TPC_UPC.Domain.Services;
 using TPC_UPC.Resources;
@@ -35,6 +36,22 @@ namespace TPC_UPC.Controllers
             if (!result.Success)
                 return BadRequest(result.Message);
             var scheduleResource = _mapper.Map<Schedule, ScheduleResource>(result.Resource);//de Entity a Resource
+            return Ok(scheduleResource);
+        }
+
+        [HttpPost]
+        [ProducesResponseType(typeof(ScheduleResource), 200)]
+        [ProducesResponseType(typeof(BadRequestResult), 404)]
+        public async Task<IActionResult> PostAsync([FromBody] SaveScheduleResource resource)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState.GetErrorMessages());
+            var schedule = _mapper.Map<SaveScheduleResource, Schedule>(resource);
+            var result = await _scheduleService.SaveAsync(schedule);
+
+            if (!result.Success)
+                return BadRequest(result.Message);
+            var scheduleResource = _mapper.Map<Schedule, ScheduleResource>(result.Resource);
             return Ok(scheduleResource);
         }
     }
