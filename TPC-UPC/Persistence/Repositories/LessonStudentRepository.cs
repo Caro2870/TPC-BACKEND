@@ -1,8 +1,9 @@
 using System;
- using System.Collections.Generic;
- using System.Threading.Tasks;
- using Microsoft.EntityFrameworkCore;
- using TPC_UPC.Domain.Models;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using TPC_UPC.Domain.Models;
  using TPC_UPC.Domain.Persistence.Contexts;
  using TPC_UPC.Domain.Persistence.Repositories;
  
@@ -29,8 +30,33 @@ using System;
  		{
  			return await _context.LessonStudents.ToListAsync();
  		}
- 
- 		public void Remove(LessonStudent lessonStudent)
+
+        public async Task<IEnumerable<LessonStudent>> ListStudentsByLessonIdAsync(int lessonId)
+        {
+            return await _context.LessonStudents
+                .Where(ls => ls.LessonId == lessonId)
+                .Include(ls => ls.Lesson)
+                .Include(ls => ls.Student)
+                .ToListAsync();
+        }
+        public async Task<IEnumerable<LessonStudent>> ListStudentAssistantsByLessonIdAsync(int lessonId)
+        {
+            return await _context.LessonStudents
+                .Where(ls => ls.LessonId == lessonId)
+                .Where(ls => ls.Assistance == true)
+                .Include(ls => ls.Lesson)
+                .Include(ls => ls.Student)
+                .ToListAsync();
+        }
+        public async Task<IEnumerable<LessonStudent>> ListMissingStudentByLessonIdAsync(int lessonId)
+        {
+            return await _context.LessonStudents
+                .Where(ls => ls.LessonId == lessonId)
+                .Where(ls => ls.Assistance == true)
+                .Include(ls => ls.Student)
+                .ToListAsync();
+        }
+        public void Remove(LessonStudent lessonStudent)
  		{
  			_context.LessonStudents.Remove(lessonStudent);
  		}

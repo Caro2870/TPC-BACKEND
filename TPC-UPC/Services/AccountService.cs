@@ -13,12 +13,11 @@ namespace TPC_UPC.Services
     public class AccountService : IAccountService
     {
         private readonly IAccountRepository _accountRepository;
-        private readonly IUnitOfWork _unitOfWork;
-
-        public AccountService(IAccountRepository accountRepository, IUnitOfWork unitOfWork)
+        private IUnitOfWork _unitOfWork;
+        public AccountService(IAccountRepository object1, IUnitOfWork object2)
         {
-            _accountRepository = accountRepository;
-            _unitOfWork = unitOfWork;
+            this._accountRepository = object1;
+            this._unitOfWork = object2;
         }
 
         public async Task<AccountResponse> DeleteAsync(int id)
@@ -83,12 +82,10 @@ namespace TPC_UPC.Services
                 return new AccountResponse("Account not found");
 
             existingAccount.AccountName = account.AccountName;
-
             try
             {
                 _accountRepository.Update(existingAccount);
                 await _unitOfWork.CompleteAsync();
-
                 return new AccountResponse(existingAccount);
             }
             catch (Exception ex)

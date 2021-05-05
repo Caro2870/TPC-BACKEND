@@ -1,8 +1,9 @@
 using System;
- using System.Collections.Generic;
- using System.Threading.Tasks;
- using Microsoft.EntityFrameworkCore;
- using TPC_UPC.Domain.Models;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using TPC_UPC.Domain.Models;
  using TPC_UPC.Domain.Persistence.Contexts;
  using TPC_UPC.Domain.Persistence.Repositories;
  
@@ -29,8 +30,8 @@ using System;
  		{
  			return await _context.Students.ToListAsync();
  		}
- 
- 		public void Remove(Student student)
+
+        public void Remove(Student student)
  		{
  			_context.Students.Remove(student);
  		}
@@ -39,5 +40,5 @@ using System;
  		{
  			_context.Students.Update(student);
  		}
- 	}
+    }
  }
