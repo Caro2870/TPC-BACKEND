@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Web.Domain.Models;
-using Web.Domain.Services.Communications;
+using TPC_UPC.Domain.Models;
+using TPC_UPC.Domain.Services.Communications;
 
-namespace Web.Domain.Services
+namespace TPC_UPC.Domain.Services
 {
     public interface IScheduleService
     {

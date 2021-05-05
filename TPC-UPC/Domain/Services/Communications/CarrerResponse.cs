@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Web.Domain.Models;
+using TPC_UPC.Domain.Models;
 
-namespace Web.Domain.Services.Communications
+namespace TPC_UPC.Domain.Services.Communications
 {
-    public class CarrerResponse : BaseResponse<Carrer>
+    public class CarrerResponse : BaseResponse<Career>
     {
-        public CarrerResponse(Carrer resource) : base(resource)
+        public CarrerResponse(Career resource) : base(resource)
         {
         }
 
