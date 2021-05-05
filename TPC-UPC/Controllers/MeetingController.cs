@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TPC_UPC.Domain.Models;
+using TPC_UPC.Domain.Services;
 using TPC_UPC.Resources;
 using TPC_UPC.Services;
 
@@ -16,10 +17,10 @@ namespace TPC_UPC.Controllers
     [ApiController]
     class MeetingController : ControllerBase
     {
-        private readonly MeetingService _meetingService;
+        private readonly IMeetingService _meetingService;
         private readonly IMapper _mapper;
 
-        public MeetingController(MeetingService meetingService, IMapper mapper)
+        public MeetingController(IMeetingService meetingService, IMapper mapper)
         {
             _meetingService = meetingService;
             _mapper = mapper;

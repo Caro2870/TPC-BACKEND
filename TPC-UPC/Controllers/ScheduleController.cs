@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TPC_UPC.Domain.Models;
+using TPC_UPC.Domain.Services;
 using TPC_UPC.Resources;
 using TPC_UPC.Services;
 
@@ -16,10 +17,10 @@ namespace TPC_UPC.Controllers
     [ApiController]
     public class ScheduleController : ControllerBase
     {
-        private readonly ScheduleService _scheduleService;
+        private readonly IScheduleService _scheduleService;
         private readonly IMapper _mapper;
 
-        public ScheduleController(ScheduleService scheduleService, IMapper mapper)
+        public ScheduleController(IScheduleService scheduleService, IMapper mapper)
         {
             _scheduleService = scheduleService;
             _mapper = mapper;
