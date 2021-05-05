@@ -7,10 +7,12 @@ using System;
  {
  public interface ILessonRepository
  {
- Task<IEnumerable<Lesson>> ListAsync();
- Task AddAsync(Lesson lesson);
- Task<Lesson> FindById(int id);
- void Update(Lesson lesson);
- void Remove(Lesson lesson);
- }
+        Task<IEnumerable<Lesson>> ListAsync();
+        Task AddAsync(Lesson lesson);
+        Task<Lesson> FindById(int id);
+        void Update(Lesson lesson);
+        void Remove(Lesson lesson);
+        //new
+        Task<IEnumerable<Lesson>> ListByTutorIdAsync(int tutorId);
+    }
  }

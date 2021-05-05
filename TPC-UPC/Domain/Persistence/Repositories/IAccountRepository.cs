@@ -12,5 +12,7 @@ namespace TPC_UPC.Domain.Persistence.Repositories
          Task<Account> FindById(int id);
          void Update(Account account);
          void Remove(Account account);
-     }
+        //new
+        Task<IEnumerable<Account>> ListByUniversityIdAsync(int universityId);
+    }
 }
