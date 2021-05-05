@@ -12,7 +12,7 @@ namespace Web.Domain.Services.Communications
         {
         }
 
-        public CourseResponse(string mensaje) : base(mensaje)
+        public CourseResponse(string message) : base(message)
         {
         }
     }

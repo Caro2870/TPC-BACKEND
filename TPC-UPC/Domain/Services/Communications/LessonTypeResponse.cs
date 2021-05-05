@@ -12,7 +12,7 @@ namespace Web.Domain.Services.Communications
         {
         }
 
-        public LessonTypeResponse(string mensaje) : base(mensaje)
+        public LessonTypeResponse(string message) : base(message)
         {
         }
     }

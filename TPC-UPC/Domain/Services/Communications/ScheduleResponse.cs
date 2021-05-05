@@ -12,7 +12,7 @@ namespace Web.Domain.Services.Communications
         {
         }
 
-        public ScheduleResponse(string mensaje) : base(mensaje)
+        public ScheduleResponse(string message) : base(message)
         {
         }
     }

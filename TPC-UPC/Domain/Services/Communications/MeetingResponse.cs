@@ -12,7 +12,7 @@ namespace Web.Domain.Services.Communications
         {
         }
 
-        public MeetingResponse(string mensaje) : base(mensaje)
+        public MeetingResponse(string message) : base(message)
         {
         }
     }

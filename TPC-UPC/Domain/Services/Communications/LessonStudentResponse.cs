@@ -6,13 +6,13 @@ using Web.Domain.Models;
 
 namespace Web.Domain.Services.Communications
 {
-    public class UniversityResponse : BaseResponse<University>
+    public class LessonStudentResponse : BaseResponse<LessonStudent>
     {
-        public UniversityResponse(University resource) : base(resource)
+        public LessonStudentResponse(LessonStudent resource) : base(resource)
         {
         }
 
-        public UniversityResponse(string message) : base(message)
+        public LessonStudentResponse(string message) : base(message)
         {
         }
     }

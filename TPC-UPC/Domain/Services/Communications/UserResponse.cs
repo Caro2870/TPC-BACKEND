@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TPC_UPC.Domain.Models;
+using Web.Domain.Models;
 
-namespace TPC_UPC.Domain.Services.Communications
+namespace Web.Domain.Services.Communications
 {
     public class UserResponse : BaseResponse<User>
     {
