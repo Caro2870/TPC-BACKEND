@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TPC_UPC.API.Extensions;
 using TPC_UPC.Domain.Models;
 using TPC_UPC.Domain.Services;
 using TPC_UPC.Resources;
@@ -45,6 +46,22 @@ namespace TPC_UPC.Controllers
                 return BadRequest(result.Message);
             var lessonTypeResource = _mapper.Map<LessonType, LessonTypeResource>(result.Resource);
             return Ok(lessonTypeResource);
+        }
+
+        [HttpPost]
+        [ProducesResponseType(typeof(MeetingResource), 200)]
+        [ProducesResponseType(typeof(BadRequestResult), 404)]
+        public async Task<IActionResult> PostAsync([FromBody] SaveLessonTypeResource resource)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState.GetErrorMessages());
+            var lessonType = _mapper.Map<SaveLessonTypeResource, LessonType>(resource);
+            var result = await _lessonTypeService.SaveAsync(lessonType);
+
+            if (!result.Success)
+                return BadRequest(result.Message);
+            var meetingResource = _mapper.Map<LessonType, LessonTypeResource>(result.Resource);
+            return Ok(meetingResource);
         }
     }
 }
