@@ -9,5 +9,17 @@ namespace TPC_UPC.Services
 {
     public class LessonStudentService : ILessonStudentService
     {
+        private readonly ILessonStudentRepository _lessonStudentRepository;
+        private IUnitOfWork _unitOfWork;
+        public CoordinatorService(ILessonStudentRepository object1, IUnitOfWork object2)
+        {
+            this._lessonStudentRepository = object1;
+            this._unitOfWork = object2;
+        }
+
+        Task<IEnumerable<LessonService>> ListStudentAssistantsByLessonIdAsync(int lessonId)
+        {
+            return await _lessonStudentRepository.ListStudentAssistantsByLessonIdAsync(lessonId);
+        }
     }
 }

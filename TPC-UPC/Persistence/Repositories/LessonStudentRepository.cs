@@ -35,6 +35,7 @@ using TPC_UPC.Domain.Models;
         {
             return await _context.LessonStudents
                 .Where(ls => ls.LessonId == lessonId)
+                .Include(ls => ls.Lesson)
                 .Include(ls => ls.Student)
                 .ToListAsync();
         }
@@ -43,6 +44,7 @@ using TPC_UPC.Domain.Models;
             return await _context.LessonStudents
                 .Where(ls => ls.LessonId == lessonId)
                 .Where(ls => ls.Assistance == true)
+                .Include(ls => ls.Lesson)
                 .Include(ls => ls.Student)
                 .ToListAsync();
         }

@@ -8,5 +8,6 @@ namespace TPC_UPC.Domain.Services
 {
     public interface ILessonStudentService
     {
+        Task<IEnumerable<LessonService>> ListStudentAssistantsByLessonIdAsync(int lessonId);
     }
 }
