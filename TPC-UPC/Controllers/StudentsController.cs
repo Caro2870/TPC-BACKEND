@@ -8,7 +8,7 @@ using Swashbuckle.AspNetCore.Annotations;
 using TPC_UPC.Domain.Services;
 using TPC_UPC.Resources;
 using TPC_UPC.Domain.Models;
-using TPC_UPC.Extensions;
+using TPC_UPC.API.Extensions;
 
 namespace TPC_UPC.Controllers
 {
@@ -18,11 +18,11 @@ namespace TPC_UPC.Controllers
     [ApiController]
     public class StudentsController : ControllerBase
     {
-        private readonly IUserService _userService;
+        private readonly IStudentService _studentService;
         private readonly IMapper _mapper;
-        public StudentsController(IUserService userService, IMapper mapper)
+        public StudentsController(IStudentService studentService, IMapper mapper)
         {
-            _userService = userService;
+            _studentService = studentService;
             _mapper = mapper;
         }
 
@@ -30,31 +30,31 @@ namespace TPC_UPC.Controllers
             Summary = "List all users",
             Description = "List of Users",
             OperationId = "ListAllUsers")]
-        [SwaggerResponse(200, "List of Users", typeof(IEnumerable<UserResource>))]
+        [SwaggerResponse(200, "List of Students", typeof(IEnumerable<StudentResource>))]
         [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<UserResource>), 200)]
-        public async Task<IEnumerable<UserResource>> GetAllAsync()
+        [ProducesResponseType(typeof(IEnumerable<StudentResource>), 200)]
+        public async Task<IEnumerable<StudentResource>> GetAllAsync()
         {
-            var users = await _userService.ListAsync();
+            var students = await _studentService.ListAsync();
             var resources = _mapper
-                .Map<IEnumerable<User>, IEnumerable<UserResource>>(users);
+                .Map<IEnumerable<Student>, IEnumerable<StudentResource>>(students);
             return resources;
         }
 
         [HttpPost]
-        [ProducesResponseType(typeof(UserResource), 200)]
+        [ProducesResponseType(typeof(StudentResource), 200)]
         [ProducesResponseType(typeof(BadRequestResult), 404)]
-        public async Task<IActionResult> PostAsync([FromBody] SaveUserResource resource)
+        public async Task<IActionResult> PostAsync([FromBody] SaveStudentResource resource)
         {
             if (!ModelState.IsValid)
-                return BadRequest(ModelState.GetErrorMessage());
-            var user = _mapper.Map<SaveUserResource, User>(resource);
-            var result = await _userService.SaveAsync(user);
+                return BadRequest(ModelState.GetErrorMessages());
+            var student = _mapper.Map<SaveStudentResource, Student>(resource);
+            var result = await _studentService.SaveAsync(student);
 
             if (!result.Success)
                 return BadRequest(result.Message);
-            var userResource = _mapper.Map<User, UserResource>(result.Resource);
-            return Ok(userResource);
+            var studentResource = _mapper.Map<Student, StudentResource>(result.Resource);
+            return Ok(studentResource);
         }
     }
 }

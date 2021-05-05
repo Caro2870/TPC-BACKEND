@@ -20,7 +20,7 @@ namespace TPC_UPC.Services
         }
 
         //CRUD
-        Task<StudentResponse> SaveAsync(Student student) 
+        public async Task<StudentResponse> SaveAsync(Student student) 
         {
             try
             {
@@ -33,24 +33,24 @@ namespace TPC_UPC.Services
                 return new StudentResponse($"An error ocurred while saving {e.Message}");
             }
         }
-        Task<StudentResponse> GetByIdAsync(int studentId) {
+        Task<StudentResponse> IStudentService.GetByIdAsync(int studentId) {
             throw new NotImplementedException();
         }
-        Task<StudentResponse> UpdateAsync(int id, Student student) {
+        Task<StudentResponse> IStudentService.UpdateAsync(int id, Student student) {
             throw new NotImplementedException();
         }
-        Task<StudentResponse> DeleteAsync(int id) {
+        Task<StudentResponse> IStudentService.DeleteAsync(int id) {
             throw new NotImplementedException();
         }
 
         //ADDED
-        Task<IEnumerable<Student>> ListAsync() {
+        public async Task<IEnumerable<Student>> ListAsync() {
+            return await _studentRepository.ListAsync();
+        }
+        Task<IEnumerable<Student>> IStudentService.ListByCourseIdAsync(int courseId) {
             throw new NotImplementedException();
         }
-        Task<IEnumerable<Student>> ListByCourseIdAsync(int courseId) {
-            throw new NotImplementedException();
-        }
-        Task<IEnumerable<Student>> ListByLessonIdAsync(int courseId) {
+        Task<IEnumerable<Student>> IStudentService.ListByLessonIdAsync(int courseId) {
             throw new NotImplementedException();
         }
     }
