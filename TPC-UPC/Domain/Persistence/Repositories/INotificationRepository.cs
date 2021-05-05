@@ -8,9 +8,9 @@ using System;
  public interface INotificationRepository
  {
  Task<IEnumerable<Notification>> ListAsync();
- Task AddAsync(Notification Notification);
+ Task AddAsync(Notification notification);
  Task<Notification> FindById(int id);
- void Update(Notification Notification);
- void Remove(Notification Notification);
+ void Update(Notification notification);
+ void Remove(Notification notification);
  }
  }

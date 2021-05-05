@@ -8,9 +8,9 @@ using System;
  public interface IStudentRepository
  {
  Task<IEnumerable<Student>> ListAsync();
- Task AddAsync(Student Student);
+ Task AddAsync(Student student);
  Task<Student> FindById(int id);
- void Update(Student Student);
- void Remove(Student Student);
+ void Update(Student student);
+ void Remove(Student student);
  }
  }

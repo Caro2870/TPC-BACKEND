@@ -8,9 +8,9 @@ using System;
  public interface ISuggestionRepository
  {
  Task<IEnumerable<Suggestion>> ListAsync();
- Task AddAsync(Suggestion Suggestion);
+ Task AddAsync(Suggestion suggestion);
  Task<Suggestion> FindById(int id);
- void Update(Suggestion Suggestion);
- void Remove(Suggestion Suggestion);
+ void Update(Suggestion suggestion);
+ void Remove(Suggestion suggestion);
  }
  }

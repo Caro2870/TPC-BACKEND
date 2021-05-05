@@ -8,9 +8,9 @@ using System;
  public interface IMailMessageRepository
  {
  Task<IEnumerable<MailMessage>> ListAsync();
- Task AddAsync(MailMessage MailMessage);
+ Task AddAsync(MailMessage mailMessage);
  Task<MailMessage> FindById(int id);
- void Update(MailMessage MailMessage);
- void Remove(MailMessage MailMessage);
+ void Update(MailMessage mailMessage);
+ void Remove(MailMessage mailMessage);
  }
  }

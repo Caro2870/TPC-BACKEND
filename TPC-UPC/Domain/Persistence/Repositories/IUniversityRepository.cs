@@ -8,9 +8,9 @@ using System;
  public interface IUniversityRepository
  {
  Task<IEnumerable<University>> ListAsync();
- Task AddAsync(University University);
+ Task AddAsync(University university);
  Task<University> FindById(int id);
- void Update(University University);
- void Remove(University University);
+ void Update(University university);
+ void Remove(University university);
  }
  }

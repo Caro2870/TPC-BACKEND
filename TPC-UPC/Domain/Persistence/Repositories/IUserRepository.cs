@@ -8,9 +8,9 @@ using System;
  public interface IUserRepository
  {
  Task<IEnumerable<User>> ListAsync();
- Task AddAsync(User User);
+ Task AddAsync(User user);
  Task<User> FindById(int id);
- void Update(User User);
- void Remove(User User);
+ void Update(User user);
+ void Remove(User user);
  }
  }
