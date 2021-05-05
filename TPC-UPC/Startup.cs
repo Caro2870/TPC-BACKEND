@@ -28,6 +28,9 @@ namespace TPC_UPC
         {
 
             services.AddControllers();
+
+            //Database Connection Configuration
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "TPC_UPC", Version = "v1" });
