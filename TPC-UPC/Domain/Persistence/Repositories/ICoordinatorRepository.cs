@@ -8,9 +8,9 @@ using System;
  public interface ICoordinatorRepository
  {
  Task<IEnumerable<Coordinator>> ListAsync();
- Task AddAsync(Coordinator Coordinator);
+ Task AddAsync(Coordinator coordinator);
  Task<Coordinator> FindById(int id);
- void Update(Coordinator Coordinator);
- void Remove(Coordinator Coordinator);
+ void Update(Coordinator coordinator);
+ void Remove(Coordinator coordinator);
  }
  }

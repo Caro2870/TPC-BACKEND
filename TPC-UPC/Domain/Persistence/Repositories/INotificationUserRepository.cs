@@ -8,9 +8,9 @@ using System;
  public interface INotificationUserRepository
  {
  Task<IEnumerable<NotificationUser>> ListAsync();
- Task AddAsync(NotificationUser NotificationUser);
+ Task AddAsync(NotificationUser notificationUser);
  Task<NotificationUser> FindById(int id);
- void Update(NotificationUser NotificationUser);
- void Remove(NotificationUser NotificationUser);
+ void Update(NotificationUser notificationUser);
+ void Remove(NotificationUser notificationUser);
  }
  }

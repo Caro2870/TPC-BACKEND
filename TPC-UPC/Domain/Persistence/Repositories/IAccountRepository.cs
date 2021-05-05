@@ -8,9 +8,9 @@ namespace TPC_UPC.Domain.Persistence.Repositories
      public interface IAccountRepository
      {
          Task<IEnumerable<Account>> ListAsync();
-         Task AddAsync(Account Account);
+         Task AddAsync(Account account);
          Task<Account> FindById(int id);
-         void Update(Account Account);
-         void Remove(Account Account);
+         void Update(Account account);
+         void Remove(Account account);
      }
 }

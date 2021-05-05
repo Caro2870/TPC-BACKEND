@@ -8,9 +8,9 @@ using System;
  public interface ILessonStudentRepository
  {
  Task<IEnumerable<LessonStudent>> ListAsync();
- Task AddAsync(LessonStudent LessonStudent);
+ Task AddAsync(LessonStudent lessonStudent);
  Task<LessonStudent> FindById(int id);
- void Update(LessonStudent LessonStudent);
- void Remove(LessonStudent LessonStudent);
+ void Update(LessonStudent lessonStudent);
+ void Remove(LessonStudent lessonStudent);
  }
  }

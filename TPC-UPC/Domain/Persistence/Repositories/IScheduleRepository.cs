@@ -8,9 +8,9 @@ using System;
  public interface IScheduleRepository
  {
  Task<IEnumerable<Schedule>> ListAsync();
- Task AddAsync(Schedule Schedule);
+ Task AddAsync(Schedule schedule);
  Task<Schedule> FindById(int id);
- void Update(Schedule Schedule);
- void Remove(Schedule Schedule);
+ void Update(Schedule schedule);
+ void Remove(Schedule schedule);
  }
  }

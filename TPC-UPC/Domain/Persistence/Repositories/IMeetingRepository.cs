@@ -8,9 +8,9 @@ using System;
  public interface IMeetingRepository
  {
  Task<IEnumerable<Meeting>> ListAsync();
- Task AddAsync(Meeting Meeting);
+ Task AddAsync(Meeting meeting);
  Task<Meeting> FindById(int id);
- void Update(Meeting Meeting);
- void Remove(Meeting Meeting);
+ void Update(Meeting meeting);
+ void Remove(Meeting meeting);
  }
  }
