@@ -18,9 +18,60 @@ namespace TPC_UPC.Controllers
     public class AccountController : ControllerBase
     {
         private readonly IAccountService _accountService;
+        private readonly IMapper _mapper;
 
-        public AccountController(IAccountService accountService)
+        public AccountController(IAccountService accountService, IMapper mapper) 
         {
-            _accountService = accountService;        }
+            _mapper = mapper;
+            _accountService = accountService;
+        }
+
+        [SwaggerOperation(
+            Summary = "List all accounts",
+            Description = "List of Accounts",
+            OperationId = "ListAllAccounts")]
+        [SwaggerResponse(200, "List of Accounts", typeof(IEnumerable<AccountResource>))]
+        [HttpGet]
+        [ProducesResponseType(typeof(IEnumerable<AccountResource>), 200)]
+        public async Task<IEnumerable<AccountResource>> GetAllAsync()
+        {
+            var accounts = await _accountService.ListAsync();
+            var resources = _mapper
+                .Map<IEnumerable<Account>, IEnumerable<AccountResource>>(accounts);
+            return resources;
+        }
+
+        [HttpPost]
+        [ProducesResponseType(typeof(AccountResource), 200)]
+        [ProducesResponseType(typeof(BadRequestResult), 404)]
+        public async Task<IActionResult> PostAsync([FromBody] SaveAccountResource resource)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState.GetErrorMessages());
+            var account = _mapper.Map<SaveAccountResource, Account>(resource);
+            var result = await _accountService.SaveAsync(account);
+
+            if (!result.Success)
+                return BadRequest(result.Message);
+            var accountResource = _mapper.Map<Account, AccountResource>(result.Resource);
+            return Ok(accountResource);
+        }
+
+        [HttpPut("{id}")]
+        [ProducesResponseType(typeof(AccountResource), 200)]
+        [ProducesResponseType(typeof(BadRequestResult), 404)]
+        public async Task<IActionResult> PutAsync(int id, [FromBody] SaveAccountResource resource)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState.GetErrorMessages());
+
+            var account = _mapper.Map<SaveAccountResource, Account>(resource);
+            var result = await _accountService.UpdateASync(id, account);
+
+            if (!result.Success)
+                return BadRequest(result.Message);
+            var accountResource = _mapper.Map<Account, AccountResource>(result.Resource);
+            return Ok(accountResource);
+        }
     }
 }
