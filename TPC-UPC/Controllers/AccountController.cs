@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 using TPC_UPC.Domain.Services;
 using AutoMapper;
 using Swashbuckle.AspNetCore.Annotations;
-using TPC_UPC.Domain.Services;
 using TPC_UPC.Resources;
 using TPC_UPC.Domain.Models;
-using TPC_UPC.Extensions;
+using TPC_UPC.API.Extensions;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace TPC_UPC.Controllers

@@ -6,11 +6,11 @@ using System;
  namespace TPC_UPC.Domain.Persistence.Repositories
  {
  public interface INotificationRepository
- {
- Task<IEnumerable<Notification>> ListAsync();
- Task AddAsync(Notification notification);
- Task<Notification> FindById(int id);
- void Update(Notification notification);
- void Remove(Notification notification);
- }
+     {
+         Task<IEnumerable<Notification>> ListAsync();
+         Task AddAsync(Notification notification);
+         Task<Notification> FindById(int id);
+         void Update(Notification notification);
+         void Remove(Notification notification);
+     }
  }
