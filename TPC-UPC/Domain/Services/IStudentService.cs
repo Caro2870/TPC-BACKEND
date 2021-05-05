@@ -19,5 +19,6 @@ namespace TPC_UPC.Domain.Services
         Task<IEnumerable<Student>> ListAsync();
         Task<IEnumerable<Student>> ListByCourseIdAsync(int courseId);
         Task<IEnumerable<Student>> ListByLessonIdAsync(int courseId);
+        Task<IEnumerable<Student>> ListAssistantsByLessonIdAsync(int lessonId);
     }
 }

@@ -12,6 +12,7 @@ namespace TPC_UPC.Services
     public class StudentService : IStudentService
     {
         private readonly IStudentRepository _studentRepository;
+        private readonly ILessonStudentRepository _lessonStudentRepository;
         private IUnitOfWork _unitOfWork;
         public StudentService(IStudentRepository object1, IUnitOfWork object2)
         {
@@ -53,5 +54,13 @@ namespace TPC_UPC.Services
         Task<IEnumerable<Student>> IStudentService.ListByLessonIdAsync(int courseId) {
             throw new NotImplementedException();
         }
+
+        public async Task<IEnumerable<Student>> ListAssistantsByLessonIdAsync(int lessonId)
+        {
+            var lessonStudents = await _lessonStudentRepository.ListStudentAssistantsByLessonIdAsync(lessonId);
+            var students = lessonStudents.Select(ls => ls.Student).ToList();
+            return students;
+        }
+
     }
 }
