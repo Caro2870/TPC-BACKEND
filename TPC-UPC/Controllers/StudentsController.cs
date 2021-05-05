@@ -27,9 +27,9 @@ namespace TPC_UPC.Controllers
         }
 
         [SwaggerOperation(
-            Summary = "List all users",
-            Description = "List of Users",
-            OperationId = "ListAllUsers")]
+            Summary = "List all students",
+            Description = "List of Students",
+            OperationId = "ListAllStudents")]
         [SwaggerResponse(200, "List of Students", typeof(IEnumerable<StudentResource>))]
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<StudentResource>), 200)]
