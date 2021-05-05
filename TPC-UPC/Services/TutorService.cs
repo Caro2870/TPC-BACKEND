@@ -20,7 +20,7 @@ namespace TPC_UPC.Services
         }
 
         //CRUD
-        Task<TutorResponse> SaveAsync(Tutor tutor) {
+        public async Task<TutorResponse> SaveAsync(Tutor tutor) {
             try
             {
                 await _tutorRepository.AddAsync(tutor);
@@ -32,21 +32,21 @@ namespace TPC_UPC.Services
                 return new TutorResponse($"An error ocurred while saving {e.Message}");
             }
         }
-        Task<TutorResponse> GetByIdAsync(int tutorId) {
+        public async Task<TutorResponse> GetByIdAsync(int tutorId) {
             throw new NotImplementedException();
         }
-        Task<TutorResponse> UpdateAsync(int id, Tutor tutor) {
+        public async Task<TutorResponse> UpdateAsync(int id, Tutor tutor) {
             throw new NotImplementedException();
         }
-        Task<TutorResponse> DeleteAsync(int id) {
+        public async Task<TutorResponse> DeleteAsync(int id) {
             throw new NotImplementedException();
         }
 
         //ADDED
-        Task<IEnumerable<Tutor>> ListAsync() {
+        public async Task<IEnumerable<Tutor>> ListAsync() {
             throw new NotImplementedException();
         }
-        Task<IEnumerable<Tutor>> ListByCourseIdAsync(int courseId) {
+        public async Task<IEnumerable<Tutor>> ListByCourseIdAsync(int courseId) {
             throw new NotImplementedException();
         }
     }
