@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace TPC_UPC.Controllers
 {
-    [Route("/api/[controller]")]
-    [Produces("application/json")]
     [ApiController]
-    [Route("/api/[controller]")]
+    [Route("api/lessons/{lessonId}/students")]
     public class LessonStudentController : ControllerBase
     {
+
+
     }
 }
