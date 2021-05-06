@@ -30,9 +30,9 @@ namespace TPC_UPC.Services
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<University>> ListAsync()
+        public async Task<IEnumerable<University>> ListAsync()
         {
-            throw new NotImplementedException();
+            return await _universityRepository.ListAsync();
         }
 
         public async Task<UniversityResponse> SaveAsync(University university)
