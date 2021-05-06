@@ -141,6 +141,25 @@ namespace TPC_UPC.Domain.Persistence.Contexts
             builder.Entity<Schedule>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
             builder.Entity<Schedule>().Property(p => p.StartDate).IsRequired();
             builder.Entity<Schedule>().Property(p => p.EndDate).IsRequired();
+            //Constraints of Student
+            builder.Entity<Student>().HasKey(p => p.Id);   //PK
+            builder.Entity<Student>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
+            builder.Entity<Student>().Property(p => p.CycleNumber).IsRequired();
+            builder.Entity<Student>().Property(p => p.FirstName).IsRequired().HasMaxLength(35);   //PK
+            builder.Entity<Student>().Property(p => p.LastName).IsRequired().HasMaxLength(60);   //PK
+            builder.Entity<Student>().Property(p => p.Mail).IsRequired();   //PK
+            builder.Entity<Student>().Property(p => p.PhoneNumber).HasMaxLength(15);   //PK
+            //Constraints of Suggestion
+            builder.Entity<Suggestion>().HasKey(p => p.Id);   //PK
+            builder.Entity<Suggestion>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();  //GeneraKey
+            builder.Entity<Suggestion>().Property(p => p.Message).IsRequired().HasMaxLength(400);
+            //Constraints of Training
+            builder.Entity<Training>().HasKey(p => p.Id);   //PK
+            builder.Entity<Training>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
+            //Constraints of TrainingTutor
+            builder.Entity<TrainingTutor>().HasKey(p => p.TrainingId);   //PK
+            builder.Entity<TrainingTutor>().HasKey(p => p.TutorId);   //PK
+            builder.Entity<TrainingTutor>().Property(p => p.Assistance).IsRequired();
         }
     }
 }
