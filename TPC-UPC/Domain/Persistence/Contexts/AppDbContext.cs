@@ -27,7 +27,6 @@ namespace TPC_UPC.Domain.Persistence.Contexts
         public DbSet<   Notification    > Notifications { get; set; }
         public DbSet<   NotificationType    > NotificationTypes { get; set; }
         public DbSet<   NotificationUser    > NotificationUsers { get; set; }
-        public DbSet<   Schedule           > Schedules { get; set; }
         public DbSet<   Student         > Students { get; set; }
         public DbSet<   Suggestion      > Suggestions { get; set; }
         public DbSet<   Training        > Trainings { get; set; }
@@ -55,7 +54,6 @@ namespace TPC_UPC.Domain.Persistence.Contexts
              builder.Entity<Notification    >().ToTable("Notifications")      ;
              builder.Entity<NotificationType>().ToTable("NotificationTypes")  ;
              builder.Entity<NotificationUser>().ToTable("NotificationUsers")  ;
-             builder.Entity<Schedule        >().ToTable("Schedules")          ;
              builder.Entity<Student         >().ToTable("Students")           ;
              builder.Entity<Suggestion      >().ToTable("Suggestions")        ;
              builder.Entity<Training        >().ToTable("Trainings")          ;
@@ -75,7 +73,7 @@ namespace TPC_UPC.Domain.Persistence.Contexts
             //Constraints of Carrer
             builder.Entity<Career>().HasKey(p => p.Id);   //PK
             builder.Entity<Career>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();  //GeneraKey
-            builder.Entity<Career>().Property(p => p.CarrerName).IsRequired().HasMaxLength(80); 
+            builder.Entity<Career>().Property(p => p.CareerName).IsRequired().HasMaxLength(80); 
             //Constraints of Coordinator
             builder.Entity<Coordinator>().HasKey(p => p.Id);   //PK
             builder.Entity<Coordinator>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
@@ -110,7 +108,7 @@ namespace TPC_UPC.Domain.Persistence.Contexts
              //Constraints of LessonType
             builder.Entity<LessonType>().HasKey(p => p.Id);   //PK
             builder.Entity<LessonType>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();  //GeneraKey
-            builder.Entity<LessonType>().Property(p => p.Name).IsRequired().HasMaxLength(100);
+            builder.Entity<LessonType>().Property(p => p.LessonTypeName).IsRequired().HasMaxLength(100);
             //Constraints of MailMessage
             builder.Entity<MailMessage>().HasKey(p => p.Id);   //PK
             builder.Entity<MailMessage>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();  //GeneraKey
@@ -118,7 +116,8 @@ namespace TPC_UPC.Domain.Persistence.Contexts
             builder.Entity<MailMessage>().Property(p => p.DocumentLink).IsRequired().HasMaxLength(150);
             //Constraints of Meeting
             builder.Entity<Meeting>().HasKey(p => p.Id);   //PK
-            builder.Entity<Meeting>().HasKey(p => p.ScheduleId);   //PK
+            builder.Entity<Meeting>().Property(p => p.StartDate).IsRequired();
+            builder.Entity<Meeting>().Property(p => p.EndDate).IsRequired();
             builder.Entity<Meeting>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();  //GeneraKey
             builder.Entity<Meeting>().Property(p => p.Description).IsRequired().HasMaxLength(300);
             builder.Entity<Meeting>().Property(p => p.MeetingLink).IsRequired().HasMaxLength(150);
@@ -136,11 +135,6 @@ namespace TPC_UPC.Domain.Persistence.Contexts
             //Constraints of NotificationUser
             builder.Entity<NotificationUser>().HasKey(p => p.NotificationId);   //PK
             builder.Entity<NotificationUser>().HasKey(p => p.UserId);   //PK
-            //Constraints of Schedule
-            builder.Entity<Schedule>().HasKey(p => p.Id);   //PK
-            builder.Entity<Schedule>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
-            builder.Entity<Schedule>().Property(p => p.StartDate).IsRequired();
-            builder.Entity<Schedule>().Property(p => p.EndDate).IsRequired();
             //Constraints of Student
             builder.Entity<Student>().HasKey(p => p.Id);   //PK
             builder.Entity<Student>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
@@ -211,10 +205,11 @@ namespace TPC_UPC.Domain.Persistence.Contexts
                 .WithOne(b => b.Lesson)
                 .HasForeignKey(p => p.LessonId);
             //Relationships of LessonType
+            //hemos cambiado esto
             builder.Entity<LessonType>()
-                .HasOne(a => a.Lesson)
+                .HasMany(a => a.Lessons)
                 .WithOne(b => b.LessonType)
-                .HasForeignKey<Lesson>(a => a.LessonTypeId);
+                .HasForeignKey(a => a.LessonTypeId);
             //Relationships of Account
             builder.Entity<Account>()
                     .HasOne(a => a.User)
@@ -240,15 +235,11 @@ namespace TPC_UPC.Domain.Persistence.Contexts
                .WithOne(b => b.Tutor)
                .HasForeignKey(p => p.TutorId);
             //Relationships of Carrer
-            builder.Entity<Carrer>()
+            builder.Entity<Career>()
                 .HasMany(a => a.Students)
                 .WithOne(b => b.Career)
                 .HasForeignKey(p => p.CareerId);
-            //Relationships of Schedule
-            builder.Entity<Schedule>()
-                .HasMany(a => a.Meetings)
-                .WithOne(b => b.Schedule)
-                .HasForeignKey(p => p.ScheduleId);
+
             //Relationships of Faculty
             builder.Entity<Faculty>()
                 .HasMany(a => a.Coordinators)
@@ -302,7 +293,7 @@ namespace TPC_UPC.Domain.Persistence.Contexts
                .HasForeignKey(p => p.CourseId);
 
 
-            /*
+            
             builder.Entity<University>().HasData
                     (
                     new University { Id = 101, UniversityName = "UPC" },
@@ -313,7 +304,7 @@ namespace TPC_UPC.Domain.Persistence.Contexts
                     new Account { Id = 101, AccountName = "notidea", Password = "123122" },
                      new Account { Id = 102, AccountName = "notideax2", Password = "43242" }
                     );
-            uilder.Entity<Suggestion>().HasData
+            builder.Entity<Suggestion>().HasData
                     (
                     new Suggestion { Id = 101, Message = "hola tengo sueño odio aqui" },
                      new Suggestion { Id = 102, Message = "NoOoOoOoOo" }
@@ -328,7 +319,6 @@ namespace TPC_UPC.Domain.Persistence.Contexts
                     new MailMessage { Id = 101, Message = "AAAAAAAAAAA", DocumentLink = "holatengosueñoodioaqui.pdf" },
                      new MailMessage { Id = 102, Message = "Cienciaaasdas", DocumentLink = "NoOoOoOoOo.doc" }
                     );
-            */
 
         }
     }

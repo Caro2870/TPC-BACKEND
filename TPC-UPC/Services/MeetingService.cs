@@ -57,16 +57,6 @@ namespace TPC_UPC.Services
             return await _meetingRepository.ListAsync();
         }
 
-        public async Task<IEnumerable<Schedule>> ListByMeetingIdAsync(int meetingId)
-        {
-            return await _meetingRepository.ListByMeetingIdAsync(meetingId);
-        }
-
-        public async Task<IEnumerable<Meeting>> ListByScheduleIdAsync(int scheduleId)
-        {
-            return await _meetingRepository.ListByScheduleIdAsync(scheduleId);
-        }
-
         public async Task<MeetingResponse> SaveAsync(Meeting meeting)
         {
             try

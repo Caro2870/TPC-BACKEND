@@ -30,16 +30,6 @@ using System;
  			return await _context.Meetings.ToListAsync();
  		}
 
-        public Task<IEnumerable<Schedule>> ListByMeetingIdAsync(int meetingId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<IEnumerable<Meeting>> ListByScheduleIdAsync(int scheduleId)
-        {
-            throw new NotImplementedException();
-        }
-
         public void Remove(Meeting meeting)
  		{
  			_context.Meetings.Remove(meeting);

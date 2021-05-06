@@ -10,7 +10,8 @@ namespace TPC_UPC.Domain.Models
         public int Id { get; set; }
 
         public int ScheduleId { get; set; }
-        public Schedule Schedule { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
 
         public string Description { get; set; }
         public string MeetingLink { get; set; }
