@@ -43,8 +43,8 @@ namespace TPC_UPC.Services
         }
 
         //ADDED
-        Task<IEnumerable<Tutor>> ITutorService.ListAsync() {
-            throw new NotImplementedException();
+        public async Task<IEnumerable<Tutor>> ListAsync() {
+            return await _tutorRepository.ListAsync();
         }
         Task<IEnumerable<Tutor>> ITutorService.ListByCourseIdAsync(int courseId) {
             throw new NotImplementedException();
