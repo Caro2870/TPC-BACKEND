@@ -19,8 +19,8 @@ namespace TPC_UPC.Services
             this._unitOfWork = object2;
         }
 
-        Task<IEnumerable<Faculty>> IFacultyService.ListAsync() {
-            throw new NotImplementedException();
+        public async  Task<IEnumerable<Faculty>> ListAsync() {
+            return await _facultyRepository.ListAsync();
         }
         Task<IEnumerable<Faculty>> IFacultyService.ListByCoordinatorIdAsync(int coordinatorId) {
             throw new NotImplementedException();
