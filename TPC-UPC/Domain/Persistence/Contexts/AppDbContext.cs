@@ -64,6 +64,18 @@ namespace TPC_UPC.Domain.Persistence.Contexts
              builder.Entity<University      >().ToTable("Universities")       ;
              builder.Entity<User            >().ToTable("Users")              ;
              builder.Entity<UserCourse      >().ToTable("UserCourses")        ;
+
+            //Constraints of Account
+            builder.Entity<Account>().HasKey(p => p.Id);   //PK
+            builder.Entity<Account>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();  //GeneraKey
+            builder.Entity<Account>().Property(p => p.AccountName).IsRequired().HasMaxLength(50);
+            builder.Entity<Account>().Property(p => p.Password).IsRequired().HasMaxLength(50);
+            //Constraints of Carrer
+            builder.Entity<Career>().HasKey(p => p.Id);   //PK
+            builder.Entity<Career>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();  //GeneraKey
+            builder.Entity<Career>().Property(p => p.CarrerName).IsRequired().HasMaxLength(80); 
+
+
         }
     }
 }
