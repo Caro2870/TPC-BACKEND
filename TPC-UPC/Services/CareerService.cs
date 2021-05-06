@@ -19,8 +19,8 @@ namespace TPC_UPC.Services
             this._unitOfWork = object2;
         }
 
-        Task<IEnumerable<Career>> ICareerService.ListAsync() {
-            throw new NotImplementedException();
+        public async Task<IEnumerable<Career>> ListAsync() {
+            return await _careerRepository.ListAsync();
         }
 
         //CRUD
