@@ -19,7 +19,7 @@ namespace TPC_UPC.API.Test
         }
 
         [Test]
-        public async Task SaveAsyncWhenFacultiesReturnsSuccess()
+        public async Task SaveAsyncWhenUsersReturnsSuccess()
         {
             //
             var mockUserRepository = GetDefaultIUserRepositoryInstance();

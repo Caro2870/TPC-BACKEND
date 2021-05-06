@@ -19,7 +19,7 @@ namespace TPC_UPC.API.Test
         }
 
         [Test]
-        public async Task SaveAsyncWhenUniversitiesReturnsSuccess()
+        public async Task SaveAsyncWhenCareersReturnsSuccess()
         {
             //
             var mockCareerRepository = GetDefaultICareerRepositoryInstance();
