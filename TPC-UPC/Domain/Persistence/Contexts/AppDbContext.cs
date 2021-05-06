@@ -291,6 +291,15 @@ namespace TPC_UPC.Domain.Persistence.Contexts
                 .HasMany(a => a.Notifications)
                 .WithOne(b => b.NotificationType)
                 .HasForeignKey(p => p.NotificationTypeId);
+            //Relationships of Course
+            builder.Entity<Course>()
+               .HasMany(a => a.UserCourses)
+               .WithOne(b => b.Course)
+               .HasForeignKey(p => p.CourseId);
+            builder.Entity<Course>()
+               .HasMany(a => a.Lessons)
+               .WithOne(b => b.Course)
+               .HasForeignKey(p => p.CourseId);
 
         }
     }
