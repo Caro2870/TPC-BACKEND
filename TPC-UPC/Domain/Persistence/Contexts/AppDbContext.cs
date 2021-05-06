@@ -87,7 +87,18 @@ namespace TPC_UPC.Domain.Persistence.Contexts
             builder.Entity<Course>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();  //GeneraKey
             builder.Entity<Course>().Property(p => p.Name).IsRequired().HasMaxLength(50);   //PK
 
-
+            //Constraints of Faculty
+            builder.Entity<Faculty>().HasKey(p => p.Id);   //PK
+            builder.Entity<Faculty>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();  //GeneraKey
+            builder.Entity<Faculty>().Property(p => p.Name).IsRequired().HasMaxLength(80);
+            builder.Entity<Faculty>().Property(p => p.Description).IsRequired().HasMaxLength(400);
+            //Constraints of Lesson
+            builder.Entity<Lesson>().HasKey(p => p.Id);   //PK
+            builder.Entity<Lesson>().HasKey(p => p.TutorId);   //PK
+            builder.Entity<Lesson>().HasKey(p => p.LessonTypeId);   //PK
+            builder.Entity<Lesson>().HasKey(p => p.CourseId);   //PK
+            builder.Entity<Lesson>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();  //GeneraKey
+            builder.Entity<Lesson>().Property(p => p.Vacants).IsRequired();  //GeneraKey
         }
     }
 }
