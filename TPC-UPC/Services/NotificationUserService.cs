@@ -32,9 +32,7 @@ namespace TPC_UPC.Services
 
         public async Task<IEnumerable<NotificationUser>> ListByUserIdAsync(int userId)
         {
-            var lessonStudents = await _notificationUserRepository.FindByUserId(userId);
-            var students = lessonStudents.Select(ls => ls.Student).ToList();
-            return students;
+            return await _notificationUserRepository.ListByUserId(userId); 
         }
 
         public Task<NotificationUserResponse> SaveAsync(NotificationUser notificationUser)

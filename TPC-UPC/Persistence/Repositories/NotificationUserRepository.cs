@@ -26,7 +26,7 @@ using System.Threading.Tasks;
  			return await _context.NotificationUsers.FindAsync(id);
  		}
 
-        public async Task<NotificationUser> FindByUserId(int userId)
+        public async Task<IEnumerable<NotificationUser>> ListByUserId(int userId)
         {
             return await _context.NotificationUsers
                 .Where(ls => ls.UserId == userId)

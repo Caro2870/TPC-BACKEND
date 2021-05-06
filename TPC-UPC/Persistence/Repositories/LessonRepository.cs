@@ -31,14 +31,14 @@ using System.Threading.Tasks;
  			return await _context.Lessons.ToListAsync();
  		}
 
-        public Task<IEnumerable<Course>> ListByLessonTypeIdAsync(int lessonTypeId)
+        public async Task<IEnumerable<Lesson>> ListByLessonTypeIdAsync(int lessonTypeId)
         {
             return await _context.Lessons
                 .Where(ls => ls.LessonTypeId == lessonTypeId)
                 .ToListAsync();
         }
 
-        public Task<IEnumerable<Course>> ListByTutorIdAsync(int tutorId)
+        public async Task<IEnumerable<Lesson>> ListByTutorIdAsync(int tutorId)
         {
             return await _context.Lessons
                  .Where(ls => ls.TutorId == tutorId)

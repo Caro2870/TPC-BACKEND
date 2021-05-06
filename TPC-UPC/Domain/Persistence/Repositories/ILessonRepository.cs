@@ -13,7 +13,7 @@ using System;
         void Update(Lesson lesson);
         void Remove(Lesson lesson);
         //new
-        Task<IEnumerable<Course>> ListByTutorIdAsync(int tutorId);
-        Task<IEnumerable<Course>> ListByLessonTypeIdAsync(int lessonTypeId);
+        Task<IEnumerable<Lesson>> ListByTutorIdAsync(int tutorId);
+        Task<IEnumerable<Lesson>> ListByLessonTypeIdAsync(int lessonTypeId);
     }
  }
