@@ -26,12 +26,21 @@ namespace TPC_UPC.Controllers
             _mapper = mapper;
         }
 
+
+
         [SwaggerOperation(
-            Summary = "List all faculties",
-            Description = "List of faculties",
-            OperationId = "ListAllfaculties")]
-        [SwaggerResponse(200, "List of faculties", typeof(IEnumerable<LessonResource>))]
-        
+            Summary = "List all Lessons",
+            Description = "List of Lessons",
+            OperationId = "ListAllLessons")]
+        [SwaggerResponse(200, "List of lessons", typeof(IEnumerable<LessonResource>))]
+        public async Task<IEnumerable<LessonResource>> GetAllAsync()
+        {
+            var lessons = await _lessonService.ListAsync();
+            var resources = _mapper
+                .Map<IEnumerable<Lesson>, IEnumerable<LessonResource>>(lessons);
+            return resources;
+        }
+
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(LessonResource), 200)]
         [ProducesResponseType(typeof(BadRequestResult), 404)]
