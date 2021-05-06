@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace TPC_UPC.Domain.Models
 {
-    public abstract class User
+    public class User
     {
         public int Id { get; set; }
         public string FirstName { get; set; }

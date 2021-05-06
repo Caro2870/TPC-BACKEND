@@ -39,7 +39,7 @@ namespace TPC_UPC
 
             services.AddDbContext<AppDbContext>(options =>
             {
-                options.UseMySQL(Configuration.GetConnectionString("DefaultConection"));
+                options.UseMySQL(Configuration.GetConnectionString("DefaultConnection"));
             });
 
             //Dependency Injection Configuration
@@ -57,7 +57,6 @@ namespace TPC_UPC
             services.AddScoped<INotificationRepository, NotificationRepository>();
             services.AddScoped<INotificationTypeRepository, NotificationTypeRepository>();
             services.AddScoped<INotificationUserRepository, NotificationUserRepository>();
-            services.AddScoped<IScheduleRepository, ScheduleRepository>();
             services.AddScoped<IStudentRepository, StudentRepository>();
             services.AddScoped<ISuggestionRepository, SuggestionRepository>();
             services.AddScoped<ITrainingRepository, TrainingRepository>();
@@ -81,7 +80,6 @@ namespace TPC_UPC
             services.AddScoped<INotificationService, NotificationService>();
             //services.AddScoped<INotificationTypeService, NotificationTypeService>();
             services.AddScoped<INotificationUserService, NotificationUserService>();
-            services.AddScoped<IScheduleService, ScheduleService>();
             services.AddScoped<IStudentService, StudentService>();
             //services.AddScoped<ISuggestionService, SuggestionService>();
             //services.AddScoped<ITrainingService, TrainingService>();
