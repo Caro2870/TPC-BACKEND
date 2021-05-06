@@ -318,6 +318,16 @@ namespace TPC_UPC.Domain.Persistence.Contexts
                     new Suggestion { Id = 101, Message = "hola tengo sueño odio aqui" },
                      new Suggestion { Id = 102, Message = "NoOoOoOoOo" }
                     );
+            builder.Entity<Faculty>().HasData
+                    (
+                    new Faculty { Id = 101, Name = "Letras", Description = "hola tengo sueño odio aqui" },
+                     new Faculty { Id = 102, Name = "Ciencia", Description = "NoOoOoOoOo" }
+                    );
+            builder.Entity<MailMessage>().HasData
+                    (
+                    new MailMessage { Id = 101, Message = "AAAAAAAAAAA", DocumentLink = "holatengosueñoodioaqui.pdf" },
+                     new MailMessage { Id = 102, Message = "Cienciaaasdas", DocumentLink = "NoOoOoOoOo.doc" }
+                    );
             */
 
         }
