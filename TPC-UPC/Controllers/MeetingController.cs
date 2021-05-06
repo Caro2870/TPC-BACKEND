@@ -1,15 +1,14 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using TPC_UPC.API.Extensions;
-using TPC_UPC.Domain.Models;
+using AutoMapper;
+using Swashbuckle.AspNetCore.Annotations;
 using TPC_UPC.Domain.Services;
 using TPC_UPC.Resources;
-using TPC_UPC.Services;
+using TPC_UPC.Domain.Models;
+using TPC_UPC.API.Extensions;
 
 namespace TPC_UPC.Controllers
 {
@@ -26,6 +25,23 @@ namespace TPC_UPC.Controllers
             _meetingService = meetingService;
             _mapper = mapper;
         }
+
+        [SwaggerOperation(
+         Summary = "List all meetings",
+         Description = "List of meetings",
+         OperationId = "ListAllmeetings")]
+        [SwaggerResponse(200, "List of meetings", typeof(IEnumerable<MeetingResource>))]
+        [HttpGet]
+        [ProducesResponseType(typeof(IEnumerable<MeetingResource>), 200)]
+        public async Task<IEnumerable<MeetingResource>> GetAllAsync()
+        {
+            var meetings = await _meetingService.ListAsync();
+            var resources = _mapper
+                .Map<IEnumerable<Meeting>, IEnumerable<MeetingResource>>(meetings);
+            return resources;
+        }
+
+
 
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(MeetingResource), 200)]
@@ -54,5 +70,7 @@ namespace TPC_UPC.Controllers
             var meetingResource = _mapper.Map<Meeting, MeetingResource>(result.Resource);
             return Ok(meetingResource);
         }
+
+        
     }
 }
