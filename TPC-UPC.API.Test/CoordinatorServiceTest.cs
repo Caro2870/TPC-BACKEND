@@ -1,4 +1,4 @@
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using Moq;
 using FluentAssertions;
 using TPC_UPC.Domain.Models;
@@ -11,7 +11,7 @@ using TPC_UPC.Services;
 
 namespace TPC_UPC.API.Test
 {
-    public class UniversityServiceTest
+    class CoordinatorServiceTest
     {
         [SetUp]
         public void Setup()
@@ -22,22 +22,22 @@ namespace TPC_UPC.API.Test
         public async Task SaveAsyncWhenUniversitiesReturnsSuccess()
         {
             //
-            var mockUniversityRepository = GetDefaultIUniversityRepositoryInstance();
+            var mockCoordinatorRepository = GetDefaultICoordinatorRepositoryInstance();
             var mockIUnitOfWork = GetDefaultIUnitOfWorkInstance();
-            University university = new University();
-            mockUniversityRepository.Setup(r => r.AddAsync(university))
-                .Returns( Task.FromResult<University>(university));
-            var service = new UniversityService(mockUniversityRepository.Object, mockIUnitOfWork.Object);
+            Coordinator coordinator = new Coordinator();
+            mockCoordinatorRepository.Setup(r => r.AddAsync(coordinator))
+                .Returns(Task.FromResult<Coordinator>(coordinator));
+            var service = new CoordinatorService(mockCoordinatorRepository.Object, mockIUnitOfWork.Object);
             //
-            UniversityResponse result = await service.SaveAsync(university);
+            CoordinatorResponse result = await service.SaveAsync(coordinator);
             var message = result.Message;
             //
             message.Should().Be("");
         }
 
-        private Mock<IUniversityRepository> GetDefaultIUniversityRepositoryInstance ()
+        private Mock<ICoordinatorRepository> GetDefaultICoordinatorRepositoryInstance()
         {
-            return new Mock<IUniversityRepository>();
+            return new Mock<ICoordinatorRepository>();
         }
 
         private Mock<IUnitOfWork> GetDefaultIUnitOfWorkInstance()

@@ -1,4 +1,4 @@
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using Moq;
 using FluentAssertions;
 using TPC_UPC.Domain.Models;
@@ -11,7 +11,7 @@ using TPC_UPC.Services;
 
 namespace TPC_UPC.API.Test
 {
-    public class UniversityServiceTest
+    class UserServiceTest
     {
         [SetUp]
         public void Setup()
@@ -19,25 +19,25 @@ namespace TPC_UPC.API.Test
         }
 
         [Test]
-        public async Task SaveAsyncWhenUniversitiesReturnsSuccess()
+        public async Task SaveAsyncWhenFacultiesReturnsSuccess()
         {
             //
-            var mockUniversityRepository = GetDefaultIUniversityRepositoryInstance();
+            var mockUserRepository = GetDefaultIUserRepositoryInstance();
             var mockIUnitOfWork = GetDefaultIUnitOfWorkInstance();
-            University university = new University();
-            mockUniversityRepository.Setup(r => r.AddAsync(university))
-                .Returns( Task.FromResult<University>(university));
-            var service = new UniversityService(mockUniversityRepository.Object, mockIUnitOfWork.Object);
+            User user = new User();
+            mockUserRepository.Setup(r => r.AddAsync(user))
+                .Returns(Task.FromResult<User>(user));
+            var service = new UserService(mockUserRepository.Object, mockIUnitOfWork.Object);
             //
-            UniversityResponse result = await service.SaveAsync(university);
+            UserResponse result = await service.SaveAsync(user);
             var message = result.Message;
             //
             message.Should().Be("");
         }
 
-        private Mock<IUniversityRepository> GetDefaultIUniversityRepositoryInstance ()
+        private Mock<IUserRepository> GetDefaultIUserRepositoryInstance()
         {
-            return new Mock<IUniversityRepository>();
+            return new Mock<IUserRepository>();
         }
 
         private Mock<IUnitOfWork> GetDefaultIUnitOfWorkInstance()

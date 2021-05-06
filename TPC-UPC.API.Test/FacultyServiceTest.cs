@@ -1,4 +1,4 @@
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using Moq;
 using FluentAssertions;
 using TPC_UPC.Domain.Models;
@@ -11,7 +11,7 @@ using TPC_UPC.Services;
 
 namespace TPC_UPC.API.Test
 {
-    public class UniversityServiceTest
+    class FacultyServiceTest
     {
         [SetUp]
         public void Setup()
@@ -22,22 +22,22 @@ namespace TPC_UPC.API.Test
         public async Task SaveAsyncWhenUniversitiesReturnsSuccess()
         {
             //
-            var mockUniversityRepository = GetDefaultIUniversityRepositoryInstance();
+            var mockFacultyRepository = GetDefaultIFacultyRepositoryInstance();
             var mockIUnitOfWork = GetDefaultIUnitOfWorkInstance();
-            University university = new University();
-            mockUniversityRepository.Setup(r => r.AddAsync(university))
-                .Returns( Task.FromResult<University>(university));
-            var service = new UniversityService(mockUniversityRepository.Object, mockIUnitOfWork.Object);
+            Faculty faculty = new Faculty();
+            mockFacultyRepository.Setup(r => r.AddAsync(faculty))
+                .Returns(Task.FromResult<Faculty>(faculty));
+            var service = new FacultyService(mockFacultyRepository.Object, mockIUnitOfWork.Object);
             //
-            UniversityResponse result = await service.SaveAsync(university);
+            FacultyResponse result = await service.SaveAsync(faculty);
             var message = result.Message;
             //
             message.Should().Be("");
         }
 
-        private Mock<IUniversityRepository> GetDefaultIUniversityRepositoryInstance ()
+        private Mock<IFacultyRepository> GetDefaultIFacultyRepositoryInstance()
         {
-            return new Mock<IUniversityRepository>();
+            return new Mock<IFacultyRepository>();
         }
 
         private Mock<IUnitOfWork> GetDefaultIUnitOfWorkInstance()
