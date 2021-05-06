@@ -75,6 +75,18 @@ namespace TPC_UPC.Domain.Persistence.Contexts
             builder.Entity<Career>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();  //GeneraKey
             builder.Entity<Career>().Property(p => p.CarrerName).IsRequired().HasMaxLength(80); 
 
+            //Constraints of Coordinator
+            builder.Entity<Coordinator>().HasKey(p => p.Id);   //PK
+            builder.Entity<Coordinator>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
+            builder.Entity<Coordinator>().Property(p => p.FirstName).IsRequired().HasMaxLength(35);   //PK
+            builder.Entity<Coordinator>().Property(p => p.LastName).IsRequired().HasMaxLength(60);   //PK
+            builder.Entity<Coordinator>().Property(p => p.Mail).IsRequired();   //PK
+            builder.Entity<Coordinator>().Property(p => p.PhoneNumber).HasMaxLength(15);   //PK
+            //Constraints of Course
+            builder.Entity<Course>().HasKey(p => p.Id);   //PK
+            builder.Entity<Course>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();  //GeneraKey
+            builder.Entity<Course>().Property(p => p.Name).IsRequired().HasMaxLength(50);   //PK
+
 
         }
     }
