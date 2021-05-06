@@ -18,21 +18,24 @@ namespace TPC_UPC.Services
             this._userRepository = object1;
             this._unitOfWork = object2;
         }
+        public async Task<IEnumerable<User>> ListAsync()
+        {
+            return await _userRepository.ListAsync();
+        }
 
-        Task<IEnumerable<User>> ListAsync() {
+        Task<IEnumerable<User>> IUserService.ListByAccountIdAsync(int accountId)
+        {
             throw new NotImplementedException();
         }
-        Task<IEnumerable<User>> ListByAccountIdAsync(int accountId) {
+
+        Task<IEnumerable<User>> IUserService.ListBySuggestionIdAsync(int suggestionId)
+        {
             throw new NotImplementedException();
         }
-        Task<IEnumerable<User>> ListBySuggestionIdAsync(int suggestionId) {
-            throw new NotImplementedException();
-        }
-        //CRUD
-        Task<UserResponse> GetByIdAsync(int id) {
-            throw new NotImplementedException();
-        }
-        Task<UserResponse> SaveAsync(User user) {
+
+
+        public async Task<UserResponse> SaveAsync(User user)
+        {
             try
             {
                 await _userRepository.AddAsync(user);
@@ -44,10 +47,19 @@ namespace TPC_UPC.Services
                 return new UserResponse($"An error ocurred while saving {e.Message}");
             }
         }
-        Task<UserResponse> UpdateASync(int id, User user) {
+
+        Task<UserResponse> IUserService.GetByIdAsync(int id)
+        {
             throw new NotImplementedException();
         }
-        Task<UserResponse> DeleteAsync(int id) {
+
+        public Task<UserResponse> UpdateASync(int id, User user)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<UserResponse> DeleteAsync(int id)
+        {
             throw new NotImplementedException();
         }
     }

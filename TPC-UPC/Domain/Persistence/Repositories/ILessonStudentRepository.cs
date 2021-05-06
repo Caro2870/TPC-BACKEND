@@ -15,5 +15,6 @@ namespace TPC_UPC.Domain.Persistence.Repositories
         Task<IEnumerable<LessonStudent>> ListMissingStudentByLessonIdAsync(int lessonId);
         void Update(LessonStudent lessonStudent);
         void Remove(LessonStudent lessonStudent);
+        Task<IEnumerable<LessonStudent>> ListByStudentIdAsync(int studentId);
     }
 }

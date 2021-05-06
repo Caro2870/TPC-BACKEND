@@ -12,8 +12,5 @@ using System;
          Task<Meeting> FindById(int id);
          void Update(Meeting meeting);
          void Remove(Meeting meeting);
-        //new
-        Task<IEnumerable<Schedule>> ListByMeetingIdAsync(int meetingId);
-        Task<IEnumerable<Meeting>> ListByScheduleIdAsync(int scheduleId);
     }
  }

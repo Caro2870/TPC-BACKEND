@@ -12,6 +12,7 @@ namespace TPC_UPC.Services
     public class StudentService : IStudentService
     {
         private readonly IStudentRepository _studentRepository;
+        private readonly ILessonStudentRepository _lessonStudentRepository;
         private IUnitOfWork _unitOfWork;
         public StudentService(IStudentRepository object1, IUnitOfWork object2)
         {
@@ -20,7 +21,7 @@ namespace TPC_UPC.Services
         }
 
         //CRUD
-        Task<StudentResponse> SaveAsync(Student student) 
+        public async Task<StudentResponse> SaveAsync(Student student) 
         {
             try
             {
@@ -33,25 +34,42 @@ namespace TPC_UPC.Services
                 return new StudentResponse($"An error ocurred while saving {e.Message}");
             }
         }
-        Task<StudentResponse> GetByIdAsync(int studentId) {
+        Task<StudentResponse> IStudentService.GetByIdAsync(int studentId) {
             throw new NotImplementedException();
         }
-        Task<StudentResponse> UpdateAsync(int id, Student student) {
+        Task<StudentResponse> IStudentService.UpdateAsync(int id, Student student) {
             throw new NotImplementedException();
         }
-        Task<StudentResponse> DeleteAsync(int id) {
+        Task<StudentResponse> IStudentService.DeleteAsync(int id) {
             throw new NotImplementedException();
         }
 
         //ADDED
-        Task<IEnumerable<Student>> ListAsync() {
+        public async Task<IEnumerable<Student>> ListAsync() {
+            return await _studentRepository.ListAsync();
+        }
+        Task<IEnumerable<Student>> IStudentService.ListByCourseIdAsync(int courseId) {
             throw new NotImplementedException();
         }
-        Task<IEnumerable<Student>> ListByCourseIdAsync(int courseId) {
-            throw new NotImplementedException();
+        public async Task<IEnumerable<Student>> ListByLessonIdAsync(int lessonId) {
+            var lessonStudents = await _lessonStudentRepository.ListStudentsByLessonIdAsync(lessonId);
+            var students = lessonStudents.Select(ls => ls.Student).ToList();
+            return students;
         }
-        Task<IEnumerable<Student>> ListByLessonIdAsync(int courseId) {
-            throw new NotImplementedException();
+
+        public async Task<IEnumerable<Student>> ListAssistantsByLessonIdAsync(int lessonId)
+        {
+            var lessonStudents = await _lessonStudentRepository.ListStudentAssistantsByLessonIdAsync(lessonId);
+            var students = lessonStudents.Select(ls => ls.Student).ToList();
+            return students;
         }
+
+        public async Task<IEnumerable<Student>> ListMissingStudentByLessonIdAsync(int lessonId)
+        {
+            var lessonStudents = await _lessonStudentRepository.ListMissingStudentByLessonIdAsync(lessonId);
+            var students = lessonStudents.Select(ls => ls.Student).ToList();
+            return students;
+        }
+
     }
 }

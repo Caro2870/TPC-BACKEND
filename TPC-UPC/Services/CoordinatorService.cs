@@ -19,18 +19,18 @@ namespace TPC_UPC.Services
             this._unitOfWork = object2;
         }
 
-        Task<IEnumerable<Coordinator>> ListAsync() {
-            throw new NotImplementedException();
+        public async Task<IEnumerable<Coordinator>> ListAsync() {
+            return await _coordinatorRepository.ListAsync();
         }
-        Task<IEnumerable<Coordinator>> ListByFacultyIdAsync(int facultyId) {
-            throw new NotImplementedException;
+        Task<IEnumerable<Coordinator>> ICoordinatorService.ListByFacultyIdAsync(int facultyId) {
+            throw new NotImplementedException();
         }
 
         //CRUD
-        Task<CoordinatorResponse> GetByIdAsync(int id) {
+        Task<CoordinatorResponse> ICoordinatorService.GetByIdAsync(int id) {
             throw new NotImplementedException();
         }
-        Task<CoordinatorResponse> SaveAsync(Coordinator coordinator) {
+        public async Task<CoordinatorResponse> SaveAsync(Coordinator coordinator) {
             try
             {
                 await _coordinatorRepository.AddAsync(coordinator);
@@ -42,10 +42,10 @@ namespace TPC_UPC.Services
                 return new CoordinatorResponse($"An error ocurred while saving {e.Message}");
             }
         }
-        Task<CoordinatorResponse> UpdateASync(int id, Coordinator coordinator) {
+        Task<CoordinatorResponse> ICoordinatorService.UpdateASync(int id, Coordinator coordinator) {
             throw new NotImplementedException();
         }
-        Task<CoordinatorResponse> DeleteAsync(int id) {
+        Task<CoordinatorResponse> ICoordinatorService.DeleteAsync(int id) {
             throw new NotImplementedException();
         }
     }

@@ -29,8 +29,8 @@ using System;
  		{
  			return await _context.Meetings.ToListAsync();
  		}
- 
- 		public void Remove(Meeting meeting)
+
+        public void Remove(Meeting meeting)
  		{
  			_context.Meetings.Remove(meeting);
  		}
