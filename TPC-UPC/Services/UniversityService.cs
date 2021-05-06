@@ -19,13 +19,23 @@ namespace TPC_UPC.Services
             this._universityRepository = object1;
             this._unitOfWork = object2;
         }
-        
-        Task<IEnumerable<University>> ListAsync() 
+
+        public Task<UniversityResponse> DeleteAsync(int id)
         {
             throw new NotImplementedException();
         }
-        Task<UniversityResponse> GetByIdAsync(int id) { }
-        Task<UniversityResponse> SaveAsync(University university)
+
+        public Task<UniversityResponse> GetByIdAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<IEnumerable<University>> ListAsync()
+        {
+            return await _universityRepository.ListAsync();
+        }
+
+        public async Task<UniversityResponse> SaveAsync(University university)
         {
             try
             {
@@ -38,10 +48,9 @@ namespace TPC_UPC.Services
                 return new UniversityResponse($"An error ocurred while saving {e.Message}");
             }
         }
-        Task<UniversityResponse> UpdateASync(int id, University university) {
-            throw new NotImplementedException();
-        }
-        Task<UniversityResponse> DeleteAsync(int id) {
+
+        public Task<UniversityResponse> UpdateASync(int id, University university)
+        {
             throw new NotImplementedException();
         }
     }

@@ -10,10 +10,10 @@ namespace TPC_UPC.Domain.Services
     public interface ITutorService
     {
         //CRUD
-        Task<UserResponse> SaveAsync(Tutor tutor);
-        Task<UserResponse> GetByIdAsync(int tutorId);
-        Task<UserResponse> UpdateAsync(int id, Tutor tutor);
-        Task<UserResponse> DeleteAsync(int id);
+        Task<TutorResponse> SaveAsync(Tutor tutor);
+        Task<TutorResponse> GetByIdAsync(int tutorId);
+        Task<TutorResponse> UpdateAsync(int id, Tutor tutor);
+        Task<TutorResponse> DeleteAsync(int id);
 
         //ADDED
         Task<IEnumerable<Tutor>> ListAsync();

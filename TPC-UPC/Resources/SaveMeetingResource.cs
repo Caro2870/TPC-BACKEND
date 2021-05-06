@@ -18,6 +18,10 @@ namespace TPC_UPC.Resources
         public string MeetingLink { get; set; }
         [Required]
         [MaxLength(100)]
-        public string ResourceLink { get; set; }
+        public string ResourceLink { get; set; } 
+        [Required]
+        public DateTime StartDate { get; set; }
+        [Required]
+        public DateTime EndDate { get; set; }
     }
 }

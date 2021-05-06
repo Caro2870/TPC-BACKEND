@@ -81,7 +81,7 @@ namespace TPC_UPC.Services
             if (existingAccount == null)
                 return new AccountResponse("Account not found");
 
-            existingAccount.AccountName = account.AccountName;
+            existingAccount.Password = account.Password;
             try
             {
                 _accountRepository.Update(existingAccount);

@@ -17,27 +17,27 @@ using System;
  
  		public async Task AddAsync(University university)
  		{
- 			await _context.Universitys.AddAsync(university);
+ 			await _context.Universities.AddAsync(university);
  		}
  
  		public async Task<University> FindById(int id)
  		{
- 			return await _context.Universitys.FindAsync(id);
+ 			return await _context.Universities.FindAsync(id);
  		}
  
  		public async Task<IEnumerable<University>> ListAsync()
  		{
- 			return await _context.Universitys.ToListAsync();
+ 			return await _context.Universities.ToListAsync();
  		}
  
  		public void Remove(University university)
  		{
- 			_context.Universitys.Remove(university);
+ 			_context.Universities.Remove(university);
  		}
  
  		public void Update(University university)
  		{
- 			_context.Universitys.Update(university);
+ 			_context.Universities.Update(university);
  		}
  	}
  }
