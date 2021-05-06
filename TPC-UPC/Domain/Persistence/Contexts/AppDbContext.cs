@@ -249,6 +249,25 @@ namespace TPC_UPC.Domain.Persistence.Contexts
                 .HasMany(a => a.Meetings)
                 .WithOne(b => b.Schedule)
                 .HasForeignKey(p => p.ScheduleId);
+            //Relationships of Faculty
+            builder.Entity<Faculty>()
+                .HasMany(a => a.Coordinators)
+                .WithOne(b => b.Faculty)
+                .HasForeignKey(p => p.FacultyId);
+            //Relationships of Coordinator
+            builder.Entity<Coordinator>()
+                .HasMany(a => a.MailMessages)
+                .WithOne(b => b.Coordinator)
+                .HasForeignKey(p => p.CoordinatorId);
+            builder.Entity<Coordinator>()
+                .HasMany(a => a.Trainings)
+                .WithOne(b => b.Coordinator)
+                .HasForeignKey(p => p.CoordinatorId);
+            //Relationships of University
+            builder.Entity<University>()
+                    .HasMany(a => a.Accounts)
+                    .WithOne(b => b.University)
+                    .HasForeignKey(b => b.UniversityId);
 
         }
     }
