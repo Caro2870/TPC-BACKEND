@@ -41,7 +41,29 @@ namespace TPC_UPC.Domain.Persistence.Contexts
         {
             base.OnModelCreating(builder);
            
-            
+            //Building Entities
+             builder.Entity<Account         >().ToTable("Accounts");
+             builder.Entity<Career          >().ToTable("Carrers");
+             builder.Entity<Coordinator     >().ToTable("Coordinators")       ;
+             builder.Entity<Course          >().ToTable("Courses")            ;
+             builder.Entity<Faculty         >().ToTable("Faculties")          ;
+             builder.Entity<Lesson          >().ToTable("Lessons")            ;
+             builder.Entity<LessonStudent   >().ToTable("LessonStudents")     ;
+             builder.Entity<LessonType      >().ToTable("LessonTypes")        ;
+             builder.Entity<MailMessage     >().ToTable("MailMessages")       ;
+             builder.Entity<Meeting         >().ToTable("Meetings")           ;
+             builder.Entity<Notification    >().ToTable("Notifications")      ;
+             builder.Entity<NotificationType>().ToTable("NotificationTypes")  ;
+             builder.Entity<NotificationUser>().ToTable("NotificationUsers")  ;
+             builder.Entity<Schedule        >().ToTable("Schedules")          ;
+             builder.Entity<Student         >().ToTable("Students")           ;
+             builder.Entity<Suggestion      >().ToTable("Suggestions")        ;
+             builder.Entity<Training        >().ToTable("Trainings")          ;
+             builder.Entity<TrainingTutor   >().ToTable("TrainingTutors")     ;
+             builder.Entity<Tutor           >().ToTable("Tutors")             ;
+             builder.Entity<University      >().ToTable("Universities")       ;
+             builder.Entity<User            >().ToTable("Users")              ;
+             builder.Entity<UserCourse      >().ToTable("UserCourses")        ;
         }
     }
 }
