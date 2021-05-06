@@ -182,7 +182,28 @@ namespace TPC_UPC.Domain.Persistence.Contexts
             builder.Entity<UserCourse>().HasKey(p => p.CourseId);   //PK
             builder.Entity<UserCourse>().HasKey(p => p.UserId);  //GeneraKey
 
+            /*
+            Example of Relationship
+            1 a muchos
+            builder.Entity<Category>()
+                .HasMany(p => p.Products)
+                .WithOne(p => p.Category)
+                .HasForeignKey(p => p.CategoryId);
 
+            Muchos a muchos
+            builder.Entity<ProductTag>()
+                .HasOne(pt => pt.Product)
+                .WithMany(p => p.ProductTags)
+                .HasForeignKey(pt => pt.ProductId);
+
+            builder.Entity<ProductTag>()
+                .HasOne(pt => pt.Tag)
+                .WithMany(p => p.ProductTags)
+                .HasForeignKey(pt => pt.TagId);
+
+
+
+            */
 
             //Relationships of Lesson
             builder.Entity<Lesson>()
