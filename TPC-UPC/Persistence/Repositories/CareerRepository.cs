@@ -17,27 +17,27 @@ using System;
  
  		public async Task AddAsync(Career career)
  		{
- 			await _context.Careers.AddAsync(career);
+ 			await _context.Carrers.AddAsync(career);
  		}
  
  		public async Task<Career> FindById(int id)
  		{
- 			return await _context.Careers.FindAsync(id);
+ 			return await _context.Carrers.FindAsync(id);
  		}
  
  		public async Task<IEnumerable<Career>> ListAsync()
  		{
- 			return await _context.Careers.ToListAsync();
+ 			return await _context.Carrers.ToListAsync();
  		}
  
  		public void Remove(Career career)
  		{
- 			_context.Careers.Remove(career);
+ 			_context.Carrers.Remove(career);
  		}
  
  		public void Update(Career career)
  		{
- 			_context.Careers.Update(career);
+ 			_context.Carrers.Update(career);
  		}
  	}
  }

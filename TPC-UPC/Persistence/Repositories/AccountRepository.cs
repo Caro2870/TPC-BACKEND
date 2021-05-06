@@ -29,8 +29,13 @@ using System;
  		{
  			return await _context.Accounts.ToListAsync();
  		}
- 
- 		public void Remove(Account account)
+
+        public Task<IEnumerable<Account>> ListByUniversityIdAsync(int universityId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Remove(Account account)
  		{
  			_context.Accounts.Remove(account);
  		}

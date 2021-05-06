@@ -52,7 +52,7 @@ using TPC_UPC.Domain.Models;
         {
             return await _context.LessonStudents
                 .Where(ls => ls.LessonId == lessonId)
-                .Where(ls => ls.Assistance == true)
+                .Where(ls => ls.Assistance == false)
                 .Include(ls => ls.Student)
                 .ToListAsync();
         }
@@ -65,5 +65,10 @@ using TPC_UPC.Domain.Models;
  		{
  			_context.LessonStudents.Update(lessonStudent);
  		}
- 	}
+
+        public Task<IEnumerable<LessonStudent>> ListByStudentIdAsync(int studentId)
+        {
+            throw new NotImplementedException();
+        }
+    }
  }
