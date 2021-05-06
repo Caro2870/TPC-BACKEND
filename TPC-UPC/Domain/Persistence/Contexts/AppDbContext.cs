@@ -268,6 +268,29 @@ namespace TPC_UPC.Domain.Persistence.Contexts
                     .HasMany(a => a.Accounts)
                     .WithOne(b => b.University)
                     .HasForeignKey(b => b.UniversityId);
+            //Relationships of User
+            builder.Entity<User>()
+                .HasMany(a => a.Suggestions)
+                .WithOne(b => b.User)
+                .HasForeignKey(p => p.UserId);
+            builder.Entity<User>()
+                .HasMany(a => a.NotificationUsers)
+                .WithOne(b => b.User)
+                .HasForeignKey(p => p.UserId);
+            builder.Entity<User>()
+                .HasMany(a => a.UserCourses)
+                .WithOne(b => b.User)
+                .HasForeignKey(p => p.UserId);
+            //Relationships of Notification
+            builder.Entity<Notification>()
+                .HasMany(a => a.NotificationUsers)
+                .WithOne(b => b.Notification)
+                .HasForeignKey(p => p.NotificationId);
+            //Relationships of NotificationType
+            builder.Entity<NotificationType>()
+                .HasMany(a => a.Notifications)
+                .WithOne(b => b.NotificationType)
+                .HasForeignKey(p => p.NotificationTypeId);
 
         }
     }
