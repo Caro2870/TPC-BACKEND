@@ -246,6 +246,7 @@ namespace TPC_UPC.Domain.Persistence.Contexts
                 .HasMany(a => a.MailMessages)
                 .WithOne(b => b.Coordinator)
                 .HasForeignKey(p => p.CoordinatorId);
+
             builder.Entity<Coordinator>()
                 .HasMany(a => a.Trainings)
                 .WithOne(b => b.Coordinator)
@@ -346,8 +347,8 @@ namespace TPC_UPC.Domain.Persistence.Contexts
                     );
             builder.Entity<Suggestion>().HasData
                     (
-                    new Suggestion { Id = 101, Message = "Increible clase" },
-                     new Suggestion { Id = 102, Message = "Buena clase" }
+                    new Suggestion { Id = 101, Message = "Increible clase", UserId=101 },
+                     new Suggestion { Id = 102, Message = "Buena clase", UserId=101 }
                     );
             builder.Entity<Faculty>().HasData
                     (
@@ -356,8 +357,8 @@ namespace TPC_UPC.Domain.Persistence.Contexts
                     );
             builder.Entity<MailMessage>().HasData
                     (
-                    new MailMessage { Id = 101, Message = "Bienvenidos 2021", DocumentLink = "bienve.pdf" },
-                     new MailMessage { Id = 102, Message = "Bienvenidos 2022", DocumentLink = "bienve.doc" }
+                    new MailMessage { Id = 101, Message = "Bienvenidos 2021", DocumentLink = "bienve.pdf", CoordinatorId=103 },
+                     new MailMessage { Id = 102, Message = "Bienvenidos 2022", DocumentLink = "bienve.doc", CoordinatorId =103 }
                     );
             builder.Entity<LessonType>().HasData
                 (
