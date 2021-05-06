@@ -301,6 +301,25 @@ namespace TPC_UPC.Domain.Persistence.Contexts
                .WithOne(b => b.Course)
                .HasForeignKey(p => p.CourseId);
 
+
+            /*
+            builder.Entity<University>().HasData
+                    (
+                    new University { Id = 101, UniversityName = "UPC" },
+                     new University { Id = 102, UniversityName = "UPN" }
+                    );
+            builder.Entity<Account>().HasData
+                    (
+                    new Account { Id = 101, AccountName = "notidea", Password = "123122" },
+                     new Account { Id = 102, AccountName = "notideax2", Password = "43242" }
+                    );
+            uilder.Entity<Suggestion>().HasData
+                    (
+                    new Suggestion { Id = 101, Message = "hola tengo sueño odio aqui" },
+                     new Suggestion { Id = 102, Message = "NoOoOoOoOo" }
+                    );
+            */
+
         }
     }
 }
