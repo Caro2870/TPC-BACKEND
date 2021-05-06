@@ -62,5 +62,12 @@ namespace TPC_UPC.Services
             return students;
         }
 
+        public async Task<IEnumerable<Student>> ListMissingStudentByLessonIdAsync(int lessonId)
+        {
+            var lessonStudents = await _lessonStudentRepository.ListMissingStudentByLessonIdAsync(lessonId);
+            var students = lessonStudents.Select(ls => ls.Student).ToList();
+            return students;
+        }
+
     }
 }
