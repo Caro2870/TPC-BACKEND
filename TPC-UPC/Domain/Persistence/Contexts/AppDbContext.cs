@@ -225,6 +225,30 @@ namespace TPC_UPC.Domain.Persistence.Contexts
                 .HasMany(a => a.TrainingTutors)
                 .WithOne(b => b.Training)
                 .HasForeignKey(p => p.TrainingId);
+            //Relationships of Student
+            builder.Entity<Student>()
+                .HasMany(a => a.LessonStudents)
+                .WithOne(b => b.Student)
+                .HasForeignKey(p => p.StudentId);
+            //Relationships of Tutor
+            builder.Entity<Tutor>()
+                .HasMany(a => a.TrainingTutors)
+                .WithOne(b => b.Tutor)
+                .HasForeignKey(p => p.TutorId);
+            builder.Entity<Tutor>()
+               .HasMany(a => a.Lessons)
+               .WithOne(b => b.Tutor)
+               .HasForeignKey(p => p.TutorId);
+            //Relationships of Carrer
+            builder.Entity<Carrer>()
+                .HasMany(a => a.Students)
+                .WithOne(b => b.Career)
+                .HasForeignKey(p => p.CareerId);
+            //Relationships of Schedule
+            builder.Entity<Schedule>()
+                .HasMany(a => a.Meetings)
+                .WithOne(b => b.Schedule)
+                .HasForeignKey(p => p.ScheduleId);
 
         }
     }
