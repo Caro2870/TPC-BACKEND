@@ -65,6 +65,8 @@ namespace TPC_UPC.Domain.Persistence.Contexts
              builder.Entity<User            >().ToTable("Users")              ;
              builder.Entity<UserCourse      >().ToTable("UserCourses")        ;
 
+
+
             //Constraints of Account
             builder.Entity<Account>().HasKey(p => p.Id);   //PK
             builder.Entity<Account>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();  //GeneraKey
@@ -179,6 +181,30 @@ namespace TPC_UPC.Domain.Persistence.Contexts
             //Constraints of UserCourse
             builder.Entity<UserCourse>().HasKey(p => p.CourseId);   //PK
             builder.Entity<UserCourse>().HasKey(p => p.UserId);  //GeneraKey
+
+
+
+            //Relationships of Lesson
+            builder.Entity<Lesson>()
+                .HasMany(a => a.LessonStudents)
+                .WithOne(b => b.Lesson)
+                .HasForeignKey(p => p.LessonId);
+            //Relationships of LessonType
+            builder.Entity<LessonType>()
+                .HasOne(a => a.Lesson)
+                .WithOne(b => b.LessonType)
+                .HasForeignKey<Lesson>(a => a.LessonTypeId);
+            //Relationships of Account
+            builder.Entity<Account>()
+                    .HasOne(a => a.User)
+                    .WithOne(b => b.Account)
+                    .HasForeignKey<User>(p => p.AccountId);
+            //Relationships of Training
+            builder.Entity<Training>()
+                .HasMany(a => a.TrainingTutors)
+                .WithOne(b => b.Training)
+                .HasForeignKey(p => p.TrainingId);
+
         }
     }
 }
