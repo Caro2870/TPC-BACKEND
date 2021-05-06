@@ -18,9 +18,9 @@ namespace TPC_UPC.Services
             this._userRepository = object1;
             this._unitOfWork = object2;
         }
-        Task<IEnumerable<User>> IUserService.ListAsync()
+        public async Task<IEnumerable<User>> ListAsync()
         {
-            throw new NotImplementedException();
+            return await _userRepository.ListAsync();
         }
 
         Task<IEnumerable<User>> IUserService.ListByAccountIdAsync(int accountId)
