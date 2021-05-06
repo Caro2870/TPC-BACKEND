@@ -91,11 +91,12 @@ namespace TPC_UPC
             //Apply endpoints naming convention
 
             services.AddRouting(options => options.LowercaseUrls = true);
-
+            services.AddAutoMapper(typeof(Startup));
 
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "TPC_UPC", Version = "v1" });
+                c.EnableAnnotations();
             });
         }
 
@@ -107,6 +108,7 @@ namespace TPC_UPC
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "TPC_UPC v1"));
+
             }
 
             app.UseHttpsRedirection();

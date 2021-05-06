@@ -25,8 +25,8 @@ namespace TPC_UPC.API.Extensions
                 foreach (var foreignKey in entity.GetForeignKeys())
                     foreignKey.SetConstraintName(foreignKey.GetConstraintName().ToSnakeCase());
 
-                foreach (var index in entity.GetIndexes())
-                    index.SetDatabaseName(index.GetDatabaseName().ToSnakeCase());
+                //foreach (var index in entity.GetIndexes())
+                //    index.SetDatabaseName(index.GetDatabaseName().ToSnakeCase());
                 
             }
         }

@@ -340,9 +340,9 @@ namespace TPC_UPC.Domain.Persistence.Contexts
                     );
             builder.Entity<Account>().HasData
                     (
-                    new Account { Id = 102, AccountName = "tutor01", Password = "123122" },
-                     new Account { Id = 101, AccountName = "student01", Password = "43242" },
-                     new Account { Id = 103, AccountName = "coordinator01", Password = "35353" }
+                    new Account { Id = 102, AccountName = "tutor01", Password = "123122", UniversityId=101 },
+                     new Account { Id = 101, AccountName = "student01", Password = "43242", UniversityId = 101 },
+                     new Account { Id = 103, AccountName = "coordinator01", Password = "35353", UniversityId = 101 }
                     );
             builder.Entity<Suggestion>().HasData
                     (
@@ -395,7 +395,6 @@ namespace TPC_UPC.Domain.Persistence.Contexts
                     new NotificationUser { NotificationId = 902, UserId = 101 },
                     new NotificationUser { NotificationId = 903, UserId = 102 }
                     );
-
         }
     }
 }
