@@ -12,6 +12,7 @@ using TPC_UPC.Resources;
 namespace TPC_UPC.Controllers
 {
     [ApiController]
+    [Produces("application/json")]
     [Route("api/users/{userId}/notifications")]
     public class NotificationUsersController : ControllerBase
     {
@@ -24,6 +25,7 @@ namespace TPC_UPC.Controllers
             _mapper = mapper;
         }
 
+        [HttpGet]
         public async Task<IEnumerable<NotificationUserResource>> GetAllNotificationsByUserIdAsync(int userId)
         {
             var notifications = await _notificationUserService.ListByUserIdAsync(userId);

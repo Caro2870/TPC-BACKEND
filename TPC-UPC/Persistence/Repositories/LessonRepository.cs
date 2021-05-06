@@ -45,6 +45,14 @@ using System.Threading.Tasks;
                  .ToListAsync();
         }
 
+        public async Task<IEnumerable<Lesson>> ListByCourseIdAsync(int courseId)
+        {
+            return await _context.Lessons
+                 .Where(ls => ls.LessonTypeId == 2)
+                 .Where(ls => ls.CourseId == courseId) 
+                 .ToListAsync();
+        }
+
         public void Remove(Lesson lesson)
  		{
  			_context.Lessons.Remove(lesson);

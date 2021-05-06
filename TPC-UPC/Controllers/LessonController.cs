@@ -26,6 +26,7 @@ namespace TPC_UPC.Controllers
             _mapper = mapper;
         }
 
+
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(LessonResource), 200)]
         [ProducesResponseType(typeof(BadRequestResult), 404)]

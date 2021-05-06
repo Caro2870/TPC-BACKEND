@@ -32,21 +32,21 @@ namespace TPC_UPC.Services
                 return new TutorResponse($"An error ocurred while saving {e.Message}");
             }
         }
-        public async Task<TutorResponse> GetByIdAsync(int tutorId) {
+        Task<TutorResponse> ITutorService.GetByIdAsync(int tutorId) {
             throw new NotImplementedException();
         }
-        public async Task<TutorResponse> UpdateAsync(int id, Tutor tutor) {
+        Task<TutorResponse> ITutorService.UpdateAsync(int id, Tutor tutor) {
             throw new NotImplementedException();
         }
-        public async Task<TutorResponse> DeleteAsync(int id) {
+        Task<TutorResponse> ITutorService.DeleteAsync(int id) {
             throw new NotImplementedException();
         }
 
         //ADDED
-        public async Task<IEnumerable<Tutor>> ListAsync() {
+        Task<IEnumerable<Tutor>> ITutorService.ListAsync() {
             throw new NotImplementedException();
         }
-        public async Task<IEnumerable<Tutor>> ListByCourseIdAsync(int courseId) {
+        Task<IEnumerable<Tutor>> ITutorService.ListByCourseIdAsync(int courseId) {
             throw new NotImplementedException();
         }
     }

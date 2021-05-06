@@ -13,6 +13,7 @@ using TPC_UPC.API.Extensions;
 namespace TPC_UPC.Controllers
 {
     [Route("/api/[controller]")]
+    //api/tutores/tutorid/lessons
     //el formato, devuelve en .json
     [Produces("application/json")]
     [ApiController]
@@ -56,5 +57,8 @@ namespace TPC_UPC.Controllers
             var tutorResource = _mapper.Map<Tutor, TutorResource>(result.Resource);
             return Ok(tutorResource);
         }
+        //[HttpGet]
+        //[Route("/{tutorId}/lessons")]
+
     }
 }

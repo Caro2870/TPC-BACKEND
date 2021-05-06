@@ -14,6 +14,9 @@ using System;
         void Remove(Lesson lesson);
         //new
         Task<IEnumerable<Lesson>> ListByTutorIdAsync(int tutorId);
+        Task<IEnumerable<Lesson>> ListByCourseIdAsync(int courseId);
+
         Task<IEnumerable<Lesson>> ListByLessonTypeIdAsync(int lessonTypeId);
+
     }
  }

@@ -51,8 +51,10 @@ namespace TPC_UPC.Services
         Task<IEnumerable<Student>> IStudentService.ListByCourseIdAsync(int courseId) {
             throw new NotImplementedException();
         }
-        Task<IEnumerable<Student>> IStudentService.ListByLessonIdAsync(int courseId) {
-            throw new NotImplementedException();
+        public async Task<IEnumerable<Student>> ListByLessonIdAsync(int lessonId) {
+            var lessonStudents = await _lessonStudentRepository.ListStudentsByLessonIdAsync(lessonId);
+            var students = lessonStudents.Select(ls => ls.Student).ToList();
+            return students;
         }
 
         public async Task<IEnumerable<Student>> ListAssistantsByLessonIdAsync(int lessonId)

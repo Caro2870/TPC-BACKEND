@@ -80,7 +80,7 @@ namespace TPC_UPC
             services.AddScoped<IMeetingService, MeetingService>();
             services.AddScoped<INotificationService, NotificationService>();
             //services.AddScoped<INotificationTypeService, NotificationTypeService>();
-            //services.AddScoped<INotificationUserService, NotificationUserService>();
+            services.AddScoped<INotificationUserService, NotificationUserService>();
             services.AddScoped<IScheduleService, ScheduleService>();
             services.AddScoped<IStudentService, StudentService>();
             //services.AddScoped<ISuggestionService, SuggestionService>();
@@ -88,7 +88,7 @@ namespace TPC_UPC
             services.AddScoped<ITutorService, TutorService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IUniversityService, UniversityService>();
-            //services.AddScoped<IUserCourseService, UserCourseService>();
+            services.AddScoped<IUserCourseService, UserCourseService>();
 
             //Apply endpoints naming convention
 

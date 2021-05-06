@@ -65,6 +65,11 @@ namespace TPC_UPC.Services
             return await _lessonRepository.ListByTutorIdAsync(tutorId);
         }
 
+        public async Task<IEnumerable<Lesson>> ListByCourseIdAsync(int courseId)
+        {
+            return await _lessonRepository.ListByCourseIdAsync(courseId);
+        }
+
         public async Task<LessonResponse> SaveAsync(Lesson lesson)
         {
             try

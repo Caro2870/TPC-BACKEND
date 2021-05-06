@@ -13,8 +13,10 @@ using TPC_UPC.Resources;
 
 namespace TPC_UPC.Controllers
 {
-    [ApiController]
+    
     [Route("/api/[controller]")]
+    [Produces("application/json")]
+    [ApiController]
     public class LessonTypeController : ControllerBase
     {
         private readonly ILessonTypeService _lessonTypeService;
@@ -60,8 +62,8 @@ namespace TPC_UPC.Controllers
 
             if (!result.Success)
                 return BadRequest(result.Message);
-            var meetingResource = _mapper.Map<LessonType, LessonTypeResource>(result.Resource);
-            return Ok(meetingResource);
+            var lessonTypeResource = _mapper.Map<LessonType, LessonTypeResource>(result.Resource);
+            return Ok(lessonTypeResource);
         }
     }
 }

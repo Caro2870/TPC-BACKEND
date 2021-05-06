@@ -19,15 +19,15 @@ namespace TPC_UPC.Services
             this._unitOfWork = object2;
         }
 
-        Task<IEnumerable<Career>> ListAsync() {
+        Task<IEnumerable<Career>> ICareerService.ListAsync() {
             throw new NotImplementedException();
         }
 
         //CRUD
-        Task<CarrerResponse> GetByIdAsync(int id) {
+        Task<CarrerResponse> ICareerService.GetByIdAsync(int id) {
             throw new NotImplementedException();
         }
-        Task<CarrerResponse> SaveAsync(Career career) {
+        public async Task<CarrerResponse> SaveAsync(Career career) {
             try
             {
                 await _careerRepository.AddAsync(career);
@@ -39,10 +39,10 @@ namespace TPC_UPC.Services
                 return new CarrerResponse($"An error ocurred while saving {e.Message}");
             }
         }
-        Task<CarrerResponse> UpdateASync(int id, Career career) {
+        Task<CarrerResponse> ICareerService.UpdateASync(int id, Career career) {
             throw new NotImplementedException();
         }
-        Task<CarrerResponse> DeleteAsync(int id) {
+        Task<CarrerResponse> ICareerService.DeleteAsync(int id) {
             throw new NotImplementedException();
         }
     }
