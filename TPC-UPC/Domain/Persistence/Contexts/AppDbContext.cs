@@ -129,6 +129,18 @@ namespace TPC_UPC.Domain.Persistence.Contexts
             builder.Entity<Notification>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();  //GeneraKey
             builder.Entity<Notification>().Property(p => p.Link).IsRequired().HasMaxLength(150);
             builder.Entity<Notification>().Property(p => p.SendDate).IsRequired();
+            //Constraints of NotificationType
+            builder.Entity<NotificationType>().HasKey(p => p.Id);   //PK
+            builder.Entity<NotificationType>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();  //GeneraKey
+            builder.Entity<NotificationType>().Property(p => p.Description).IsRequired().HasMaxLength(150);
+            //Constraints of NotificationUser
+            builder.Entity<NotificationUser>().HasKey(p => p.NotificationId);   //PK
+            builder.Entity<NotificationUser>().HasKey(p => p.UserId);   //PK
+            //Constraints of Schedule
+            builder.Entity<Schedule>().HasKey(p => p.Id);   //PK
+            builder.Entity<Schedule>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
+            builder.Entity<Schedule>().Property(p => p.StartDate).IsRequired();
+            builder.Entity<Schedule>().Property(p => p.EndDate).IsRequired();
         }
     }
 }
