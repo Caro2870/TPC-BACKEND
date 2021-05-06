@@ -14,6 +14,6 @@ using System;
         void Remove(NotificationUser notificationUser);
         
         //ADDED
-        Task<NotificationUser> FindByUserId(int id);
+        Task<NotificationUser> FindByUserId(int userId);
      }
  }

@@ -17,6 +17,6 @@ namespace TPC_UPC.Domain.Services
         Task<NotificationUserResponse> DeleteAsync(int id);
 
         //ADDED
-        Task<IEnumerable<NotificationUser>> ListByUserIdAsync(int id);
+        Task<IEnumerable<NotificationUser>> ListByUserIdAsync(int userId);
     }
 }

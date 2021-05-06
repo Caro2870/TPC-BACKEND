@@ -1,6 +1,7 @@
 using System;
  using System.Collections.Generic;
- using System.Threading.Tasks;
+using System.Linq;
+using System.Threading.Tasks;
  using Microsoft.EntityFrameworkCore;
  using TPC_UPC.Domain.Models;
  using TPC_UPC.Domain.Persistence.Contexts;
@@ -29,8 +30,22 @@ using System;
  		{
  			return await _context.Lessons.ToListAsync();
  		}
- 
- 		public void Remove(Lesson lesson)
+
+        public Task<IEnumerable<Course>> ListByLessonTypeIdAsync(int lessonTypeId)
+        {
+            return await _context.Lessons
+                .Where(ls => ls.LessonTypeId == lessonTypeId)
+                .ToListAsync();
+        }
+
+        public Task<IEnumerable<Course>> ListByTutorIdAsync(int tutorId)
+        {
+            return await _context.Lessons
+                 .Where(ls => ls.TutorId == tutorId)
+                 .ToListAsync();
+        }
+
+        public void Remove(Lesson lesson)
  		{
  			_context.Lessons.Remove(lesson);
  		}
