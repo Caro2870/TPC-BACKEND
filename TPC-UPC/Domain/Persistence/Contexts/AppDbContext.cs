@@ -116,6 +116,19 @@ namespace TPC_UPC.Domain.Persistence.Contexts
             builder.Entity<MailMessage>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();  //GeneraKey
             builder.Entity<MailMessage>().Property(p => p.Message).IsRequired().HasMaxLength(400);
             builder.Entity<MailMessage>().Property(p => p.DocumentLink).IsRequired().HasMaxLength(150);
+            //Constraints of Meeting
+            builder.Entity<Meeting>().HasKey(p => p.Id);   //PK
+            builder.Entity<Meeting>().HasKey(p => p.ScheduleId);   //PK
+            builder.Entity<Meeting>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();  //GeneraKey
+            builder.Entity<Meeting>().Property(p => p.Description).IsRequired().HasMaxLength(300);
+            builder.Entity<Meeting>().Property(p => p.MeetingLink).IsRequired().HasMaxLength(150);
+            builder.Entity<Meeting>().Property(p => p.ResourceLink).IsRequired().HasMaxLength(150);
+            //Constraints of Notification
+            builder.Entity<Notification>().HasKey(p => p.Id);   //PK
+            builder.Entity<Notification>().HasKey(p => p.NotificationTypeId);   //PK
+            builder.Entity<Notification>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();  //GeneraKey
+            builder.Entity<Notification>().Property(p => p.Link).IsRequired().HasMaxLength(150);
+            builder.Entity<Notification>().Property(p => p.SendDate).IsRequired();
         }
     }
 }
