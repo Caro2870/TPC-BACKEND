@@ -99,7 +99,6 @@ namespace TPC_UPC.Domain.Persistence.Contexts
             builder.Entity<Lesson>().HasKey(p => p.CourseId);   //PK
             builder.Entity<Lesson>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();  //GeneraKey
             builder.Entity<Lesson>().Property(p => p.Vacants).IsRequired();  //GeneraKey
-
             //Constraints of LessonStudent
             builder.Entity<LessonStudent>().HasKey(p => p.LessonId);   //PK
             builder.Entity<LessonStudent>().HasKey(p => p.StudentId);   //PK
@@ -108,6 +107,15 @@ namespace TPC_UPC.Domain.Persistence.Contexts
             builder.Entity<LessonStudent>().Property(p => p.Qualification).IsRequired();
             builder.Entity<LessonStudent>().Property(p => p.Complaint).IsRequired();
             builder.Entity<LessonStudent>().Property(p => p.Assistance).IsRequired();
+             //Constraints of LessonType
+            builder.Entity<LessonType>().HasKey(p => p.Id);   //PK
+            builder.Entity<LessonType>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();  //GeneraKey
+            builder.Entity<LessonType>().Property(p => p.Name).IsRequired().HasMaxLength(100);
+            //Constraints of MailMessage
+            builder.Entity<MailMessage>().HasKey(p => p.Id);   //PK
+            builder.Entity<MailMessage>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();  //GeneraKey
+            builder.Entity<MailMessage>().Property(p => p.Message).IsRequired().HasMaxLength(400);
+            builder.Entity<MailMessage>().Property(p => p.DocumentLink).IsRequired().HasMaxLength(150);
         }
     }
 }
