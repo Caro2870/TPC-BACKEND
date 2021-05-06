@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace TPC_UPC.Domain.Models
 {
-    public class Meeting
+    public abstract class Meeting
     {
         public int Id { get; set; }
 

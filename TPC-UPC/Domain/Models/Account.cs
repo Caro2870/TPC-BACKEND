@@ -12,7 +12,7 @@ namespace TPC_UPC.Domain.Models
         public string Password { get; set; }
 
         //uno-FK
-        public string UniversityId { get; set; }
+        public int UniversityId { get; set; }
         public University University { get; set; }
 
         //uno a
