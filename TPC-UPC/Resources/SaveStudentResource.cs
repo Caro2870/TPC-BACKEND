@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace TPC_UPC.Resources
 {
-    public class SaveStudentResource
+    public class SaveStudentResource : SaveUserResource
     {
         public int CycleNumber { get; set; }
         public int ResourceId { get; set; } //duda
