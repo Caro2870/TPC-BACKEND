@@ -95,7 +95,8 @@ namespace TPC_UPC.Domain.Persistence.Contexts
             builder.Entity<Faculty>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();  //GeneraKey
             builder.Entity<Faculty>().Property(p => p.Name).IsRequired().HasMaxLength(80);
             builder.Entity<Faculty>().Property(p => p.Description).IsRequired().HasMaxLength(400);
-            
+
+
             //Constraints of Lesson
 
             builder.Entity<Lesson>().Property(p => p.Vacants).IsRequired();  //GeneraKey
