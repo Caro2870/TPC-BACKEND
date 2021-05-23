@@ -10,7 +10,11 @@ using System;
  Task<IEnumerable<Faculty>> ListAsync();
  Task AddAsync(Faculty faculty);
  Task<Faculty> FindById(int id);
+ Task<Faculty> FindByIdAndUniversityId(int universityId, int id);
  void Update(Faculty faculty);
  void Remove(Faculty faculty);
- }
- }
+        
+ Task<IEnumerable<Faculty>> ListByUniversityIdAsync(int universityId);
+
+    }
+}

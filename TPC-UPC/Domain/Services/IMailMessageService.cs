@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TPC_UPC.Domain.Models;
+using TPC_UPC.Domain.Services.Communications;
 using TPC_UPC.Resources;
 
 namespace TPC_UPC.Domain.Services
@@ -14,9 +15,9 @@ namespace TPC_UPC.Domain.Services
 
 
         //CRUD
-        Task<MailMessageResource> GetByIdAsync(int id);
-        Task<MailMessageResource> SaveAsync(MailMessage mailMessage);
-        Task<MailMessageResource> UpdateASync(int id, MailMessage mailMessage);
-        Task<MailMessageResource> DeleteAsync(int id);
+        Task<MailMessageResponse> GetByIdAsync(int id);
+        Task<MailMessageResponse> SaveAsync(MailMessage mailMessage);
+        Task<MailMessageResponse> UpdateASync(int id, MailMessage mailMessage);
+        Task<MailMessageResponse> DeleteAsync(int id);
     }
 }

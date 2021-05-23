@@ -22,13 +22,18 @@ namespace TPC_UPC.Services
         public async  Task<IEnumerable<Faculty>> ListAsync() {
             return await _facultyRepository.ListAsync();
         }
-        Task<IEnumerable<Faculty>> IFacultyService.ListByCoordinatorIdAsync(int coordinatorId) {
-            throw new NotImplementedException();
+        public async Task<IEnumerable<Faculty>> ListByUniversityIdAsync(int universityId) {
+            return await _facultyRepository.ListByUniversityIdAsync(universityId);
         }
 
         //Crud
-        Task<FacultyResponse> IFacultyService.GetByIdAsync(int id) {
-            throw new NotImplementedException();
+        public async Task<FacultyResponse> GetByIdAsync(int id) {
+            var existingFaculty = await _facultyRepository.FindById(id);
+
+            if (existingFaculty == null)
+                return new FacultyResponse("Faculty not found");
+
+            return new FacultyResponse(existingFaculty);
         }
         public async Task<FacultyResponse> SaveAsync(Faculty faculty) {
             try
@@ -42,11 +47,44 @@ namespace TPC_UPC.Services
                 return new FacultyResponse($"An error ocurred while saving {e.Message}");
             }
         }
-        Task<FacultyResponse> IFacultyService.UpdateASync(int id, Faculty faculty) {
-            throw new NotImplementedException();
+        public async Task<FacultyResponse> UpdateASync(int id, Faculty faculty) {
+            var existingFaculty = await _facultyRepository.FindById(id);
+
+            if (existingFaculty == null)
+                return new FacultyResponse("Faculty not found");
+
+            existingFaculty.Name = faculty.Name;
+
+            try
+            {
+                _facultyRepository.Update(faculty);
+                await _unitOfWork.CompleteAsync();
+
+                return new FacultyResponse(faculty);
+            }
+            catch (Exception ex)
+            {
+                return new FacultyResponse($"An error ocurred while updating faculty: {ex.Message}");
+            }
         }
-        Task<FacultyResponse> IFacultyService.DeleteAsync(int id) {
-            throw new NotImplementedException();
+        public async Task<FacultyResponse> DeleteAsync(int id) {
+            var existingFaculty = await _facultyRepository.FindById(id);
+
+            if (existingFaculty == null)
+                return new FacultyResponse("Faculty not found");
+
+            try
+            {
+                _facultyRepository.Remove(existingFaculty);
+                await _unitOfWork.CompleteAsync();
+
+                return new FacultyResponse(existingFaculty);
+
+            }
+            catch (Exception ex)
+            {
+                return new FacultyResponse($"An error ocurred while deleting faculty: {ex.Message}");
+            }
         }
     }
 }
