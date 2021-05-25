@@ -90,6 +90,7 @@ namespace TPC_UPC.Domain.Persistence.Contexts
             builder.Entity<Course>().HasKey(p => p.Id);   //PK
             builder.Entity<Course>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();  //GeneraKey
             builder.Entity<Course>().Property(p => p.Name).IsRequired().HasMaxLength(50);   //PK
+            builder.Entity<Course>().Property(p => p.Credits).IsRequired();
             //Constraints of Faculty
             builder.Entity<Faculty>().HasKey(p => p.Id);   //PK
             builder.Entity<Faculty>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();  //GeneraKey
@@ -383,7 +384,7 @@ namespace TPC_UPC.Domain.Persistence.Contexts
                 );
             builder.Entity<Course>().HasData
                 (
-                new Course { Id = 1, Name = "Programacion 1" }
+                new Course { Id = 1, Name = "Programacion 1", Credits=6 }
                 );
             builder.Entity<NotificationType>().HasData
                    (

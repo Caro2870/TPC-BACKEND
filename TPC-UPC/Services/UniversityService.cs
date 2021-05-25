@@ -25,9 +25,13 @@ namespace TPC_UPC.Services
             throw new NotImplementedException();
         }
 
-        public Task<UniversityResponse> GetByIdAsync(int id)
+        public async Task<UniversityResponse> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var existingUniversity = await _universityRepository.FindById(id);
+
+            if (existingUniversity == null)
+                return new UniversityResponse("University not found");
+            return new UniversityResponse(existingUniversity);
         }
 
         public async Task<IEnumerable<University>> ListAsync()

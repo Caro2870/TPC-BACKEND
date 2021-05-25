@@ -13,15 +13,11 @@ namespace TPC_UPC.Services
     public class CourseService : ICourseService
     {
         private readonly ICourseRepository _courseRepository;
-        private readonly ILessonRepository _lessonRepository;//new
-        private readonly ILessonStudentRepository _lessonStudentRepository;//new
         private readonly IUnitOfWork _unitOfWork;
 
-        public CourseService(ICourseRepository courseRepository, ILessonRepository lessonRepository, ILessonStudentRepository lessonStudentRepository, IUnitOfWork unitOfWork)
+        public CourseService(ICourseRepository courseRepository, IUnitOfWork unitOfWork)
         {
             _courseRepository = courseRepository;
-            _lessonRepository = lessonRepository;
-            _lessonStudentRepository = lessonStudentRepository;
             _unitOfWork = unitOfWork;
         }
 
@@ -57,18 +53,6 @@ namespace TPC_UPC.Services
         public async Task<IEnumerable<Course>> ListAsync()
         {
             return await _courseRepository.ListAsync();
-        }
-
-        Task<IEnumerable<Course>> ICourseService.ListByStudentIdAsync(int studentId)
-        {
-            //return await _lessonStudentRepository.ListByStudentIdAsync(studentId);
-            throw new NotImplementedException();
-        }
-
-        Task<IEnumerable<Course>> ICourseService.ListByTutorIdAsync(int tutorId)
-        {
-            //return await _lessonRepository.ListByTutorIdAsync(tutorId);
-            throw new NotImplementedException();
         }
 
         public async Task<CourseResponse> SaveAsync(Course course)
