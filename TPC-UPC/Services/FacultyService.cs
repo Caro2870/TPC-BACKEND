@@ -13,10 +13,12 @@ namespace TPC_UPC.Services
     {
         private readonly IFacultyRepository _facultyRepository;
         private IUnitOfWork _unitOfWork;
-        public FacultyService(IFacultyRepository object1, IUnitOfWork object2)
+        private IUniversityRepository _universityRepository;
+        public FacultyService(IFacultyRepository object1, IUniversityRepository universityRepository, IUnitOfWork object2)
         {
             this._facultyRepository = object1;
             this._unitOfWork = object2;
+            this._universityRepository = universityRepository;
         }
 
         public async  Task<IEnumerable<Faculty>> ListAsync() {
@@ -35,16 +37,24 @@ namespace TPC_UPC.Services
 
             return new FacultyResponse(existingFaculty);
         }
-        public async Task<FacultyResponse> SaveAsync(Faculty faculty) {
-            try
+        public async Task<FacultyResponse> SaveAsync(Faculty faculty, int universityId) {
+            if (_universityRepository.FindById(universityId) != null)
             {
-                await _facultyRepository.AddAsync(faculty);
-                await _unitOfWork.CompleteAsync();
-                return new FacultyResponse(faculty);
+                try
+                {
+                    faculty.UniversityId = universityId;
+                    await _facultyRepository.AddAsync(faculty);
+                    await _unitOfWork.CompleteAsync();
+                    return new FacultyResponse(faculty);
+                }
+                catch (Exception e)
+                {
+                    return new FacultyResponse($"An error ocurred while saving {e.Message}");
+                }
             }
-            catch (Exception e)
+            else
             {
-                return new FacultyResponse($"An error ocurred while saving {e.Message}");
+                return new FacultyResponse($"An error ocurred, the university with id {universityId} doesn't exist");
             }
         }
         public async Task<FacultyResponse> UpdateASync(int id, Faculty faculty) {

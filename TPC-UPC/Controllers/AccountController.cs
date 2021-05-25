@@ -49,7 +49,7 @@ namespace TPC_UPC.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState.GetErrorMessages());
             var account = _mapper.Map<SaveAccountResource, Account>(resource);
-            var result = await _accountService.SaveAsync(account);
+            var result = await _accountService.SaveAsync(account, 101); //aniadir universityId aqui
 
             if (!result.Success)
                 return BadRequest(result.Message);

@@ -14,8 +14,11 @@ namespace TPC_UPC.Services
     {
         private readonly IAccountRepository _accountRepository;
         private IUnitOfWork _unitOfWork;
-        public AccountService(IAccountRepository object1, IUnitOfWork object2)
+        private IUniversityRepository _universityRepository;
+
+        public AccountService(IAccountRepository object1, IUniversityRepository universityRepository, IUnitOfWork object2)
         {
+            this._universityRepository = universityRepository;
             this._accountRepository = object1;
             this._unitOfWork = object2;
         }
@@ -59,19 +62,28 @@ namespace TPC_UPC.Services
             return await _accountRepository.ListByUniversityIdAsync(universityId);
         }
 
-        public async Task<AccountResponse> SaveAsync(Account account)
+        public async Task<AccountResponse> SaveAsync(Account account, int universityId)
         {
-            try
+            if (_universityRepository.FindById(universityId) != null)
             {
-                await _accountRepository.AddAsync(account);
-                await _unitOfWork.CompleteAsync();
+                try
+                {
+                    account.UniversityId = universityId;
+                    await _accountRepository.AddAsync(account);
+                    await _unitOfWork.CompleteAsync();
 
-                return new AccountResponse(account);
+                    return new AccountResponse(account);
+                }
+                catch (Exception ex)
+                {
+                    return new AccountResponse($"An error ocurred while saving the account: {ex.Message}");
+                }
             }
-            catch (Exception ex)
+            else
             {
-                return new AccountResponse($"An error ocurred while saving the account: {ex.Message}");
+                return new AccountResponse($"The UNIVERSITY with id {universityId}, doesn't exist");
             }
+
         }
 
         public async Task<AccountResponse> UpdateASync(int id, Account account)

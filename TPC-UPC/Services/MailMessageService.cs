@@ -14,9 +14,11 @@ namespace TPC_UPC.Services
     {
         public readonly IMailMessageRepository _mailMessageRepository;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly ICoordinatorRepository _coordinatorRepository;
 
-        public MailMessageService(IMailMessageRepository mailMessageRepository, IUnitOfWork unitOfWork)
+        public MailMessageService(IMailMessageRepository mailMessageRepository, ICoordinatorRepository coordinatorRepository, IUnitOfWork unitOfWork)
         {
+            _coordinatorRepository = coordinatorRepository;
             _mailMessageRepository = mailMessageRepository;
             _unitOfWork = unitOfWork;
         }
@@ -62,17 +64,25 @@ namespace TPC_UPC.Services
             return await _mailMessageRepository.ListByCoordinatorIdAsync(coordinatorId);
         }
 
-        public async Task<MailMessageResponse> SaveAsync(MailMessage mailMessage)
+        public async Task<MailMessageResponse> SaveAsync(MailMessage mailMessage, int coordinatorId)
         {
-            try
+            if (_coordinatorRepository.FindById(coordinatorId) != null)
             {
-                await _mailMessageRepository.AddAsync(mailMessage);
-                await _unitOfWork.CompleteAsync();
-                return new MailMessageResponse(mailMessage);
+                try
+                {
+                    mailMessage.CoordinatorId = coordinatorId;
+                    await _mailMessageRepository.AddAsync(mailMessage);
+                    await _unitOfWork.CompleteAsync();
+                    return new MailMessageResponse(mailMessage);
+                }
+                catch (Exception e)
+                {
+                    return new MailMessageResponse($"An error ocurred while saving {e.Message}");
+                }
             }
-            catch (Exception e)
+            else
             {
-                return new MailMessageResponse($"An error ocurred while saving {e.Message}");
+                return new MailMessageResponse($"An error ocurred, the coordinator with id {coordinatorId} doesn't exist");
             }
         }
 

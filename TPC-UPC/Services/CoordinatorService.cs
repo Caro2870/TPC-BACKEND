@@ -13,8 +13,13 @@ namespace TPC_UPC.Services
     {
         private readonly ICoordinatorRepository _coordinatorRepository;
         private IUnitOfWork _unitOfWork;
-        public CoordinatorService(ICoordinatorRepository object1, IUnitOfWork object2)
+        private IFacultyRepository _facultyRepository;
+        private readonly IAccountRepository _accountRepository;
+        public CoordinatorService(ICoordinatorRepository object1, IAccountRepository accountRepository,
+            IFacultyRepository facultyRepository, IUnitOfWork object2)
         {
+            this._accountRepository = accountRepository;
+            this._facultyRepository = facultyRepository;
             this._coordinatorRepository = object1;
             this._unitOfWork = object2;
         }
@@ -36,16 +41,31 @@ namespace TPC_UPC.Services
             return new CoordinatorResponse(existingCoordinator);
         }
         public async Task<CoordinatorResponse> SaveAsync(Coordinator coordinator) {
-            try
+            if (_accountRepository.FindById(coordinator.AccountId) != null)
             {
-                await _coordinatorRepository.AddAsync(coordinator);
-                await _unitOfWork.CompleteAsync();
-                return new CoordinatorResponse(coordinator);
+                if (_facultyRepository.FindById(coordinator.FacultyId) != null)
+                {
+                    try
+                    {
+                        await _coordinatorRepository.AddAsync(coordinator);
+                        await _unitOfWork.CompleteAsync();
+                        return new CoordinatorResponse(coordinator);
+                    }
+                    catch (Exception e)
+                    {
+                        return new CoordinatorResponse($"An error ocurred while saving {e.Message}");
+                    }
+                }
+                else
+                {
+                    return new CoordinatorResponse($"An error ocurred, the faculty with id {coordinator.FacultyId} doesn't exist");
+                }
             }
-            catch (Exception e)
+            else
             {
-                return new CoordinatorResponse($"An error ocurred while saving {e.Message}");
+                return new CoordinatorResponse($"An error ocurred, the account with id {coordinator.AccountId} doesn't exist");
             }
+
         }
         public async Task<CoordinatorResponse> UpdateASync(int id, Coordinator coordinator) {
             var existingCoordinator = await _coordinatorRepository.FindById(id);

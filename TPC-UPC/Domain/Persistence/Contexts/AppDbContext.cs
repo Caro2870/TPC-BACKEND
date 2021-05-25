@@ -239,6 +239,11 @@ namespace TPC_UPC.Domain.Persistence.Contexts
 
             //Relationships of Faculty
             builder.Entity<Faculty>()
+                .HasMany(a => a.Tutors)
+                .WithOne(b => b.Faculty)
+                .HasForeignKey(p => p.FacultyId);
+
+            builder.Entity<Faculty>()
                 .HasMany(a => a.Coordinators)
                 .WithOne(b => b.Faculty)
                 .HasForeignKey(p => p.FacultyId);
@@ -246,7 +251,8 @@ namespace TPC_UPC.Domain.Persistence.Contexts
             builder.Entity<Coordinator>()
                 .HasMany(a => a.MailMessages)
                 .WithOne(b => b.Coordinator)
-                .HasForeignKey(p => p.CoordinatorId);
+                .HasForeignKey(p => p.CoordinatorId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<Coordinator>()
                 .HasMany(a => a.Trainings)
@@ -290,6 +296,19 @@ namespace TPC_UPC.Domain.Persistence.Contexts
                .WithOne(b => b.Course)
                .HasForeignKey(p => p.CourseId);
 
+            builder.Entity<University>().HasData
+                    (
+                        new University { Id = 101, UniversityName = "UPC" },
+                        new University { Id = 102, UniversityName = "UPN" }
+                    );
+
+            builder.Entity<Account>().HasData
+                    (
+                    new Account { Id = 102, AccountName = "tutor01", Password = "123122", UniversityId = 101 },
+                     new Account { Id = 101, AccountName = "student01", Password = "43242", UniversityId = 101 },
+                     new Account { Id = 103, AccountName = "coordinator01", Password = "35353", UniversityId = 101 }
+                    );
+
             builder.Entity<Student>().HasData
                 (
                 new Student
@@ -314,7 +333,7 @@ namespace TPC_UPC.Domain.Persistence.Contexts
                     Mail = "jose@gmail.com",
                     PhoneNumber = "66588965",
                     AccountId = 102,
-                    FacultiesId = 1
+                    FacultyId = 1
                 }
                 ) ;
             builder.Entity<Coordinator>().HasData
@@ -335,17 +354,7 @@ namespace TPC_UPC.Domain.Persistence.Contexts
                     new Career { Id =1, CareerName="Ingenieria de Software"}
                 );
 
-            builder.Entity<University>().HasData
-                    (
-                    new University { Id = 101, UniversityName = "UPC" },
-                     new University { Id = 102, UniversityName = "UPN" }
-                    );
-            builder.Entity<Account>().HasData
-                    (
-                    new Account { Id = 102, AccountName = "tutor01", Password = "123122", UniversityId=101 },
-                     new Account { Id = 101, AccountName = "student01", Password = "43242", UniversityId = 101 },
-                     new Account { Id = 103, AccountName = "coordinator01", Password = "35353", UniversityId = 101 }
-                    );
+
             builder.Entity<Suggestion>().HasData
                     (
                     new Suggestion { Id = 101, Message = "Increible clase", UserId=101 },
@@ -353,8 +362,8 @@ namespace TPC_UPC.Domain.Persistence.Contexts
                     );
             builder.Entity<Faculty>().HasData
                     (
-                    new Faculty { Id = 1, Name = "Letras", Description = "departamento de letras" },
-                     new Faculty { Id = 2, Name = "Ciencia", Description = "departamento de ciencias" }
+                    new Faculty { Id = 1, Name = "Letras", Description = "departamento de letras", UniversityId=101 },
+                     new Faculty { Id = 2, Name = "Ciencia", Description = "departamento de ciencias", UniversityId=101 }
                     );
             builder.Entity<MailMessage>().HasData
                     (

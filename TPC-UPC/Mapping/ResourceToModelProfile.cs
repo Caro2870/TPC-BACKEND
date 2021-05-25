@@ -20,7 +20,7 @@ namespace TPC_UPC.Mapping
             CreateMap<SaveSuggestionResource, Suggestion>();
             CreateMap<SaveUserCourseResource, UserCourse>();
             CreateMap<SaveCourseResource, Course>();
-            CreateMap<SaceCoordinatorResource, CoordinatorResource>();
+            CreateMap<SaceCoordinatorResource, Coordinator>();
             CreateMap<SaveMailMessageResource, MailMessage>();
             CreateMap<SaveStudentResource, Student>();
             CreateMap<SaveFacultyResource, Faculty>();

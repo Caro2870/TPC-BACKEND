@@ -16,7 +16,7 @@ namespace TPC_UPC.Domain.Services
 
         //CRUD
         Task<MailMessageResponse> GetByIdAsync(int id);
-        Task<MailMessageResponse> SaveAsync(MailMessage mailMessage);
+        Task<MailMessageResponse> SaveAsync(MailMessage mailMessage, int coordinatorId);
         Task<MailMessageResponse> UpdateASync(int id, MailMessage mailMessage);
         Task<MailMessageResponse> DeleteAsync(int id);
     }

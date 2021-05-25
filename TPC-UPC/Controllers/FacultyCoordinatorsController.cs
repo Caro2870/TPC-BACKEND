@@ -13,7 +13,7 @@ using TPC_UPC.API.Extensions;
 namespace TPC_UPC.Controllers
 {
     [ApiController]
-    [Route("/api/universities/{universityId}/faculties/{facultyId}/coordinators")]
+    [Route("/api/faculties/{facultyId}/coordinators")]
     public class FacultyCoordinatorsController : ControllerBase
     {
          private readonly ICoordinatorService _coordinatorService;

@@ -12,7 +12,7 @@ using TPC_UPC.API.Extensions;
 
 namespace TPC_UPC.Controllers
 {
-    [Route("/api/universities/{universityId}/[controller]")]
+    [Route("/api/[controller]")]
     //el formato, devuelve en .json
     [Produces("application/json")]
     [ApiController]
@@ -61,17 +61,17 @@ namespace TPC_UPC.Controllers
         [HttpPost]
         [ProducesResponseType(typeof(FacultyResource), 200)]
         [ProducesResponseType(typeof(BadRequestResult), 404)]
-        public async Task<IActionResult> PostAsync([FromBody] SaveFacultyResource resource)
+        public async Task<IActionResult> PostAsync([FromBody] SaveFacultyResource resource, int universityId )
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState.GetErrorMessages());
-            var Faculty = _mapper.Map<SaveFacultyResource, Faculty>(resource);
-            var result = await _facultyService.SaveAsync(Faculty);
+            var faculty = _mapper.Map<SaveFacultyResource, Faculty>(resource);
+            var result = await _facultyService.SaveAsync(faculty, universityId);
 
             if (!result.Success)
                 return BadRequest(result.Message);
-            var FacultyResource = _mapper.Map<Faculty, FacultyResource>(result.Resource);
-            return Ok(FacultyResource);
+            var facultyResource = _mapper.Map<Faculty, FacultyResource>(result.Resource);
+            return Ok(facultyResource);
         }
 
         [HttpPut("{id}")]

@@ -12,7 +12,7 @@ using TPC_UPC.API.Extensions;
 
 namespace TPC_UPC.Controllers
 {
-    [Route("/api/universities/{universityId}/[controller]")]
+    [Route("/api/[controller]")]
     //el formato, devuelve en .json
     [Produces("application/json")]
     [ApiController]

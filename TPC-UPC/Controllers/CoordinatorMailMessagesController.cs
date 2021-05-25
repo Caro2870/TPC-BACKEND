@@ -14,7 +14,7 @@ namespace TPC_UPC.Controllers
 {
     [ApiController]
     [Produces("application/json")]
-    [Route("/api/universities/{universityId}/coordinators/{coordinatorId}/mailMessages")]
+    [Route("/api/coordinators/{coordinatorId}/mailMessages")]
     public class CoordinatorMailMessagesController : ControllerBase
     {
         private readonly IMailMessageService _mailMessageService;
@@ -45,13 +45,13 @@ namespace TPC_UPC.Controllers
         [HttpPost]
         [ProducesResponseType(typeof(MailMessageResource), 200)]
         [ProducesResponseType(typeof(BadRequestResult), 404)]
-        public async Task<IActionResult> PostAsync([FromBody] SaveMailMessageResource resource)
+        public async Task<IActionResult> PostAsync([FromBody] SaveMailMessageResource resource, int coordinatorId)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState.GetErrorMessages());
 
             var mailMessage = _mapper.Map<SaveMailMessageResource, MailMessage>(resource);
-            var result = await _mailMessageService.SaveAsync(mailMessage);
+            var result = await _mailMessageService.SaveAsync(mailMessage, coordinatorId);
 
             if (!result.Success)
                 return BadRequest(result.Message);
