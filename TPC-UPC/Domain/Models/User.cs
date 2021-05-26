@@ -5,14 +5,13 @@ using System.Threading.Tasks;
 
 namespace TPC_UPC.Domain.Models
 {
-    public abstract class User
+    public class User
     {
         public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Mail { get; set; }
         public string PhoneNumber { get; set; }
-
 
         //un user tiene un account //FK
         public int AccountId { get; set; }

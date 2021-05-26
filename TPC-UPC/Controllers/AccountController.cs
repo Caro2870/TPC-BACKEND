@@ -66,7 +66,7 @@ namespace TPC_UPC.Controllers
                 return BadRequest(ModelState.GetErrorMessages());
 
             var account = _mapper.Map<SaveAccountResource, Account>(resource);
-            var result = await _accountService.UpdateASync(id, account);
+            var result = await _accountService.UpdateAsync(id, account);
 
             if (!result.Success)
                 return BadRequest(result.Message);

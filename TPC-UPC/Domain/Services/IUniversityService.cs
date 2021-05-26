@@ -16,7 +16,7 @@ namespace TPC_UPC.Domain.Services
         //CRUD
         Task<UniversityResponse> GetByIdAsync(int id);
         Task<UniversityResponse> SaveAsync(University university);
-        Task<UniversityResponse> UpdateASync(int id, University university);
+        Task<UniversityResponse> UpdateAsync(int id, University university);
         Task<UniversityResponse> DeleteAsync(int id);
 
     }

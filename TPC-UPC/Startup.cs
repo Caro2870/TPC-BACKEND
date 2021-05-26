@@ -78,7 +78,7 @@ namespace TPC_UPC
             services.AddScoped<IMailMessageRepository, MailMessageRepository>();
             services.AddScoped<IMeetingService, MeetingService>();
             services.AddScoped<INotificationService, NotificationService>();
-            //services.AddScoped<INotificationTypeService, NotificationTypeService>();
+            services.AddScoped<INotificationTypeService, NotificationTypeService>();
             services.AddScoped<INotificationUserService, NotificationUserService>();
             services.AddScoped<IStudentService, StudentService>();
             //services.AddScoped<ISuggestionService, SuggestionService>();
