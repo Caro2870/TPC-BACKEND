@@ -20,33 +20,15 @@ namespace TPC_UPC.Controllers
         private readonly INotificationService _notificationService;
         private readonly IMapper _mapper;
 
-        public NotificationsController(INotificationService notificationService, IMapper mapper)
+        private readonly INotificationTypeService _notificationTypeService;
+
+        public NotificationsController(INotificationService notificationService, IMapper mapper, INotificationTypeService notificationTypeService)
         {
             _notificationService = notificationService;
             _mapper = mapper;
+            _notificationTypeService = notificationTypeService;
         }
 
-        [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<NotificationResource>), 200)]
-        public async Task<IEnumerable<NotificationResource>> GetAllAsync()
-        {
-            var notifications = await _notificationService.ListAsync();
-            var resources = _mapper
-                .Map<IEnumerable<Notification>, IEnumerable<NotificationResource>>(notifications);
-            return resources;
-        }
-
-        [HttpGet("{id}")]
-        [ProducesResponseType(typeof(NotificationResource), 200)]
-        [ProducesResponseType(typeof(BadRequestResult), 404)]
-        public async Task<IActionResult> GetAsync(int id)
-        {
-            var result = await _notificationService.GetByIdAsync(id);
-            if (!result.Success)
-                return BadRequest(result.Message);
-            var notificationResource = _mapper.Map<Notification, NotificationResource>(result.Resource);
-            return Ok(notificationResource);
-        }
 
         [HttpPost]
         [ProducesResponseType(typeof(NotificationResource), 200)]
@@ -64,6 +46,60 @@ namespace TPC_UPC.Controllers
 
             var notificationResource = _mapper.Map<Notification, NotificationResource>(result.Resource);
             return Ok(notificationResource);
+        }
+
+        [HttpPut("{notificationId}")]
+        [ProducesResponseType(typeof(NotificationResource), 200)]
+        [ProducesResponseType(typeof(BadRequestResult), 404)]
+        public async Task<IActionResult> PutAsync(int notificationId, [FromBody] SaveNotificationResource resource)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState.GetErrorMessages());
+
+            var notification = _mapper.Map<SaveNotificationResource, Notification>(resource);
+            var result = await _notificationService.UpdateAsync(notificationId,notification);
+
+            if (!result.Success)
+                return BadRequest(result.Message);
+
+            var notificationResource = _mapper.Map<Notification, NotificationResource>(result.Resource);
+            return Ok(notificationResource);
+        }
+
+
+        [HttpGet("{notificationId}")]
+        [ProducesResponseType(typeof(NotificationResource), 200)]
+        [ProducesResponseType(typeof(BadRequestResult), 404)]
+        public async Task<IActionResult> GetAsync(int notificationId)
+        {
+            var result = await _notificationService.GetByIdAsync(notificationId);
+            if (!result.Success)
+                return BadRequest(result.Message);
+            var notificationResource = _mapper.Map<Notification, NotificationResource>(result.Resource);
+
+            return Ok(notificationResource);
+        }
+
+        [HttpDelete("{notificationId}")]
+        [ProducesResponseType(typeof(NotificationResource), 200)]
+        [ProducesResponseType(typeof(BadRequestResult), 404)]
+        public async Task<IActionResult> DeleteAsync(int notificationId)
+        {
+            var result = await _notificationService.DeleteAsync(notificationId);
+            if (!result.Success)
+                return BadRequest(result.Message);
+            var notificationResource = _mapper.Map<Notification, NotificationResource>(result.Resource);
+            return Ok(notificationResource);
+        }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(IEnumerable<NotificationResource>), 200)]
+        public async Task<IEnumerable<NotificationResource>> GetAllAsync()
+        {
+            var notifications = await _notificationService.ListAsync();
+            var resources = _mapper
+                .Map<IEnumerable<Notification>, IEnumerable<NotificationResource>>(notifications);
+            return resources;
         }
     }
 }
