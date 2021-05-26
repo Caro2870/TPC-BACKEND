@@ -25,11 +25,9 @@ using System.Threading.Tasks;
  		{
  			return await _context.Accounts.FindAsync(id);
  		}
- 
- 		public async Task<IEnumerable<Account>> ListAsync()
- 		{
- 			return await _context.Accounts.ToListAsync();
- 		}
+
+        public async Task<IEnumerable<Account>> ListAsync() =>
+                    await _context.Accounts.Include(p => p.University).ToListAsync();
 
         public async Task<IEnumerable<Account>> ListByUniversityIdAsync(int universityId) =>
         

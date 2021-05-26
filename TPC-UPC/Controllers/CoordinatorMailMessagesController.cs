@@ -63,13 +63,13 @@ namespace TPC_UPC.Controllers
         [HttpPut("{id}")]
         [ProducesResponseType(typeof(MailMessageResource), 200)]
         [ProducesResponseType(typeof(BadRequestResult), 404)]
-        public async Task<IActionResult> PutAsync(int id, [FromBody] SaveMailMessageResource resource)
+        public async Task<IActionResult> PutAsync(int id, int coordinatorId,[FromBody] SaveMailMessageResource resource)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState.GetErrorMessages());
 
             var mailMessage = _mapper.Map<SaveMailMessageResource, MailMessage>(resource);
-            var result = await _mailMessageService.UpdateASync(id, mailMessage);
+            var result = await _mailMessageService.UpdateASync(id, coordinatorId, mailMessage);
 
             if (!result.Success)
                 return BadRequest(result.Message);
@@ -81,9 +81,9 @@ namespace TPC_UPC.Controllers
         [HttpDelete("{id}")]
         [ProducesResponseType(typeof(MailMessageResource), 200)]
         [ProducesResponseType(typeof(BadRequestResult), 404)]
-        public async Task<IActionResult> DeleteAsync(int id)
+        public async Task<IActionResult> DeleteAsync(int id, int coordinatorId)
         {
-            var result = await _mailMessageService.DeleteAsync(id);
+            var result = await _mailMessageService.DeleteAsync(id, coordinatorId);
 
             if (!result.Success)
                 return BadRequest(result.Message);

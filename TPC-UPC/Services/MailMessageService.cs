@@ -23,12 +23,17 @@ namespace TPC_UPC.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<MailMessageResponse> DeleteAsync(int id)
+        public async Task<MailMessageResponse> DeleteAsync(int id, int coordinatorId)
         {
             var existingMailMessage = await _mailMessageRepository.FindById(id);
 
             if (existingMailMessage == null)
                 return new MailMessageResponse("Mail message not found");
+
+            if (existingMailMessage.CoordinatorId != coordinatorId)
+            {
+                return new MailMessageResponse("Este mensaje no pertenece al coordinador dado");
+            }
 
             try
             {
@@ -40,7 +45,7 @@ namespace TPC_UPC.Services
             }
             catch (Exception ex)
             {
-                return new MailMessageResponse($"An error ocurred while deleting faculty: {ex.Message}");
+                return new MailMessageResponse($"An error ocurred while deleting mail message: {ex.Message}");
             }
         }
 
@@ -86,21 +91,31 @@ namespace TPC_UPC.Services
             }
         }
 
-        public async Task<MailMessageResponse> UpdateASync(int id, MailMessage mailMessage)
+        public async Task<MailMessageResponse> UpdateASync(int id, int coordinatorId, MailMessage mailMessage)
         {
+
             var existingMailMessage = await _mailMessageRepository.FindById(id);
 
             if (existingMailMessage == null)
-                return new MailMessageResponse("Faculty not found");
+                return new MailMessageResponse("Mail Message not found");
+
+            var existingCoordinator = await _coordinatorRepository.FindById(coordinatorId);
+
+            if (existingCoordinator == null)
+                return new MailMessageResponse("Coordinator not found");
+
+            //aqui deberia hacer un findbyid 
 
             existingMailMessage.Message = mailMessage.Message;
+            existingMailMessage.DocumentLink = mailMessage.DocumentLink;
 
             try
             {
-                _mailMessageRepository.Update(mailMessage);
+                existingMailMessage.CoordinatorId = coordinatorId;
+                _mailMessageRepository.Update(existingMailMessage);
                 await _unitOfWork.CompleteAsync();
 
-                return new MailMessageResponse(mailMessage);
+                return new MailMessageResponse(existingMailMessage);
             }
             catch (Exception ex)
             {

@@ -33,7 +33,11 @@ using System.Threading.Tasks;
 
         public async Task<IEnumerable<Coordinator>> ListAsync()
  		{
- 			return await _context.Coordinators.ToListAsync();
+ 			return await _context.Coordinators
+                .Include(p => p.Faculty)
+                .Include(p => p.Account)
+                .ThenInclude( a=> a.University)
+                .ToListAsync();
  		}
 
         public async Task<IEnumerable<Coordinator>> ListByFacultyIdAsync(int facultyId)
