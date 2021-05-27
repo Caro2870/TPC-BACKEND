@@ -12,6 +12,8 @@ namespace TPC_UPC.Domain.Services
         Task<IEnumerable<User>> ListAsync();
         Task<IEnumerable<User>> ListByAccountIdAsync(int accountId);
         Task<IEnumerable<User>> ListBySuggestionIdAsync(int suggestionId);
+        Task<IEnumerable<User>> ListByCourseIdAsync(int courseId);
+
         //CRUD
         Task<UserResponse> GetByIdAsync(int id);
         Task<UserResponse> SaveAsync(User user);

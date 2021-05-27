@@ -24,7 +24,7 @@ namespace TPC_UPC.Controllers
             _facultyService = facultyService;
             _mapper = mapper;
         }
-
+        
         [SwaggerOperation(
             Summary = "List all faculties of a university",
             Description = "List of faculties of a specific university",

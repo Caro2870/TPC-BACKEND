@@ -171,8 +171,18 @@ namespace TPC_UPC.Domain.Persistence.Contexts
             builder.Entity<University>().Property(p => p.UniversityName).IsRequired().HasMaxLength(50);
 
             //Constraints of UserCourse
-            builder.Entity<UserCourse>().HasKey(p => p.CourseId);   //PK
-            builder.Entity<UserCourse>().HasKey(p => p.UserId);  //GeneraKey
+            builder.Entity<UserCourse>().HasKey(pt => new { pt.UserId, pt.CourseId });   //PK
+
+            //Relationships of UserCourse
+            builder.Entity<UserCourse>()
+                .HasOne(pt => pt.User)
+                .WithMany(p => p.UserCourses)
+                .HasForeignKey(pt => pt.UserId);
+
+            builder.Entity<UserCourse>()
+                .HasOne(pt => pt.Course)
+                .WithMany(p => p.UserCourses)
+                .HasForeignKey(pt => pt.CourseId);
 
             /*
             Example of Relationship
@@ -212,7 +222,8 @@ namespace TPC_UPC.Domain.Persistence.Contexts
             builder.Entity<Account>()
                     .HasOne(a => a.User)
                     .WithOne(b => b.Account)
-                    .HasForeignKey<User>(p => p.AccountId);
+                    .HasForeignKey<User>(p => p.AccountId)
+                    .OnDelete(DeleteBehavior.Cascade);
             //Relationships of Training
             builder.Entity<Training>()
                 .HasMany(a => a.TrainingTutors)
@@ -263,7 +274,12 @@ namespace TPC_UPC.Domain.Persistence.Contexts
             builder.Entity<University>()
                     .HasMany(a => a.Accounts)
                     .WithOne(b => b.University)
-                    .HasForeignKey(b => b.UniversityId);
+                    .HasForeignKey(b => b.UniversityId)
+                    .OnDelete(DeleteBehavior.Cascade);
+            builder.Entity<University>()
+                   .HasMany(a => a.Faculties)
+                   .WithOne(b => b.University)
+                   .HasForeignKey(b => b.UniversityId);
             //Relationships of User
             builder.Entity<User>()
                 .HasMany(a => a.Suggestions)
@@ -271,10 +287,6 @@ namespace TPC_UPC.Domain.Persistence.Contexts
                 .HasForeignKey(p => p.UserId);
             builder.Entity<User>()
                 .HasMany(a => a.NotificationUsers)
-                .WithOne(b => b.User)
-                .HasForeignKey(p => p.UserId);
-            builder.Entity<User>()
-                .HasMany(a => a.UserCourses)
                 .WithOne(b => b.User)
                 .HasForeignKey(p => p.UserId);
             //Relationships of Notification
@@ -288,10 +300,6 @@ namespace TPC_UPC.Domain.Persistence.Contexts
                 .WithOne(b => b.NotificationType)
                 .HasForeignKey(p => p.NotificationTypeId);
             //Relationships of Course
-            builder.Entity<Course>()
-               .HasMany(a => a.UserCourses)
-               .WithOne(b => b.Course)
-               .HasForeignKey(p => p.CourseId);
             builder.Entity<Course>()
                .HasMany(a => a.Lessons)
                .WithOne(b => b.Course)

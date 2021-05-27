@@ -23,8 +23,10 @@ using System.Threading.Tasks;
  
  		public async Task<Account> FindById(int id)
  		{
- 			return await _context.Accounts.FindAsync(id);
- 		}
+            return await _context.Accounts
+               .Include(a => a.University)
+               .FirstOrDefaultAsync(p => p.Id == id);
+        }
 
         public async Task<IEnumerable<Account>> ListAsync() =>
                     await _context.Accounts.Include(p => p.University).ToListAsync();

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace TPC_UPC.Resources
 {
-    public abstract class UserResource
+    public class UserResource
     {
         public int Id { get; set; }
         public AccountResource Account { get; set; }

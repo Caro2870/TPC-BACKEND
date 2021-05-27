@@ -81,7 +81,7 @@ namespace TPC_UPC
             //services.AddScoped<INotificationTypeService, NotificationTypeService>();
             services.AddScoped<INotificationUserService, NotificationUserService>();
             services.AddScoped<IStudentService, StudentService>();
-            //services.AddScoped<ISuggestionService, SuggestionService>();
+            services.AddScoped<ISuggestionService, SuggestionService>();
             //services.AddScoped<ITrainingService, TrainingService>();
             services.AddScoped<ITutorService, TutorService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();

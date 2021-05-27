@@ -62,13 +62,12 @@ namespace TPC_UPC.Services
             return await _accountRepository.ListByUniversityIdAsync(universityId);
         }
 
-        public async Task<AccountResponse> SaveAsync(Account account, int universityId)
+        public async Task<AccountResponse> SaveAsync(Account account)
         {
-            if (_universityRepository.FindById(universityId) != null)
+            if (_universityRepository.FindById(account.UniversityId) != null)
             {
                 try
                 {
-                    account.UniversityId = universityId;
                     await _accountRepository.AddAsync(account);
                     await _unitOfWork.CompleteAsync();
 
@@ -81,7 +80,7 @@ namespace TPC_UPC.Services
             }
             else
             {
-                return new AccountResponse($"The UNIVERSITY with id {universityId}, doesn't exist");
+                return new AccountResponse($"The UNIVERSITY with id {account.UniversityId}, doesn't exist");
             }
 
         }
@@ -93,6 +92,7 @@ namespace TPC_UPC.Services
             if (existingAccount == null)
                 return new AccountResponse("Account not found");
 
+            existingAccount.UniversityId = account.UniversityId;
             existingAccount.Password = account.Password;
             try
             {
