@@ -8,7 +8,7 @@ namespace TPC_UPC.Domain.Models
     public class Tutor : User
     {
 
-        public int FacultiesId { get; set; }
+        public int FacultyId { get; set; }
         public Faculty Faculty { get; set; }
 
         public List<TrainingTutor> TrainingTutors { get; set; }

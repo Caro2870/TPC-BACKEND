@@ -8,6 +8,7 @@ using System;
  public interface IMailMessageRepository
  {
  Task<IEnumerable<MailMessage>> ListAsync();
+ Task<IEnumerable<MailMessage>> ListByCoordinatorIdAsync(int coordinatorId);
  Task AddAsync(MailMessage mailMessage);
  Task<MailMessage> FindById(int id);
  void Update(MailMessage mailMessage);

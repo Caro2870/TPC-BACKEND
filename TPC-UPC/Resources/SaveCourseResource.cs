@@ -10,6 +10,9 @@ namespace TPC_UPC.Resources
     {
         [Required]
         [MaxLength(100)]
-        public string CourseName { get; set; }
+        public string Name { get; set; }
+
+        [Required]
+        public int Credits { get; set; }
     }
 }
