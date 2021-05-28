@@ -13,5 +13,34 @@ namespace TPC_UPC.API.Test
 {
     class LessonTypeServiceTest
     {
+        [SetUp]
+        public void Setup()
+        {
+        }
+
+        [Test]
+        public async Task SaveAsyncWhenLessonTypeReturnsSuccess()
+        {
+            var mockLessonTypeRepository = GetDefaultILessonTypeRepositoryInstance();
+            var mockUnityOfWork = GetDefaultIUnitOfWorkInstance();
+            LessonType lessonType = new LessonType();
+            mockLessonTypeRepository.Setup(r => r.AddAsync(lessonType))
+                .Returns(Task.FromResult<LessonType>(lessonType));
+            var service = new LessonTypeService(mockLessonTypeRepository.Object, mockUnityOfWork.Object);
+            LessonTypeResponse result = await service.SaveAsync(lessonType);
+            var message = result.Message;
+
+            message.Should().Be("");
+        }
+
+        private Mock<ILessonTypeRepository> GetDefaultILessonTypeRepositoryInstance()
+        {
+            return new Mock<ILessonTypeRepository>();
+        }
+
+        private Mock<IUnitOfWork> GetDefaultIUnitOfWorkInstance()
+        {
+            return new Mock<IUnitOfWork>();
+        }
     }
 }

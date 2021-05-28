@@ -19,7 +19,6 @@ namespace TPC_UPC.Resources
         [EmailAddress]
         public string Mail { get; set; }
         [Required]
-        [Phone]
         public string PhoneNumber { get; set; }
         [Required]
         public int AccountId { get; set; }

@@ -22,6 +22,10 @@ using System;
  
  		public async Task<User> FindById(int id)
  		{
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> master
             return await _context.Users
                .Include(u => u.Account)
                .Include(u => u.Account.University)
@@ -35,7 +39,23 @@ using System;
                 .Include(u=>u.Account.University)
                 .ToListAsync();
  		}
+=======
+            return await _context.Users//si no funciona, quitar esto
+              .Include(u => u.Account)
+              .Include(u => u.Account.University)
+              .FirstOrDefaultAsync(p => p.Id == id);
+        }
  
+ 		public async Task<IEnumerable<User>> ListAsync()
+ 		{
+            return await _context.Users
+               .Include(u => u.Account)
+               .Include(u => u.Account.University)
+               .ToListAsync();
+        }
+>>>>>>> master
+ 
+        
  		public void Remove(User user)
  		{
  			_context.Users.Remove(user);

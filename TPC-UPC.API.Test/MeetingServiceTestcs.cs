@@ -35,14 +35,14 @@ namespace TPC_UPC.API.Test
         //    message.Should().Be("");
         //}
 
-        //private Mock<IMeetingRepository> GetDefaultIMeetingRepositoryInstance()
-        //{
-        //    return new Mock<IMeetingRepository>();
-        //}
+        private Mock<IMeetingRepository> GetDefaultIMeetingRepositoryInstance()
+        {
+            return new Mock<IMeetingRepository>();
+        }
 
-        //private Mock<IUnitOfWork> GetDefaultIUnitOfWorkInstance()
-        //{
-        //    return new Mock<IUnitOfWork>();
-        //}
+        private Mock<IUnitOfWork> GetDefaultIUnitOfWorkInstance()
+        {
+            return new Mock<IUnitOfWork>();
+        }
     }
 }

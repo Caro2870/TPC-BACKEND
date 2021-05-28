@@ -61,7 +61,11 @@ namespace TPC_UPC.Controllers
         [HttpPost]
         [ProducesResponseType(typeof(FacultyResource), 200)]
         [ProducesResponseType(typeof(BadRequestResult), 404)]
+<<<<<<< HEAD
         public async Task<IActionResult> PostAsync([FromBody] SaveFacultyResource resource, int universityId)
+=======
+        public async Task<IActionResult> PostAsync([FromBody] SaveFacultyResource resource, int universityId )
+>>>>>>> master
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState.GetErrorMessages());

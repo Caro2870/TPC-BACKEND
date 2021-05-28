@@ -28,12 +28,14 @@ namespace TPC_UPC.Controllers
 
        
 
-        ////[Route("missing")]
-        //public async Task<IEnumerable<StudentResource>> GetAllMissingsByLessonIdAsync(int lessonId)
-        //{
-        //    var tags = await _studentService.ListMissingStudentByLessonIdAsync(lessonId);
-        //    var resources = _mapper.Map<IEnumerable<Student>, IEnumerable<StudentResource>>(tags);
-        //    return resources;
-        //}
+
+        [HttpGet]
+        [Route("missing")]
+        public async Task<IEnumerable<StudentResource>> GetAllMissingsByLessonIdAsync(int lessonId)
+        {
+            var tags = await _studentService.ListMissingStudentByLessonIdAsync(lessonId);
+            var resources = _mapper.Map<IEnumerable<Student>, IEnumerable<StudentResource>>(tags);
+            return resources;
+        }
     }
 }

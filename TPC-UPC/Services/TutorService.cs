@@ -12,42 +12,107 @@ namespace TPC_UPC.Services
     public class TutorService : ITutorService
     {
         private readonly ITutorRepository _tutorRepository;
+<<<<<<< HEAD
+        private readonly IUnitOfWork _unitOfWork;
+
+        public TutorService (ITutorRepository tutorRepository, IUnitOfWork unitOfWork)
+        {
+            _tutorRepository = tutorRepository;
+            _unitOfWork = unitOfWork;
+=======
         private IUnitOfWork _unitOfWork;
-        public TutorService (ITutorRepository object1, IUnitOfWork object2)
+        private readonly IFacultyRepository _facultyRepository;
+        private readonly IAccountRepository _accountRepository;
+        public TutorService (ITutorRepository object1, IFacultyRepository facultyRepository , IAccountRepository accountRepository,  IUnitOfWork object2)
         {
             this._tutorRepository = object1;
             this._unitOfWork = object2;
+            this._facultyRepository = facultyRepository;
+            this._accountRepository = accountRepository;
+>>>>>>> master
         }
 
         //CRUD
         public async Task<TutorResponse> SaveAsync(Tutor tutor) {
+
+            if (_accountRepository.FindById(tutor.AccountId) != null)
+            {
+                if (_facultyRepository.FindById(tutor.FacultyId) != null)
+                {
+                    try
+                    {
+                        await _tutorRepository.AddAsync(tutor);
+                        await _unitOfWork.CompleteAsync();
+                        return new TutorResponse(tutor);
+                    }
+                    catch (Exception e)
+                    {
+                        return new TutorResponse($"An error ocurred while saving {e.Message}");
+                    }
+                }
+                else
+                {
+                    return new TutorResponse($"The faculty with id {tutor.FacultyId}, doesn't exist");
+                }
+            }
+            else
+            {
+                return new TutorResponse($"The account with id {tutor.AccountId}, doesn't exist");
+            }
+
+        }
+
+        public async Task<TutorResponse> GetByIdAsync(int tutorId) {
+            var existingTutor = await _tutorRepository.FindById(tutorId);
+
+            if (existingTutor == null)
+                return new TutorResponse("Tutor not found");
+            return new TutorResponse(existingTutor);
+        }
+
+        public async Task<TutorResponse> UpdateAsync(int id, Tutor tutor) {
+            var existingTutor = await _tutorRepository.FindById(id);
+
+            if (existingTutor == null)
+                return new TutorResponse("Tutor not found");
+
+            existingTutor.FacultiesId = tutor.FacultiesId;
+
             try
             {
-                await _tutorRepository.AddAsync(tutor);
+                _tutorRepository.Update(existingTutor);
                 await _unitOfWork.CompleteAsync();
-                return new TutorResponse(tutor);
+
+                return new TutorResponse(existingTutor);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                return new TutorResponse($"An error ocurred while saving {e.Message}");
+                return new TutorResponse($"An error ocurred while updating the tutor: {ex.Message}");
             }
         }
-        Task<TutorResponse> ITutorService.GetByIdAsync(int tutorId) {
-            throw new NotImplementedException();
-        }
-        Task<TutorResponse> ITutorService.UpdateAsync(int id, Tutor tutor) {
-            throw new NotImplementedException();
-        }
-        Task<TutorResponse> ITutorService.DeleteAsync(int id) {
-            throw new NotImplementedException();
+
+        public async Task<TutorResponse> DeleteAsync(int id) {
+            var existingTutor = await _tutorRepository.FindById(id);
+
+            if (existingTutor == null)
+                return new TutorResponse("Tutor not found");
+
+            try
+            {
+                _tutorRepository.Remove(existingTutor);
+                await _unitOfWork.CompleteAsync();
+
+                return new TutorResponse(existingTutor);
+            }
+            catch (Exception ex)
+            {
+                return new TutorResponse($"An error ocurred while deleting the tutor: {ex.Message}");
+            }
         }
 
         //ADDED
         public async Task<IEnumerable<Tutor>> ListAsync() {
             return await _tutorRepository.ListAsync();
-        }
-        Task<IEnumerable<Tutor>> ITutorService.ListByCourseIdAsync(int courseId) {
-            throw new NotImplementedException();
         }
     }
 }
