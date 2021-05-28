@@ -14,9 +14,16 @@ namespace TPC_UPC.Services
     {
         private readonly IAccountRepository _accountRepository;
         private IUnitOfWork _unitOfWork;
+<<<<<<< HEAD
         
         public AccountService(IAccountRepository object1, IUnitOfWork object2)
+=======
+        private IUniversityRepository _universityRepository;
+
+        public AccountService(IAccountRepository object1, IUniversityRepository universityRepository, IUnitOfWork object2)
+>>>>>>> master
         {
+            this._universityRepository = universityRepository;
             this._accountRepository = object1;
             this._unitOfWork = object2;
         }
@@ -62,17 +69,25 @@ namespace TPC_UPC.Services
 
         public async Task<AccountResponse> SaveAsync(Account account)
         {
-            try
+            if (_universityRepository.FindById(account.UniversityId) != null)
             {
-                await _accountRepository.AddAsync(account);
-                await _unitOfWork.CompleteAsync();
+                try
+                {
+                    await _accountRepository.AddAsync(account);
+                    await _unitOfWork.CompleteAsync();
 
-                return new AccountResponse(account);
+                    return new AccountResponse(account);
+                }
+                catch (Exception ex)
+                {
+                    return new AccountResponse($"An error ocurred while saving the account: {ex.Message}");
+                }
             }
-            catch (Exception ex)
+            else
             {
-                return new AccountResponse($"An error ocurred while saving the account: {ex.Message}");
+                return new AccountResponse($"The UNIVERSITY with id {account.UniversityId}, doesn't exist");
             }
+
         }
 
         public async Task<AccountResponse> UpdateAsync(int id, Account account)

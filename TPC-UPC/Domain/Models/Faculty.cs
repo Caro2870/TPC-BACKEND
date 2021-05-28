@@ -14,5 +14,8 @@ namespace TPC_UPC.Domain.Models
 
         public IList<Coordinator> Coordinators { get; set; } = new List<Coordinator>();
         public IList<Tutor> Tutors { get; set; } = new List<Tutor>();
+
+        public int UniversityId { get; set; }
+        public University University { get; set; }
     }
 }

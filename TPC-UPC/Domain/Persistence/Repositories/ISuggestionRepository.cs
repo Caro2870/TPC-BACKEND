@@ -7,10 +7,12 @@ using System;
  {
  public interface ISuggestionRepository
  {
- Task<IEnumerable<Suggestion>> ListAsync();
- Task AddAsync(Suggestion suggestion);
- Task<Suggestion> FindById(int id);
- void Update(Suggestion suggestion);
- void Remove(Suggestion suggestion);
- }
- }
+       Task<IEnumerable<Suggestion>> ListAsync();
+       Task AddAsync(Suggestion suggestion);
+       Task<Suggestion> FindById(int id);
+       void Update(Suggestion suggestion);
+       void Remove(Suggestion suggestion);
+       Task<IEnumerable<Suggestion>> ListByUserIdAsync(int userId);
+
+    }
+}

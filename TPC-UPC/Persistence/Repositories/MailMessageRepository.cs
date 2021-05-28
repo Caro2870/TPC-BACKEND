@@ -1,6 +1,7 @@
 using System;
  using System.Collections.Generic;
- using System.Threading.Tasks;
+using System.Linq;
+using System.Threading.Tasks;
  using Microsoft.EntityFrameworkCore;
  using TPC_UPC.Domain.Models;
  using TPC_UPC.Domain.Persistence.Contexts;
@@ -29,8 +30,14 @@ using System;
  		{
  			return await _context.MailMessages.ToListAsync();
  		}
- 
- 		public void Remove(MailMessage mailMessage)
+
+        public async Task<IEnumerable<MailMessage>> ListByCoordinatorIdAsync(int coordinatorId) => 
+            await _context.MailMessages
+                .Where(p => p.CoordinatorId == coordinatorId)
+                .Include(p => p.Coordinator)
+                .ToListAsync();
+
+        public void Remove(MailMessage mailMessage)
  		{
  			_context.MailMessages.Remove(mailMessage);
  		}

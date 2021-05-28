@@ -13,24 +13,44 @@ namespace TPC_UPC.Services
     {
         private readonly ITutorRepository _tutorRepository;
         private IUnitOfWork _unitOfWork;
-        public TutorService (ITutorRepository object1, IUnitOfWork object2)
+        private readonly IFacultyRepository _facultyRepository;
+        private readonly IAccountRepository _accountRepository;
+        public TutorService (ITutorRepository object1, IFacultyRepository facultyRepository , IAccountRepository accountRepository,  IUnitOfWork object2)
         {
             this._tutorRepository = object1;
             this._unitOfWork = object2;
+            this._facultyRepository = facultyRepository;
+            this._accountRepository = accountRepository;
         }
 
         //CRUD
         public async Task<TutorResponse> SaveAsync(Tutor tutor) {
-            try
+
+            if (_accountRepository.FindById(tutor.AccountId) != null)
             {
-                await _tutorRepository.AddAsync(tutor);
-                await _unitOfWork.CompleteAsync();
-                return new TutorResponse(tutor);
+                if (_facultyRepository.FindById(tutor.FacultyId) != null)
+                {
+                    try
+                    {
+                        await _tutorRepository.AddAsync(tutor);
+                        await _unitOfWork.CompleteAsync();
+                        return new TutorResponse(tutor);
+                    }
+                    catch (Exception e)
+                    {
+                        return new TutorResponse($"An error ocurred while saving {e.Message}");
+                    }
+                }
+                else
+                {
+                    return new TutorResponse($"The faculty with id {tutor.FacultyId}, doesn't exist");
+                }
             }
-            catch (Exception e)
+            else
             {
-                return new TutorResponse($"An error ocurred while saving {e.Message}");
+                return new TutorResponse($"The account with id {tutor.AccountId}, doesn't exist");
             }
+
         }
         Task<TutorResponse> ITutorService.GetByIdAsync(int tutorId) {
             throw new NotImplementedException();
