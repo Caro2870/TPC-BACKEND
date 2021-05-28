@@ -123,9 +123,9 @@ namespace TPC_UPC.Domain.Persistence.Contexts
             builder.Entity<MailMessage>().Property(p => p.DocumentLink).IsRequired().HasMaxLength(150);
             //Constraints of Meeting
             builder.Entity<Meeting>().HasKey(p => p.Id);   //PK -> YATA
+            builder.Entity<Meeting>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();  //GeneraKey
             builder.Entity<Meeting>().Property(p => p.StartDate);
             builder.Entity<Meeting>().Property(p => p.EndDate);
-            builder.Entity<Meeting>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();  //GeneraKey
             builder.Entity<Meeting>().Property(p => p.Description).IsRequired().HasMaxLength(300);
             builder.Entity<Meeting>().Property(p => p.MeetingLink).IsRequired().HasMaxLength(150);
             builder.Entity<Meeting>().Property(p => p.ResourceLink).IsRequired().HasMaxLength(150);
@@ -153,18 +153,27 @@ namespace TPC_UPC.Domain.Persistence.Contexts
             builder.Entity<Suggestion>().HasKey(p => p.Id);   //PK
             builder.Entity<Suggestion>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();  //GeneraKey
             builder.Entity<Suggestion>().Property(p => p.Message).IsRequired().HasMaxLength(400);
+
             //Constraints of Training
+            builder.Entity<Training>().Property(p => p.StartDate);
+            builder.Entity<Training>().Property(p => p.EndDate);
+            builder.Entity<Training>().Property(p => p.Description).IsRequired().HasMaxLength(300);
+            builder.Entity<Training>().Property(p => p.MeetingLink).IsRequired().HasMaxLength(150);
+            builder.Entity<Training>().Property(p => p.ResourceLink).IsRequired().HasMaxLength(150);
+            builder.Entity<Training>().Property(p => p.CoordinatorId).IsRequired();
 
             //Constraints of TrainingTutor
-            builder.Entity<TrainingTutor>().HasKey(p => p.TrainingId);   //PK
-            builder.Entity<TrainingTutor>().HasKey(p => p.TutorId);   //PK
+            builder.Entity<TrainingTutor>().HasKey(p => new { p.TrainingId, p.TutorId });   //PK
+            //builder.Entity<TrainingTutor>().HasKey(p => p.TrainingId);   //PK
+            //builder.Entity<TrainingTutor>().HasKey(p => p.TutorId);   //PK
             builder.Entity<TrainingTutor>().Property(p => p.Assistance).IsRequired();
-            //Constraints of Tutor
 
+            //Constraints of Tutor
             builder.Entity<Tutor>().Property(p => p.FirstName).IsRequired().HasMaxLength(35);   //PK
             builder.Entity<Tutor>().Property(p => p.LastName).IsRequired().HasMaxLength(60);   //PK
             builder.Entity<Tutor>().Property(p => p.Mail).IsRequired();   //PK
             builder.Entity<Tutor>().Property(p => p.PhoneNumber).HasMaxLength(15);   //PK
+
             //Constraints of University
             builder.Entity<University>().HasKey(p => p.Id);   //PK
             builder.Entity<University>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();  //GeneraKey
@@ -256,6 +265,10 @@ namespace TPC_UPC.Domain.Persistence.Contexts
                 .HasMany(a => a.Coordinators)
                 .WithOne(b => b.Faculty)
                 .HasForeignKey(p => p.FacultyId);
+            builder.Entity<Faculty>()
+                .HasMany(a => a.Tutors)
+                .WithOne(b => b.Faculty)
+                .HasForeignKey(p => p.FacultiesId);
             //Relationships of Coordinator
             builder.Entity<Coordinator>()
                 .HasMany(a => a.MailMessages)
@@ -271,6 +284,13 @@ namespace TPC_UPC.Domain.Persistence.Contexts
             builder.Entity<University>()
                     .HasMany(a => a.Accounts)
                     .WithOne(b => b.University)
+<<<<<<< HEAD
+                    .HasForeignKey(b => b.UniversityId);
+            //builder.Entity<University>()
+            //        .HasMany(a => a.Faculties)
+            //        .WithOne(b => b.University)
+            //        .HasForeignKey(b => b.UniversityId);
+=======
                     .HasForeignKey(b => b.UniversityId)
                     .OnDelete(DeleteBehavior.Cascade);
 <<<<<<< HEAD
@@ -280,6 +300,7 @@ namespace TPC_UPC.Domain.Persistence.Contexts
                    .HasMany(a => a.Faculties)
                    .WithOne(b => b.University)
                    .HasForeignKey(b => b.UniversityId);
+>>>>>>> master
 >>>>>>> master
             //Relationships of User
             builder.Entity<User>()
@@ -412,6 +433,17 @@ namespace TPC_UPC.Domain.Persistence.Contexts
                     Id = 1, Description = "", MeetingLink = "https://googlemeet.com", 
                     ResourceLink = "blob://resource.pdf", LessonTypeId = 2, TutorId=102, CourseId = 1, Vacants=30 }
                 );
+            builder.Entity<Training>().HasData
+                (
+                new Training
+                {
+                    Id = 2,
+                    Description = "",
+                    MeetingLink = "https://googlemeet002.com",
+                    ResourceLink = "blob://resource002.pdf",
+                    CoordinatorId = 103
+                }
+                );
             builder.Entity<Course>().HasData
                 (
                 new Course { Id = 1, Name = "Programacion 1", Credits=6 }
@@ -419,7 +451,7 @@ namespace TPC_UPC.Domain.Persistence.Contexts
             builder.Entity<NotificationType>().HasData
                    (
                    new NotificationType { Id = 801, Description = "Recordatorio de que la clase esta por comenzar" },
-                   new NotificationType { Id = 802, Description = "Solicitud de confirmacion de asidtencia a una tutoria realizada por un amigo/a" },
+                   new NotificationType { Id = 802, Description = "Solicitud de confirmacion de asistencia a una tutoria realizada por un amigo/a" },
                    new NotificationType { Id = 803, Description = "Material compartido enviado por el tutor" },
                    new NotificationType { Id = 804, Description = "Modificacion de horario de una sesion" },
                    new NotificationType { Id = 806, Description = "Aviso enviado por el coordinador" }

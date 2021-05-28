@@ -27,8 +27,8 @@ namespace TPC_UPC.Mapping
             CreateMap<NotificationUser, NotificationUserResource>();
             CreateMap<Student, StudentResource>();
             CreateMap<Suggestion, SuggestionResource>();
-            CreateMap<Training, TrainningResource>();
-            CreateMap<TrainingTutor, TrainningTutorResource>();
+            CreateMap<Training, TrainingResource>();
+            CreateMap<TrainingTutor, TrainingTutorResource>();
             CreateMap<Tutor, TutorResource>();
             CreateMap<University, UniversityResource>();
             CreateMap<User, UserResource>();

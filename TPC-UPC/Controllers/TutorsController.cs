@@ -13,14 +13,13 @@ using TPC_UPC.API.Extensions;
 namespace TPC_UPC.Controllers
 {
     [Route("/api/[controller]")]
-    //api/tutores/tutorid/lessons
-    //el formato, devuelve en .json
     [Produces("application/json")]
     [ApiController]
     public class TutorsController : ControllerBase
     {
         private readonly ITutorService _tutorService;
         private readonly IMapper _mapper;
+
         public TutorsController(ITutorService tutorService, IMapper mapper)
         {
             _tutorService = tutorService;
@@ -42,6 +41,18 @@ namespace TPC_UPC.Controllers
             return resources;
         }
 
+        [HttpGet("{id}")]
+        [ProducesResponseType(typeof(TutorResource), 200)]
+        [ProducesResponseType(typeof(BadRequestResult), 404)]
+        public async Task<IActionResult> GetAsync(int id)
+        {
+            var result = await _tutorService.GetByIdAsync(id);
+            if (!result.Success)
+                return BadRequest(result.Message);
+            var tutorResource = _mapper.Map<Tutor, TutorResource>(result.Resource);
+            return Ok(tutorResource);
+        }
+
         [HttpPost]
         [ProducesResponseType(typeof(TutorResource), 200)]
         [ProducesResponseType(typeof(BadRequestResult), 404)]
@@ -57,8 +68,37 @@ namespace TPC_UPC.Controllers
             var tutorResource = _mapper.Map<Tutor, TutorResource>(result.Resource);
             return Ok(tutorResource);
         }
-        //[HttpGet]
-        //[Route("/{tutorId}/lessons")]
 
+        [HttpPut("{id}")]
+        [ProducesResponseType(typeof(TutorResource), 200)]
+        [ProducesResponseType(typeof(BadRequestResult), 404)]
+        public async Task<IActionResult> PutAsync(int id, [FromBody] SaveTutorResource resource)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState.GetErrorMessages());
+
+            var tutor = _mapper.Map<SaveTutorResource, Tutor>(resource);
+            var result = await _tutorService.UpdateAsync(id, tutor);
+
+            if (!result.Success)
+                return BadRequest(result.Message);
+
+            var tutorResource = _mapper.Map<Tutor, TutorResource>(result.Resource);
+            return Ok(tutorResource);
+        }
+
+        [HttpDelete("{id}")]
+        [ProducesResponseType(typeof(TutorResource), 200)]
+        [ProducesResponseType(typeof(BadRequestResult), 404)]
+        public async Task<IActionResult> DeleteAsync(int id)
+        {
+            var result = await _tutorService.DeleteAsync(id);
+
+            if (!result.Success)
+                return BadRequest(result.Message);
+
+            var tutorResource = _mapper.Map<Tutor, TutorResource>(result.Resource);
+            return Ok(tutorResource);
+        }
     }
 }

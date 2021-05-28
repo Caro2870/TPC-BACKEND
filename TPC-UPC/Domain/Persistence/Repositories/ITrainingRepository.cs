@@ -6,11 +6,14 @@ using System;
  namespace TPC_UPC.Domain.Persistence.Repositories
  {
  public interface ITrainingRepository
- {
- Task<IEnumerable<Training>> ListAsync();
- Task AddAsync(Training training);
- Task<Training> FindById(int id);
- void Update(Training training);
- void Remove(Training training);
- }
+     {
+        //CRUD
+        Task AddAsync(Training training);
+        Task<Training> FindById(int id);
+        void Update(Training training);
+        void Remove(Training training);
+
+        //ADDED
+        Task<IEnumerable<Training>> ListByCoordinatorIdAsync(int coordinatorId);
+    }
  }

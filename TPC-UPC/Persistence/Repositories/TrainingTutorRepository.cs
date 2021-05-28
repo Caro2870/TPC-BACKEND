@@ -20,15 +20,18 @@ using System;
  			await _context.TrainingTutors.AddAsync(trainingTutor);
  		}
  
- 		public async Task<TrainingTutor> FindById(int id)
+ 		public async Task<TrainingTutor> FindByTrainingIdAndTutorId(int trainingId, int tutorId)
  		{
- 			return await _context.TrainingTutors.FindAsync(id);
+ 			return await _context.TrainingTutors.FindAsync(trainingId, tutorId);
  		}
  
  		public async Task<IEnumerable<TrainingTutor>> ListAsync()
  		{
- 			return await _context.TrainingTutors.ToListAsync();
- 		}
+            return await _context.TrainingTutors
+               .Include(pt => pt.Training)
+               .Include(pt => pt.Tutor)
+               .ToListAsync();
+        }
  
  		public void Remove(TrainingTutor trainingTutor)
  		{

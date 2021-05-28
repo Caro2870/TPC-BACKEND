@@ -60,6 +60,7 @@ namespace TPC_UPC
             services.AddScoped<IStudentRepository, StudentRepository>();
             services.AddScoped<ISuggestionRepository, SuggestionRepository>();
             services.AddScoped<ITrainingRepository, TrainingRepository>();
+            services.AddScoped<ITrainingTutorRepository, TrainingTutorRepository>();//NEW
             services.AddScoped<ITutorRepository, TutorRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IUniversityRepository, UniversityRepository>();
@@ -81,8 +82,14 @@ namespace TPC_UPC
             services.AddScoped<INotificationTypeService, NotificationTypeService>();
             services.AddScoped<INotificationUserService, NotificationUserService>();
             services.AddScoped<IStudentService, StudentService>();
+<<<<<<< HEAD
+            //services.AddScoped<ISuggestionService, SuggestionService>();
+            services.AddScoped<ITrainingService, TrainingService>();
+            services.AddScoped<ITrainingTutorService, TrainingTutorService>();//NEW
+=======
             services.AddScoped<ISuggestionService, SuggestionService>();
             //services.AddScoped<ITrainingService, TrainingService>();
+>>>>>>> master
             services.AddScoped<ITutorService, TutorService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IUniversityService, UniversityService>();
