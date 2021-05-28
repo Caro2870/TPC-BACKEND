@@ -14,9 +14,14 @@ namespace TPC_UPC.Services
     {
         private readonly IAccountRepository _accountRepository;
         private IUnitOfWork _unitOfWork;
+<<<<<<< HEAD
+        
+        public AccountService(IAccountRepository object1, IUnitOfWork object2)
+=======
         private IUniversityRepository _universityRepository;
 
         public AccountService(IAccountRepository object1, IUniversityRepository universityRepository, IUnitOfWork object2)
+>>>>>>> master
         {
             this._universityRepository = universityRepository;
             this._accountRepository = object1;
@@ -62,13 +67,12 @@ namespace TPC_UPC.Services
             return await _accountRepository.ListByUniversityIdAsync(universityId);
         }
 
-        public async Task<AccountResponse> SaveAsync(Account account, int universityId)
+        public async Task<AccountResponse> SaveAsync(Account account)
         {
-            if (_universityRepository.FindById(universityId) != null)
+            if (_universityRepository.FindById(account.UniversityId) != null)
             {
                 try
                 {
-                    account.UniversityId = universityId;
                     await _accountRepository.AddAsync(account);
                     await _unitOfWork.CompleteAsync();
 
@@ -81,19 +85,21 @@ namespace TPC_UPC.Services
             }
             else
             {
-                return new AccountResponse($"The UNIVERSITY with id {universityId}, doesn't exist");
+                return new AccountResponse($"The UNIVERSITY with id {account.UniversityId}, doesn't exist");
             }
 
         }
 
-        public async Task<AccountResponse> UpdateASync(int id, Account account)
+        public async Task<AccountResponse> UpdateAsync(int id, Account account)
         {
             var existingAccount = await _accountRepository.FindById(id);
 
             if (existingAccount == null)
                 return new AccountResponse("Account not found");
 
+            existingAccount.UniversityId = account.UniversityId;
             existingAccount.Password = account.Password;
+
             try
             {
                 _accountRepository.Update(existingAccount);

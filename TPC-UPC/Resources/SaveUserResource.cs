@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations;
 namespace TPC_UPC.Resources
 {
     //cosas que pedimos al usuario
-    public abstract class SaveUserResource
+    public class SaveUserResource
     {
         [Required]
         [MaxLength(30)]

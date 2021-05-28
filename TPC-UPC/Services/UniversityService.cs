@@ -20,9 +20,24 @@ namespace TPC_UPC.Services
             this._unitOfWork = object2;
         }
 
-        public Task<UniversityResponse> DeleteAsync(int id)
+        public async Task<UniversityResponse> DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            var existingUniversity = await _universityRepository.FindById(id);
+
+            if (existingUniversity == null)
+                return new UniversityResponse("University not found");
+
+            try
+            {
+                _universityRepository.Remove(existingUniversity);
+                await _unitOfWork.CompleteAsync();
+
+                return new UniversityResponse(existingUniversity);
+            }
+            catch (Exception ex)
+            {
+                return new UniversityResponse($"An error ocurred while deleting the university: {ex.Message}");
+            }
         }
 
         public async Task<UniversityResponse> GetByIdAsync(int id)
@@ -49,13 +64,37 @@ namespace TPC_UPC.Services
             }
             catch (Exception e)
             {
-                return new UniversityResponse($"An error ocurred while saving {e.Message}");
+<<<<<<< HEAD
+                return new UniversityResponse($"An error ocurred while saving the university: {e.Message}");
             }
         }
 
-        public Task<UniversityResponse> UpdateASync(int id, University university)
+        public async Task<UniversityResponse> UpdateAsync(int id, University university)
+=======
+                return new UniversityResponse($"An error ocurred while saving the university {e.Message}");
+            }
+        }
+
+        public async Task<UniversityResponse> UpdateASync(int id, University university)
+>>>>>>> master
         {
-            throw new NotImplementedException();
+            var existingUniversity = await _universityRepository.FindById(id);
+
+            if (existingUniversity == null)
+                return new UniversityResponse("University not found");
+
+            existingUniversity.UniversityName = university.UniversityName;
+
+            try
+            {
+                _universityRepository.Update(existingUniversity);
+                await _unitOfWork.CompleteAsync();
+                return new UniversityResponse(existingUniversity);
+            }
+            catch (Exception ex)
+            {
+                return new UniversityResponse($"An error ocurred while updating the university: {ex.Message}");
+            }
         }
     }
 }

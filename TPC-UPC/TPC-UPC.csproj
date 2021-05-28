@@ -21,7 +21,8 @@
   <ItemGroup>
     <Folder Include="Domain\Repositories\" />
     <Folder Include="Domain\Persistence\" />
-    <Folder Include="Resources\" />
   </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 
 </Project>

@@ -1,6 +1,7 @@
 using System;
  using System.Collections.Generic;
- using System.Threading.Tasks;
+using System.Linq;
+using System.Threading.Tasks;
  using Microsoft.EntityFrameworkCore;
  using TPC_UPC.Domain.Models;
  using TPC_UPC.Domain.Persistence.Contexts;
@@ -27,10 +28,20 @@ using System;
  
  		public async Task<IEnumerable<Suggestion>> ListAsync()
  		{
- 			return await _context.Suggestions.ToListAsync();
+ 			return await _context.Suggestions.
+                Include(s => s.User).
+                ToListAsync();
  		}
- 
- 		public void Remove(Suggestion suggestion)
+
+        public async Task<IEnumerable<Suggestion>> ListByUserIdAsync(int userId)
+        {
+            return await _context.Suggestions
+                .Where(p => p.UserId == userId)
+                .Include(p => p.User)
+                .ToListAsync();
+        }
+
+        public void Remove(Suggestion suggestion)
  		{
  			_context.Suggestions.Remove(suggestion);
  		}
