@@ -18,13 +18,19 @@ namespace TPC_UPC.Controllers
         private readonly ITrainingTutorService _trainingTutorService;
         private readonly IMapper _mapper;
 
+        public TrainingTutorsController(ITrainingTutorService trainingTutorService, IMapper mapper)
+        {
+            _trainingTutorService = trainingTutorService;
+            _mapper = mapper;
+        }
+
         [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<TrainningTutorResource>), 200)]
-        public async Task<IEnumerable<TrainningTutorResource>> GetAllAsync()
+        [ProducesResponseType(typeof(IEnumerable<TrainingTutorResource>), 200)]
+        public async Task<IEnumerable<TrainingTutorResource>> GetAllAsync()
         {
             var trainingTutors = await _trainingTutorService.ListAsync();
             var resources = _mapper
-                .Map<IEnumerable<TrainingTutor>, IEnumerable<TrainningTutorResource>>(trainingTutors);
+                .Map<IEnumerable<TrainingTutor>, IEnumerable<TrainingTutorResource>>(trainingTutors);
             return resources;
         }
     }

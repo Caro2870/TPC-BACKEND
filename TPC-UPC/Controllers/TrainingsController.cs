@@ -12,7 +12,7 @@ using TPC_UPC.API.Extensions;
 
 namespace TPC_UPC.Controllers
 {
-    [Route("/api/[controller]")]
+    [Route("/api/coordinators/{coordinatorId}/trainings")]
     [Produces("application/json")]
     [ApiController]
     public class TrainingsController : ControllerBase
@@ -30,31 +30,31 @@ namespace TPC_UPC.Controllers
             Summary = "List all trainings",
             Description = "List of trainings",
             OperationId = "ListAllTrainings")]
-        [SwaggerResponse(200, "List of Trainings", typeof(IEnumerable<TrainningResource>))]
+        [SwaggerResponse(200, "List of Trainings", typeof(IEnumerable<TrainingResource>))]
         [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<TrainningResource>), 200)]
-        public async Task<IEnumerable<TrainningResource>> GetAllAsync()
+        [ProducesResponseType(typeof(IEnumerable<TrainingResource>), 200)]
+        public async Task<IEnumerable<TrainingResource>> GetAllByCoordinatorIdAsync(int coordinatorId)
         {
-            var trainings = await _trainingService.ListAsync();
+            var trainings = await _trainingService.ListByCoordinatorIdAsync(coordinatorId);
             var resources = _mapper
-                .Map<IEnumerable<Training>, IEnumerable<TrainningResource>>(trainings);
+                .Map<IEnumerable<Training>, IEnumerable<TrainingResource>>(trainings);
             return resources;
         }
 
         [HttpGet("{id}")]
-        [ProducesResponseType(typeof(TrainningResource), 200)]
+        [ProducesResponseType(typeof(TrainingResource), 200)]
         [ProducesResponseType(typeof(BadRequestResult), 404)]
         public async Task<IActionResult> GetAsync(int id)
         {
             var result = await _trainingService.GetByIdAsync(id);
             if (!result.Success)
                 return BadRequest(result.Message);
-            var trainingResource = _mapper.Map<Training, TrainningResource>(result.Resource);
+            var trainingResource = _mapper.Map<Training, TrainingResource>(result.Resource);
             return Ok(trainingResource);
         }
 
         [HttpPost]
-        [ProducesResponseType(typeof(TrainningResource), 200)]
+        [ProducesResponseType(typeof(TrainingResource), 200)]
         [ProducesResponseType(typeof(BadRequestResult), 404)]
         public async Task<IActionResult> PostAsync([FromBody] SaveTrainningResource resource)
         {
@@ -65,12 +65,12 @@ namespace TPC_UPC.Controllers
 
             if (!result.Success)
                 return BadRequest(result.Message);
-            var trainingResource = _mapper.Map<Training, TrainningResource>(result.Resource);
+            var trainingResource = _mapper.Map<Training, TrainingResource>(result.Resource);
             return Ok(trainingResource);
         }
 
         [HttpPut("{id}")]
-        [ProducesResponseType(typeof(TrainningResource), 200)]
+        [ProducesResponseType(typeof(TrainingResource), 200)]
         [ProducesResponseType(typeof(BadRequestResult), 404)]
         public async Task<IActionResult> PutAsync(int id, [FromBody] SaveTrainningResource resource)
         {
@@ -83,12 +83,12 @@ namespace TPC_UPC.Controllers
             if (!result.Success)
                 return BadRequest(result.Message);
 
-            var trainingResource = _mapper.Map<Training, TrainningResource>(result.Resource);
+            var trainingResource = _mapper.Map<Training, TrainingResource>(result.Resource);
             return Ok(trainingResource);
         }
 
         [HttpDelete("{id}")]
-        [ProducesResponseType(typeof(TrainningResource), 200)]
+        [ProducesResponseType(typeof(TrainingResource), 200)]
         [ProducesResponseType(typeof(BadRequestResult), 404)]
         public async Task<IActionResult> DeleteAsync(int id)
         {
@@ -97,7 +97,7 @@ namespace TPC_UPC.Controllers
             if (!result.Success)
                 return BadRequest(result.Message);
 
-            var trainingResource = _mapper.Map<Training, TrainningResource>(result.Resource);
+            var trainingResource = _mapper.Map<Training, TrainingResource>(result.Resource);
             return Ok(trainingResource);
         }
     }

@@ -1,6 +1,7 @@
 using System;
  using System.Collections.Generic;
- using System.Threading.Tasks;
+using System.Linq;
+using System.Threading.Tasks;
  using Microsoft.EntityFrameworkCore;
  using TPC_UPC.Domain.Models;
  using TPC_UPC.Domain.Persistence.Contexts;
@@ -25,9 +26,12 @@ using System;
  			return await _context.Trainings.FindAsync(id);
  		}
  
- 		public async Task<IEnumerable<Training>> ListAsync()
+ 		public async Task<IEnumerable<Training>> ListByCoordinatorIdAsync(int coordinatorId)
  		{
- 			return await _context.Trainings.ToListAsync();
+ 			return await _context.Trainings
+                .Where(p => p.CoordinatorId == coordinatorId)
+                .Include(p => p.Coordinator)
+                .ToListAsync();
  		}
  
  		public void Remove(Training training)

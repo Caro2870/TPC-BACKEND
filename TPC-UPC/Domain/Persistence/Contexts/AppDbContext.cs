@@ -121,9 +121,9 @@ namespace TPC_UPC.Domain.Persistence.Contexts
             builder.Entity<MailMessage>().Property(p => p.DocumentLink).IsRequired().HasMaxLength(150);
             //Constraints of Meeting
             builder.Entity<Meeting>().HasKey(p => p.Id);   //PK -> YATA
+            builder.Entity<Meeting>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();  //GeneraKey
             builder.Entity<Meeting>().Property(p => p.StartDate);
             builder.Entity<Meeting>().Property(p => p.EndDate);
-            builder.Entity<Meeting>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();  //GeneraKey
             builder.Entity<Meeting>().Property(p => p.Description).IsRequired().HasMaxLength(300);
             builder.Entity<Meeting>().Property(p => p.MeetingLink).IsRequired().HasMaxLength(150);
             builder.Entity<Meeting>().Property(p => p.ResourceLink).IsRequired().HasMaxLength(150);
@@ -154,10 +154,11 @@ namespace TPC_UPC.Domain.Persistence.Contexts
             
             //Constraints of Training
             builder.Entity<Training>().Property(p => p.CoordinatorId).IsRequired();
-            
+
             //Constraints of TrainingTutor
-            builder.Entity<TrainingTutor>().HasKey(p => p.TrainingId);   //PK
-            builder.Entity<TrainingTutor>().HasKey(p => p.TutorId);   //PK
+            builder.Entity<TrainingTutor>().HasKey(p => new { p.TrainingId, p.TutorId });   //PK
+            //builder.Entity<TrainingTutor>().HasKey(p => p.TrainingId);   //PK
+            //builder.Entity<TrainingTutor>().HasKey(p => p.TutorId);   //PK
             builder.Entity<TrainingTutor>().Property(p => p.Assistance).IsRequired();
 
             //Constraints of Tutor
@@ -381,6 +382,17 @@ namespace TPC_UPC.Domain.Persistence.Contexts
                 new Lesson { 
                     Id = 1, Description = "", MeetingLink = "https://googlemeet.com", 
                     ResourceLink = "blob://resource.pdf", LessonTypeId = 2, TutorId=102, CourseId = 1, Vacants=30 }
+                );
+            builder.Entity<Training>().HasData
+                (
+                new Training
+                {
+                    Id = 2,
+                    Description = "",
+                    MeetingLink = "https://googlemeet002.com",
+                    ResourceLink = "blob://resource002.pdf",
+                    CoordinatorId = 103
+                }
                 );
             builder.Entity<Course>().HasData
                 (

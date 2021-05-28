@@ -14,6 +14,6 @@ using System;
         void Remove(Training training);
 
         //ADDED
-        Task<IEnumerable<Training>> ListAsync();
+        Task<IEnumerable<Training>> ListByCoordinatorIdAsync(int coordinatorId);
     }
  }

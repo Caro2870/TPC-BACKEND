@@ -87,9 +87,9 @@ namespace TPC_UPC.Services
         }
 
         //ADDED
-        public async Task<IEnumerable<Training>> ListAsync()
+        public async Task<IEnumerable<Training>> ListByCoordinatorIdAsync(int coordinatorId)
         {
-            return await _trainingRepository.ListAsync();
+            return await _trainingRepository.ListByCoordinatorIdAsync(coordinatorId);
         }
     }
 }
