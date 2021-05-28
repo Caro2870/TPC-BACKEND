@@ -58,18 +58,7 @@ namespace TPC_UPC.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState.GetErrorMessages());
             var user = _mapper.Map<SaveUserResource, User>(resource);
-<<<<<<< HEAD
             var result = await _userService.UpdateAsync(userId,user);
-
-=======
-<<<<<<< HEAD
-            var result = await _userService.UpdateAsync(userId,user);
-
-=======
-            var result = await _userService.UpdateASync(userId, user);
-            
->>>>>>> master
->>>>>>> master
             if (!result.Success)
                 return BadRequest(result.Message);
             var userResource = _mapper.Map<User, UserResource>(result.Resource);

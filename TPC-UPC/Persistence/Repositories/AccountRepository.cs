@@ -24,52 +24,22 @@ using System.Threading.Tasks;
  		public async Task<Account> FindById(int id)
  		{
             return await _context.Accounts
-<<<<<<< HEAD
                 .Include(a => a.University)
                 .FirstOrDefaultAsync(p => p.Id == id);
         }
-
-        public async Task<IEnumerable<Account>> ListAsync() =>
-               await _context.Accounts.Include(p => p.University).ToListAsync();
-=======
-<<<<<<< HEAD
-                .Include(a => a.University)
-                .FirstOrDefaultAsync(p => p.Id == id);
-        }
- 
  		public async Task<IEnumerable<Account>> ListAsync()
  		{
  			return await _context.Accounts
                 .Include(a=>a.University)
                 .ToListAsync();
  		}
->>>>>>> master
-
         public async Task<IEnumerable<Account>> ListByUniversityIdAsync(int universityId)
         {
             return await _context.Accounts
                 .Where(p => p.UniversityId == universityId)
                 .Include(p => p.University)
                 .ToListAsync();
-<<<<<<< HEAD
-=======
-=======
-               .Include(a => a.University)
-               .FirstOrDefaultAsync(p => p.Id == id);
->>>>>>> master
->>>>>>> master
         }
-
-        public async Task<IEnumerable<Account>> ListAsync() =>
-                    await _context.Accounts.Include(p => p.University).ToListAsync();
-
-        public async Task<IEnumerable<Account>> ListByUniversityIdAsync(int universityId) =>
-        
-            await _context.Accounts
-                .Where(p => p.UniversityId == universityId)
-                .Include(p => p.University)
-                .ToListAsync();
-        
 
         public void Remove(Account account)
  		{

@@ -12,24 +12,15 @@ namespace TPC_UPC.Services
     public class TutorService : ITutorService
     {
         private readonly ITutorRepository _tutorRepository;
-<<<<<<< HEAD
         private readonly IUnitOfWork _unitOfWork;
-
-        public TutorService (ITutorRepository tutorRepository, IUnitOfWork unitOfWork)
-        {
-            _tutorRepository = tutorRepository;
-            _unitOfWork = unitOfWork;
-=======
-        private IUnitOfWork _unitOfWork;
-        private readonly IFacultyRepository _facultyRepository;
         private readonly IAccountRepository _accountRepository;
+        private readonly IFacultyRepository _facultyRepository;
         public TutorService (ITutorRepository object1, IFacultyRepository facultyRepository , IAccountRepository accountRepository,  IUnitOfWork object2)
         {
             this._tutorRepository = object1;
             this._unitOfWork = object2;
             this._facultyRepository = facultyRepository;
             this._accountRepository = accountRepository;
->>>>>>> master
         }
 
         //CRUD
@@ -76,7 +67,7 @@ namespace TPC_UPC.Services
             if (existingTutor == null)
                 return new TutorResponse("Tutor not found");
 
-            existingTutor.FacultiesId = tutor.FacultiesId;
+            existingTutor.FacultyId = tutor.FacultyId;
 
             try
             {

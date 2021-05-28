@@ -82,14 +82,11 @@ namespace TPC_UPC
             services.AddScoped<INotificationTypeService, NotificationTypeService>();
             services.AddScoped<INotificationUserService, NotificationUserService>();
             services.AddScoped<IStudentService, StudentService>();
-<<<<<<< HEAD
             //services.AddScoped<ISuggestionService, SuggestionService>();
             services.AddScoped<ITrainingService, TrainingService>();
             services.AddScoped<ITrainingTutorService, TrainingTutorService>();//NEW
-=======
             services.AddScoped<ISuggestionService, SuggestionService>();
             //services.AddScoped<ITrainingService, TrainingService>();
->>>>>>> master
             services.AddScoped<ITutorService, TutorService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IUniversityService, UniversityService>();

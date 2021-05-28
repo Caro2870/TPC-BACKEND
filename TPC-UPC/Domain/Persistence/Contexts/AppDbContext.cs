@@ -266,16 +266,6 @@ namespace TPC_UPC.Domain.Persistence.Contexts
                 .HasMany(a => a.Coordinators)
                 .WithOne(b => b.Faculty)
                 .HasForeignKey(p => p.FacultyId);
-<<<<<<< HEAD
-            
-
-
-=======
-            builder.Entity<Faculty>()
-                .HasMany(a => a.Tutors)
-                .WithOne(b => b.Faculty)
-                .HasForeignKey(p => p.FacultiesId);
->>>>>>> master
             //Relationships of Coordinator
             builder.Entity<Coordinator>()
                 .HasMany(a => a.MailMessages)
@@ -291,7 +281,6 @@ namespace TPC_UPC.Domain.Persistence.Contexts
             builder.Entity<University>()
                     .HasMany(a => a.Accounts)
                     .WithOne(b => b.University)
-<<<<<<< HEAD
                     .HasForeignKey(b => b.UniversityId)
                     .OnDelete(DeleteBehavior.Cascade);
 
@@ -306,26 +295,14 @@ namespace TPC_UPC.Domain.Persistence.Contexts
                .HasMany(a => a.Students)
                .WithOne(b => b.Career)
                .HasForeignKey(p => p.CareerId);
-=======
-<<<<<<< HEAD
-                    .HasForeignKey(b => b.UniversityId);
             //builder.Entity<University>()
             //        .HasMany(a => a.Faculties)
             //        .WithOne(b => b.University)
             //        .HasForeignKey(b => b.UniversityId);
-=======
-                    .HasForeignKey(b => b.UniversityId)
-                    .OnDelete(DeleteBehavior.Cascade);
-<<<<<<< HEAD
-
-=======
             builder.Entity<University>()
                    .HasMany(a => a.Faculties)
                    .WithOne(b => b.University)
                    .HasForeignKey(b => b.UniversityId);
->>>>>>> master
->>>>>>> master
->>>>>>> master
             //Relationships of User
             builder.Entity<User>()
                 .HasMany(a => a.Suggestions)
@@ -336,17 +313,10 @@ namespace TPC_UPC.Domain.Persistence.Contexts
                 .HasMany(a => a.NotificationUsers)
                 .WithOne(b => b.User)
                 .HasForeignKey(p => p.UserId);
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> master
-
             builder.Entity<User>()
                 .HasMany(a => a.UserCourses)
                 .WithOne(b => b.User)
                 .HasForeignKey(p => p.UserId);
-=======
->>>>>>> master
             //Relationships of Notification
             builder.Entity<Notification>()
                 .HasMany(a => a.NotificationUsers)
@@ -362,12 +332,6 @@ namespace TPC_UPC.Domain.Persistence.Contexts
                .HasMany(a => a.Lessons)
                .WithOne(b => b.Course)
                .HasForeignKey(p => p.CourseId);
-
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> master
-
             /*builder.Entity<NotificationUser>()
                 .HasOne(a => a.User)
                 .WithMany(b => b.NotificationUsers)
@@ -376,33 +340,18 @@ namespace TPC_UPC.Domain.Persistence.Contexts
                 .HasOne(a => a.Notification)
                 .WithMany(b => b.NotificationUsers)
                 .HasForeignKey(a => a.NotificationId);*/
-<<<<<<< HEAD
-
             builder.Entity<University>().HasData
                    (
                    new University { Id = 101, UniversityName = "UPC" },
                     new University { Id = 102, UniversityName = "UPN" }
                    );
-=======
-=======
-            builder.Entity<University>().HasData
-                    (
-                        new University { Id = 101, UniversityName = "UPC" },
-                        new University { Id = 102, UniversityName = "UPN" }
-                    );
-
->>>>>>> master
+            //a
             builder.Entity<Account>().HasData
                     (
                     new Account { Id = 102, AccountName = "tutor01", Password = "123122", UniversityId = 101 },
                      new Account { Id = 101, AccountName = "student01", Password = "43242", UniversityId = 101 },
                      new Account { Id = 103, AccountName = "coordinator01", Password = "35353", UniversityId = 101 }
                     );
-<<<<<<< HEAD
-=======
->>>>>>> master
->>>>>>> master
-
             builder.Entity<Student>().HasData
                 (
                 new Student
@@ -447,12 +396,6 @@ namespace TPC_UPC.Domain.Persistence.Contexts
                 (
                     new Career { Id =1, CareerName="Ingenieria de Software",FacultyId=1}
                 );
-
-<<<<<<< HEAD
-           
-=======
-
->>>>>>> master
             builder.Entity<Suggestion>().HasData
                     (
                     new Suggestion { Id = 101, Message = "Increible clase", UserId=101 },
@@ -460,13 +403,8 @@ namespace TPC_UPC.Domain.Persistence.Contexts
                     );
             builder.Entity<Faculty>().HasData
                     (
-<<<<<<< HEAD
                     new Faculty { Id = 1, Name = "Letras", Description = "departamento de letras",UniversityId=101 },
                      new Faculty { Id = 2, Name = "Ciencia", Description = "departamento de ciencias",UniversityId=101 }
-=======
-                    new Faculty { Id = 1, Name = "Letras", Description = "departamento de letras", UniversityId=101 },
-                     new Faculty { Id = 2, Name = "Ciencia", Description = "departamento de ciencias", UniversityId=101 }
->>>>>>> master
                     );
             builder.Entity<MailMessage>().HasData
                     (

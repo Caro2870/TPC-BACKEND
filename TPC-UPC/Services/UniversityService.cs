@@ -64,27 +64,10 @@ namespace TPC_UPC.Services
             }
             catch (Exception e)
             {
-<<<<<<< HEAD
                 return new UniversityResponse($"An error ocurred while saving the university: {e.Message}");
             }
         }
-
-        public async Task<UniversityResponse> UpdateAsync(int id, University university)
-=======
-<<<<<<< HEAD
-                return new UniversityResponse($"An error ocurred while saving the university: {e.Message}");
-            }
-        }
-
-        public async Task<UniversityResponse> UpdateAsync(int id, University university)
-=======
-                return new UniversityResponse($"An error ocurred while saving the university {e.Message}");
-            }
-        }
-
         public async Task<UniversityResponse> UpdateASync(int id, University university)
->>>>>>> master
->>>>>>> master
         {
             var existingUniversity = await _universityRepository.FindById(id);
 
@@ -103,6 +86,11 @@ namespace TPC_UPC.Services
             {
                 return new UniversityResponse($"An error ocurred while updating the university: {ex.Message}");
             }
+        }
+
+        public Task<UniversityResponse> UpdateAsync(int id, University university)
+        {
+            throw new NotImplementedException();
         }
     }
 }
