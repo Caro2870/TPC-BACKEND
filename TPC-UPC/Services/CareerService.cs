@@ -12,38 +12,100 @@ namespace TPC_UPC.Services
     public class CareerService : ICareerService
     {
         private readonly ICareerRepository _careerRepository;
-        private IUnitOfWork _unitOfWork;
-        public CareerService(ICareerRepository object1, IUnitOfWork object2)
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IFacultyRepository _facultyRepository;
+        private ICareerRepository object1;
+  
+
+        public CareerService(ICareerRepository careerRepository, IFacultyRepository facultyRepository, IUnitOfWork unitOfWork)
         {
-            this._careerRepository = object1;
-            this._unitOfWork = object2;
+            _careerRepository = careerRepository;
+            _unitOfWork = unitOfWork;
+            _facultyRepository = facultyRepository;
         }
 
-        public async Task<IEnumerable<Career>> ListAsync() {
+     
+
+        public async Task<IEnumerable<Career>> ListAsync()
+        {
             return await _careerRepository.ListAsync();
         }
-
-        //CRUD
-        Task<CarrerResponse> ICareerService.GetByIdAsync(int id) {
-            throw new NotImplementedException();
+        public async Task<IEnumerable<Career>> ListByFacultyIdAsync(int facultyId)
+        {
+            return await _careerRepository.ListByFacultyIdAsync(facultyId);
         }
-        public async Task<CarrerResponse> SaveAsync(Career career) {
+
+        //Crud
+        public async Task<CareerResponse> GetByIdAsync(int id)
+        {
+            var existingCareer = await _careerRepository.FindById(id);
+
+            if (existingCareer == null)
+                return new CareerResponse("Career not found");
+
+            return new CareerResponse(existingCareer);
+        }
+        public async Task<CareerResponse> SaveAsync(Career career, int facultyId)
+        {
+            if (_facultyRepository.FindById(facultyId) != null)
+            {
+                try
+                {
+                    career.FacultyId = facultyId;
+                    await _careerRepository.AddAsync(career);
+                    await _unitOfWork.CompleteAsync();
+                    return new CareerResponse(career);
+                }
+                catch (Exception e)
+                {
+                    return new CareerResponse($"An error ocurred while saving {e.Message}");
+                }
+            }
+            else
+            {
+                return new CareerResponse($"An error ocurred, the faculty with id {facultyId} doesn't exist");
+            }
+        }
+        public async Task<CareerResponse> UpdateASync(int id, Career career)
+        {
+            var existingCareer = await _careerRepository.FindById(id);
+
+            if (existingCareer == null)
+                return new CareerResponse("Career not found");
+
+            existingCareer.CareerName = career.CareerName;
+
             try
             {
-                await _careerRepository.AddAsync(career);
+                _careerRepository.Update(existingCareer);
                 await _unitOfWork.CompleteAsync();
-                return new CarrerResponse(career);
+
+                return new CareerResponse(existingCareer);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                return new CarrerResponse($"An error ocurred while saving {e.Message}");
+                return new CareerResponse($"An error ocurred while updating career: {ex.Message}");
             }
         }
-        Task<CarrerResponse> ICareerService.UpdateASync(int id, Career career) {
-            throw new NotImplementedException();
-        }
-        Task<CarrerResponse> ICareerService.DeleteAsync(int id) {
-            throw new NotImplementedException();
+        public async Task<CareerResponse> DeleteAsync(int id)
+        {
+            var existingCareer = await _careerRepository.FindById(id);
+
+            if (existingCareer == null)
+                return new CareerResponse("Career not found");
+
+            try
+            {
+                _careerRepository.Remove(existingCareer);
+                await _unitOfWork.CompleteAsync();
+
+                return new CareerResponse(existingCareer);
+
+            }
+            catch (Exception ex)
+            {
+                return new CareerResponse($"An error ocurred while deleting career: {ex.Message}");
+            }
         }
     }
 }

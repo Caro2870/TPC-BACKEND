@@ -27,20 +27,9 @@ namespace TPC_UPC.Controllers
         }
 
         [SwaggerOperation(
-            Summary = "List all accounts",
-            Description = "List of Accounts",
-            OperationId = "ListAllAccounts")]
-        [SwaggerResponse(200, "List of Accounts", typeof(IEnumerable<AccountResource>))]
-        [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<AccountResource>), 200)]
-        public async Task<IEnumerable<AccountResource>> GetAllAsync()
-        {
-            var accounts = await _accountService.ListAsync();
-            var resources = _mapper
-                .Map<IEnumerable<Account>, IEnumerable<AccountResource>>(accounts);
-            return resources;
-        }
-
+            Summary = "Add Account",
+            Description = "Add Account by Id",
+            OperationId = "AddAccount")]
         [HttpPost]
         [ProducesResponseType(typeof(AccountResource), 200)]
         [ProducesResponseType(typeof(BadRequestResult), 404)]
@@ -57,21 +46,75 @@ namespace TPC_UPC.Controllers
             return Ok(accountResource);
         }
 
-        [HttpPut("{id}")]
+        //Only update the password and universityId
+        [SwaggerOperation(
+            Summary = "Update Account",
+            Description = "Update Account by Id",
+            OperationId = "UpdateAccount")]
+        [HttpPut("{accountId}")]
         [ProducesResponseType(typeof(AccountResource), 200)]
         [ProducesResponseType(typeof(BadRequestResult), 404)]
-        public async Task<IActionResult> PutAsync(int id, [FromBody] SaveAccountResource resource)
+        public async Task<IActionResult> PutAsync(int accountId, [FromBody] SaveAccountResource resource)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState.GetErrorMessages());
 
             var account = _mapper.Map<SaveAccountResource, Account>(resource);
-            var result = await _accountService.UpdateASync(id, account);
+            var result = await _accountService.UpdateAsync(accountId, account);
 
             if (!result.Success)
                 return BadRequest(result.Message);
             var accountResource = _mapper.Map<Account, AccountResource>(result.Resource);
             return Ok(accountResource);
         }
+
+        //Rodrigo
+        [SwaggerOperation(
+            Summary = "Get Account",
+            Description = "Get Account by Id",
+            OperationId = "GetAccount")]
+        [HttpGet("{accountId}")]
+        [ProducesResponseType(typeof(AccountResource), 200)]
+        [ProducesResponseType(typeof(BadRequestResult), 404)]
+        public async Task<IActionResult> GetAsync(int accountId)
+        {
+            var result = await _accountService.GetByIdAsync(accountId);
+            if (!result.Success)
+                return BadRequest(result.Message);
+            var accountResource = _mapper.Map<Account, AccountResource>(result.Resource);
+            return Ok(accountResource);
+        }
+
+        [SwaggerOperation(
+            Summary = "Delete Account",
+            Description = "Delete Account by Id",
+            OperationId = "DeleteAccount")]
+        [HttpDelete("{accountId}")]
+        [ProducesResponseType(typeof(AccountResource), 200)]
+        [ProducesResponseType(typeof(BadRequestResult), 404)]
+        public async Task<IActionResult> DeleteAsync(int accountId)
+        {
+            var result = await _accountService.DeleteAsync(accountId);
+            if (!result.Success)
+                return BadRequest(result.Message);
+            var accountResource = _mapper.Map<Account, AccountResource>(result.Resource);
+            return Ok(accountResource);
+        }
+
+        [SwaggerOperation(
+            Summary = "List all accounts",
+            Description = "List of Accounts",
+            OperationId = "ListAllAccounts")]
+        [SwaggerResponse(200, "List of Accounts", typeof(IEnumerable<AccountResource>))]
+        [HttpGet]
+        [ProducesResponseType(typeof(IEnumerable<AccountResource>), 200)]
+        public async Task<IEnumerable<AccountResource>> GetAllAsync()
+        {
+            var accounts = await _accountService.ListAsync();
+            var resources = _mapper
+                .Map<IEnumerable<Account>, IEnumerable<AccountResource>>(accounts);
+            return resources;
+        }
+
     }
 }

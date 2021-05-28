@@ -10,12 +10,14 @@ namespace TPC_UPC.Domain.Services
     public interface ICareerService
     {
         Task<IEnumerable<Career>> ListAsync();
+        Task<IEnumerable<Career>> ListByFacultyIdAsync(int facultyId);
 
-        //CRUD
-        Task<CarrerResponse> GetByIdAsync(int id);
-        Task<CarrerResponse> SaveAsync(Career career);
-        Task<CarrerResponse> UpdateASync(int id, Career career);
-        Task<CarrerResponse> DeleteAsync(int id);
+        //Crud
+        Task<CareerResponse> GetByIdAsync(int id);
+        Task<CareerResponse> SaveAsync(Career career, int facultyId);
+        Task<CareerResponse> UpdateASync(int id, Career career);
+        Task<CareerResponse> DeleteAsync(int id);
 
     }
 }
+

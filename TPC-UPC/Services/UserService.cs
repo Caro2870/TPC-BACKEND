@@ -18,21 +18,50 @@ namespace TPC_UPC.Services
             this._userRepository = object1;
             this._unitOfWork = object2;
         }
+
+        public async Task<UserResponse> DeleteAsync(int id)
+        {
+            var existingUser = await _userRepository.FindById(id);
+
+            if (existingUser == null)
+                return new UserResponse("User not found");
+
+            try
+            {
+                _userRepository.Remove(existingUser);
+                await _unitOfWork.CompleteAsync();
+
+                return new UserResponse(existingUser);
+            }
+            catch (Exception ex)
+            {
+                return new UserResponse($"An error ocurred while deleting the user: {ex.Message}");
+            }
+        }
+
+        public async Task<UserResponse> GetByIdAsync(int id)
+        {
+            var existingUser = await _userRepository.FindById(id);
+
+            if (existingUser == null)
+                return new UserResponse("User not found");
+            return new UserResponse(existingUser);
+        }
+
         public async Task<IEnumerable<User>> ListAsync()
         {
             return await _userRepository.ListAsync();
         }
 
-        Task<IEnumerable<User>> IUserService.ListByAccountIdAsync(int accountId)
+        public Task<IEnumerable<User>> ListByAccountIdAsync(int accountId)
         {
             throw new NotImplementedException();
         }
 
-        Task<IEnumerable<User>> IUserService.ListBySuggestionIdAsync(int suggestionId)
+        public Task<IEnumerable<User>> ListBySuggestionIdAsync(int suggestionId)
         {
             throw new NotImplementedException();
         }
-
 
         public async Task<UserResponse> SaveAsync(User user)
         {
@@ -44,23 +73,33 @@ namespace TPC_UPC.Services
             }
             catch (Exception e)
             {
-                return new UserResponse($"An error ocurred while saving {e.Message}");
+                return new UserResponse($"An error ocurred while saving the user: {e.Message}");
             }
         }
 
-        Task<UserResponse> IUserService.GetByIdAsync(int id)
+        public async Task<UserResponse> UpdateAsync(int id, User user)
         {
-            throw new NotImplementedException();
-        }
+            var existingUser = await _userRepository.FindById(id);
 
-        public Task<UserResponse> UpdateASync(int id, User user)
-        {
-            throw new NotImplementedException();
-        }
+            if (existingUser == null)
+                return new UserResponse("User not found");
 
-        public Task<UserResponse> DeleteAsync(int id)
-        {
-            throw new NotImplementedException();
+            existingUser.FirstName = user.FirstName;
+            existingUser.LastName = user.LastName;
+            existingUser.Mail = user.Mail;
+            existingUser.PhoneNumber = user.PhoneNumber;
+            existingUser.AccountId = user.AccountId;
+
+            try
+            {
+                _userRepository.Update(existingUser);
+                await _unitOfWork.CompleteAsync();
+                return new UserResponse(existingUser);
+            }
+            catch (Exception ex)
+            {
+                return new UserResponse($"An error ocurred while updating the user: {ex.Message}");
+            }
         }
     }
 }

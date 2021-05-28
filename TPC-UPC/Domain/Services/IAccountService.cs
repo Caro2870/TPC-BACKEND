@@ -15,7 +15,7 @@ namespace TPC_UPC.Domain.Services
         //CRUD
         Task<AccountResponse> GetByIdAsync(int id);
         Task<AccountResponse> SaveAsync(Account account);
-        Task<AccountResponse> UpdateASync(int id, Account account);
+        Task<AccountResponse> UpdateAsync(int id, Account account);
         Task<AccountResponse> DeleteAsync(int id);
 
     }
