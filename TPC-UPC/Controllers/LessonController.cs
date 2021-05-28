@@ -27,7 +27,7 @@ namespace TPC_UPC.Controllers
         }
 
 
-
+        [HttpGet("{id}")]
         [SwaggerOperation(
             Summary = "List all Lessons",
             Description = "List of Lessons",
