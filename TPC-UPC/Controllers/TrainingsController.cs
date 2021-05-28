@@ -56,11 +56,11 @@ namespace TPC_UPC.Controllers
         [HttpPost]
         [ProducesResponseType(typeof(TrainingResource), 200)]
         [ProducesResponseType(typeof(BadRequestResult), 404)]
-        public async Task<IActionResult> PostAsync([FromBody] SaveTrainningResource resource)
+        public async Task<IActionResult> PostAsync([FromBody] SaveTrainingResource resource)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState.GetErrorMessages());
-            var training = _mapper.Map<SaveTrainningResource, Training>(resource);
+            var training = _mapper.Map<SaveTrainingResource, Training>(resource);
             var result = await _trainingService.SaveAsync(training);
 
             if (!result.Success)
@@ -72,12 +72,12 @@ namespace TPC_UPC.Controllers
         [HttpPut("{id}")]
         [ProducesResponseType(typeof(TrainingResource), 200)]
         [ProducesResponseType(typeof(BadRequestResult), 404)]
-        public async Task<IActionResult> PutAsync(int id, [FromBody] SaveTrainningResource resource)
+        public async Task<IActionResult> PutAsync(int id, [FromBody] SaveTrainingResource resource)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState.GetErrorMessages());
 
-            var training = _mapper.Map<SaveTrainningResource, Training>(resource);
+            var training = _mapper.Map<SaveTrainingResource, Training>(resource);
             var result = await _trainingService.UpdateAsync(id, training);
 
             if (!result.Success)

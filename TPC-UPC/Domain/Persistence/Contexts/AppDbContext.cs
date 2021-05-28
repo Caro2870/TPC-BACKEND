@@ -151,8 +151,13 @@ namespace TPC_UPC.Domain.Persistence.Contexts
             builder.Entity<Suggestion>().HasKey(p => p.Id);   //PK
             builder.Entity<Suggestion>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();  //GeneraKey
             builder.Entity<Suggestion>().Property(p => p.Message).IsRequired().HasMaxLength(400);
-            
+
             //Constraints of Training
+            builder.Entity<Training>().Property(p => p.StartDate);
+            builder.Entity<Training>().Property(p => p.EndDate);
+            builder.Entity<Training>().Property(p => p.Description).IsRequired().HasMaxLength(300);
+            builder.Entity<Training>().Property(p => p.MeetingLink).IsRequired().HasMaxLength(150);
+            builder.Entity<Training>().Property(p => p.ResourceLink).IsRequired().HasMaxLength(150);
             builder.Entity<Training>().Property(p => p.CoordinatorId).IsRequired();
 
             //Constraints of TrainingTutor
