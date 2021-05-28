@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations;
 namespace TPC_UPC.Resources
 {
     //cosas que pedimos al usuario
-    public abstract class SaveUserResource
+    public class SaveUserResource
     {
         [Required]
         [MaxLength(30)]
@@ -19,7 +19,6 @@ namespace TPC_UPC.Resources
         [EmailAddress]
         public string Mail { get; set; }
         [Required]
-        [Phone]
         public string PhoneNumber { get; set; }
         [Required]
         public int AccountId { get; set; }

@@ -1,6 +1,7 @@
 using System;
  using System.Collections.Generic;
- using System.Threading.Tasks;
+using System.Linq;
+using System.Threading.Tasks;
  using Microsoft.EntityFrameworkCore;
  using TPC_UPC.Domain.Models;
  using TPC_UPC.Domain.Persistence.Contexts;
@@ -14,8 +15,8 @@ using System;
  		public CourseRepository(AppDbContext context) : base(context)
  		{
  		}
- 
- 		public async Task AddAsync(Course course)
+
+        public async Task AddAsync(Course course)
  		{
  			await _context.Courses.AddAsync(course);
  		}

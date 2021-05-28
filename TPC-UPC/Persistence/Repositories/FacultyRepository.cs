@@ -1,6 +1,7 @@
 using System;
  using System.Collections.Generic;
- using System.Threading.Tasks;
+using System.Linq;
+using System.Threading.Tasks;
  using Microsoft.EntityFrameworkCore;
  using TPC_UPC.Domain.Models;
  using TPC_UPC.Domain.Persistence.Contexts;
@@ -24,13 +25,32 @@ using System;
  		{
  			return await _context.Faculties.FindAsync(id);
  		}
- 
- 		public async Task<IEnumerable<Faculty>> ListAsync()
+
+        public Task<Faculty> FindByIdAndUniversityId(int universityId, int id)
+        {
+            throw new NotImplementedException();
+            //List<Faculty> faculties =       
+            //    await _context.Faculties
+            //    .FirstOrDefault( p=> p.Id = id)
+            //    .Where(p => p.Id == id)
+            //    .Where(p => p.UniversityId == universityId)
+            //    .Include(p => p.University)
+            //    .ToListAsync();
+            //return faculties.ElementAt(0);
+        }
+
+        public async Task<IEnumerable<Faculty>> ListAsync()
  		{
  			return await _context.Faculties.ToListAsync();
  		}
- 
- 		public void Remove(Faculty faculty)
+
+        public async Task<IEnumerable<Faculty>> ListByUniversityIdAsync(int universityId) => 
+            await _context.Faculties
+                .Where(p => p.UniversityId == universityId)
+                .Include(p => p.University)
+                .ToListAsync();
+
+        public void Remove(Faculty faculty)
  		{
  			_context.Faculties.Remove(faculty);
  		}

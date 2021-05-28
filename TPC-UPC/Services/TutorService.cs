@@ -12,26 +12,54 @@ namespace TPC_UPC.Services
     public class TutorService : ITutorService
     {
         private readonly ITutorRepository _tutorRepository;
+<<<<<<< HEAD
         private readonly IUnitOfWork _unitOfWork;
 
         public TutorService (ITutorRepository tutorRepository, IUnitOfWork unitOfWork)
         {
             _tutorRepository = tutorRepository;
             _unitOfWork = unitOfWork;
+=======
+        private IUnitOfWork _unitOfWork;
+        private readonly IFacultyRepository _facultyRepository;
+        private readonly IAccountRepository _accountRepository;
+        public TutorService (ITutorRepository object1, IFacultyRepository facultyRepository , IAccountRepository accountRepository,  IUnitOfWork object2)
+        {
+            this._tutorRepository = object1;
+            this._unitOfWork = object2;
+            this._facultyRepository = facultyRepository;
+            this._accountRepository = accountRepository;
+>>>>>>> master
         }
 
         //CRUD
         public async Task<TutorResponse> SaveAsync(Tutor tutor) {
-            try
+
+            if (_accountRepository.FindById(tutor.AccountId) != null)
             {
-                await _tutorRepository.AddAsync(tutor);
-                await _unitOfWork.CompleteAsync();
-                return new TutorResponse(tutor);
+                if (_facultyRepository.FindById(tutor.FacultyId) != null)
+                {
+                    try
+                    {
+                        await _tutorRepository.AddAsync(tutor);
+                        await _unitOfWork.CompleteAsync();
+                        return new TutorResponse(tutor);
+                    }
+                    catch (Exception e)
+                    {
+                        return new TutorResponse($"An error ocurred while saving {e.Message}");
+                    }
+                }
+                else
+                {
+                    return new TutorResponse($"The faculty with id {tutor.FacultyId}, doesn't exist");
+                }
             }
-            catch (Exception e)
+            else
             {
-                return new TutorResponse($"An error ocurred while saving {e.Message}");
+                return new TutorResponse($"The account with id {tutor.AccountId}, doesn't exist");
             }
+
         }
 
         public async Task<TutorResponse> GetByIdAsync(int tutorId) {

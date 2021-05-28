@@ -8,14 +8,8 @@ namespace TPC_UPC.Resources
 {
     public class SaveNotificationResource
     {
-        [Required]
-        public int NotificationTypeId { get; set; }
-
-        [Required]
-        [MaxLength(100)]
-        public string Link;
-        
-        [Required]
+        public string Link { get; set; }
         public DateTime SendDate { get; set; }
+        public int NotificationTypeId { get; set; }
     }
 }

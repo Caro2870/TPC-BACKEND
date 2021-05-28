@@ -22,13 +22,22 @@ using System;
  
  		public async Task<Notification> FindById(int id)
  		{
- 			return await _context.Notifications.FindAsync(id);
- 		}
+            return await _context.Notifications
+                .Include(p => p.NotificationType)
+                .FirstOrDefaultAsync(p=>p.Id == id);
+
+            //Another way failed
+            /*object obj = _context.Notifications.FindAsync(id);
+            return await _context.Entry(obj).Collection(p => p.NotificationType).LoadAsync();*/
+
+        }
  
  		public async Task<IEnumerable<Notification>> ListAsync()
  		{
- 			return await _context.Notifications.ToListAsync();
- 		}
+            return await _context.Notifications
+                .Include(n=>n.NotificationType)                
+                .ToListAsync();
+        }
  
  		public void Remove(Notification notification)
  		{

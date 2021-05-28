@@ -13,16 +13,14 @@ namespace TPC_UPC.Services
     public class CourseService : ICourseService
     {
         private readonly ICourseRepository _courseRepository;
-        private readonly ILessonRepository _lessonRepository;//new
-        private readonly ILessonStudentRepository _lessonStudentRepository;//new
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IUserCourseRepository _userCourseRepository;
 
-        public CourseService(ICourseRepository courseRepository, ILessonRepository lessonRepository, ILessonStudentRepository lessonStudentRepository, IUnitOfWork unitOfWork)
+        public CourseService(ICourseRepository courseRepository, IUnitOfWork unitOfWork, IUserCourseRepository userCourseRepository )
         {
             _courseRepository = courseRepository;
-            _lessonRepository = lessonRepository;
-            _lessonStudentRepository = lessonStudentRepository;
             _unitOfWork = unitOfWork;
+            _userCourseRepository = userCourseRepository;
         }
 
         public async Task<CourseResponse> DeleteAsync(int id)
@@ -41,7 +39,7 @@ namespace TPC_UPC.Services
             }
             catch (Exception ex)
             {
-                return new CourseResponse($"An error ocurred while deleting the category: {ex.Message}");
+                return new CourseResponse($"An error ocurred while deleting the course: {ex.Message}");
             }
         }
 
@@ -59,16 +57,11 @@ namespace TPC_UPC.Services
             return await _courseRepository.ListAsync();
         }
 
-        Task<IEnumerable<Course>> ICourseService.ListByStudentIdAsync(int studentId)
+        public async Task<IEnumerable<Course>> ListByUserIdAsync(int userId)
         {
-            //return await _lessonStudentRepository.ListByStudentIdAsync(studentId);
-            throw new NotImplementedException();
-        }
-
-        Task<IEnumerable<Course>> ICourseService.ListByTutorIdAsync(int tutorId)
-        {
-            //return await _lessonRepository.ListByTutorIdAsync(tutorId);
-            throw new NotImplementedException();
+            var userCourses = await _userCourseRepository.ListByUserIdAsync(userId);
+            var courses = userCourses.Select(pt => pt.Course).ToList();
+            return courses;
         }
 
         public async Task<CourseResponse> SaveAsync(Course course)

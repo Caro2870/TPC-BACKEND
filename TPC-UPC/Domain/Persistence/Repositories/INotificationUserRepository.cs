@@ -7,13 +7,14 @@ using System;
  {
      public interface INotificationUserRepository
      {
-        Task<IEnumerable<NotificationUser>> ListAsync();
         Task AddAsync(NotificationUser notificationUser);
-        Task<NotificationUser> FindById(int id);
-        void Update(NotificationUser notificationUser);
+        Task<NotificationUser> FindById(int notificationId, int userId);
         void Remove(NotificationUser notificationUser);
-        
+        void Update(NotificationUser notificationUser);
+
         //ADDED
+        Task<IEnumerable<NotificationUser>> ListAsync();
         Task<IEnumerable<NotificationUser>> ListByUserId(int userId);
-     }
+        Task<IEnumerable<NotificationUser>> ListByNotificationId(int notificationId);
+    }
  }
