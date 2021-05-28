@@ -63,7 +63,11 @@ namespace TPC_UPC.Controllers
 <<<<<<< HEAD
             var result = await _accountService.UpdateAsync(accountId, account);
 =======
+<<<<<<< HEAD
+            var result = await _accountService.UpdateAsync(accountId, account);
+=======
             var result = await _accountService.UpdateASync(accountId, account);
+>>>>>>> master
 >>>>>>> master
 
             if (!result.Success)

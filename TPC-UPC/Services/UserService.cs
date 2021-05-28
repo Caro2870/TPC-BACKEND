@@ -63,7 +63,11 @@ namespace TPC_UPC.Services
 <<<<<<< HEAD
         public Task<IEnumerable<User>> ListBySuggestionIdAsync(int suggestionId)
 =======
+<<<<<<< HEAD
+        public Task<IEnumerable<User>> ListBySuggestionIdAsync(int suggestionId)
+=======
         public  async Task<IEnumerable<User>> ListByCourseIdAsync(int courseId)
+>>>>>>> master
 >>>>>>> master
         {
             var userCourses = await _userCourseRepository.ListByCourseIdAsync(courseId);
@@ -73,11 +77,14 @@ namespace TPC_UPC.Services
 
 <<<<<<< HEAD
 =======
+<<<<<<< HEAD
+=======
         public Task<IEnumerable<User>> ListBySuggestionIdAsync(int suggestionId)
         {
             throw new NotImplementedException();
         }
 
+>>>>>>> master
 >>>>>>> master
         public async Task<UserResponse> SaveAsync(User user)
         {
@@ -96,7 +103,11 @@ namespace TPC_UPC.Services
 <<<<<<< HEAD
         public async Task<UserResponse> UpdateAsync(int id, User user)
 =======
+<<<<<<< HEAD
+        public async Task<UserResponse> UpdateAsync(int id, User user)
+=======
         public async Task<UserResponse> UpdateASync(int id, User user)
+>>>>>>> master
 >>>>>>> master
         {
             var existingUser = await _userRepository.FindById(id);

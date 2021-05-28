@@ -12,13 +12,19 @@ namespace TPC_UPC.Domain.Models
 
         public IList<Account> Accounts { get; set; } = new List<Account>();
 <<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> master
 
 
         /*public int AccountId { get; set; }
         public Account Account { get; set; }*/
 
+<<<<<<< HEAD
+=======
 =======
         public IList<Faculty> Faculties { get; set; } = new List<Faculty>();
+>>>>>>> master
 >>>>>>> master
     }
 }

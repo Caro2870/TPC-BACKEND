@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿    using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,9 +28,9 @@ namespace TPC_UPC.Controllers
 
         [SwaggerOperation(
             Summary = "List all careers",
-            Description = "List of careers",
+            Description = "List of Careers",
             OperationId = "ListAllCareers")]
-        [SwaggerResponse(200, "List of careers", typeof(IEnumerable<CareerResource>))]
+        [SwaggerResponse(200, "List of Careers", typeof(IEnumerable<CareerResource>))]
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<CareerResource>), 200)]
         public async Task<IEnumerable<CareerResource>> GetAllAsync()
@@ -41,20 +41,64 @@ namespace TPC_UPC.Controllers
             return resources;
         }
 
-        [HttpPost]
+        [HttpGet("{id}")]
         [ProducesResponseType(typeof(CareerResource), 200)]
         [ProducesResponseType(typeof(BadRequestResult), 404)]
-        public async Task<IActionResult> PostAsync([FromBody] SaveCareerResource resource)
+        public async Task<IActionResult> GetAsync(int id)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState.GetErrorMessages());
-            var Career = _mapper.Map<SaveCareerResource, Career>(resource);
-            var result = await _careerService.SaveAsync(Career);
-
+            var result = await _careerService.GetByIdAsync(id);
             if (!result.Success)
                 return BadRequest(result.Message);
             var CareerResource = _mapper.Map<Career, CareerResource>(result.Resource);
             return Ok(CareerResource);
+        }
+
+        [HttpPost]
+        [ProducesResponseType(typeof(CareerResource), 200)]
+        [ProducesResponseType(typeof(BadRequestResult), 404)]
+        public async Task<IActionResult> PostAsync([FromBody] SaveCareerResource resource, int facultyId)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState.GetErrorMessages());
+            var career = _mapper.Map<SaveCareerResource, Career>(resource);
+            var result = await _careerService.SaveAsync(career, facultyId);
+
+            if (!result.Success)
+                return BadRequest(result.Message);
+            var careerResource = _mapper.Map<Career, CareerResource>(result.Resource);
+            return Ok(careerResource);
+        }
+
+        [HttpPut("{id}")]
+        [ProducesResponseType(typeof(CareerResource), 200)]
+        [ProducesResponseType(typeof(BadRequestResult), 404)]
+        public async Task<IActionResult> PutAsync(int id, [FromBody] SaveCareerResource resource)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState.GetErrorMessages());
+
+            var career = _mapper.Map<SaveCareerResource, Career>(resource);
+            var result = await _careerService.UpdateASync(id, career);
+
+            if (!result.Success)
+                return BadRequest(result.Message);
+
+            var careerResource = _mapper.Map<Career, CareerResource>(result.Resource);
+            return Ok(careerResource);
+        }
+
+        [HttpDelete("{id}")]
+        [ProducesResponseType(typeof(CareerResource), 200)]
+        [ProducesResponseType(typeof(BadRequestResult), 404)]
+        public async Task<IActionResult> DeleteAsync(int id)
+        {
+            var result = await _careerService.DeleteAsync(id);
+
+            if (!result.Success)
+                return BadRequest(result.Message);
+
+            var careerResource = _mapper.Map<Career, CareerResource>(result.Resource);
+            return Ok(careerResource);
         }
     }
 }

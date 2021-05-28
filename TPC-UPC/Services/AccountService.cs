@@ -15,6 +15,9 @@ namespace TPC_UPC.Services
         private readonly IAccountRepository _accountRepository;
         private IUnitOfWork _unitOfWork;
 <<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> master
         
         public AccountService(IAccountRepository object1, IUnitOfWork object2)
 =======

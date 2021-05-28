@@ -23,6 +23,9 @@ using System;
  		public async Task<User> FindById(int id)
  		{
 <<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> master
             return await _context.Users
                .Include(u => u.Account)
                .Include(u => u.Account.University)

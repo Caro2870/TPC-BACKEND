@@ -62,8 +62,13 @@ namespace TPC_UPC.Controllers
             var result = await _userService.UpdateAsync(userId,user);
 
 =======
+<<<<<<< HEAD
+            var result = await _userService.UpdateAsync(userId,user);
+
+=======
             var result = await _userService.UpdateASync(userId, user);
             
+>>>>>>> master
 >>>>>>> master
             if (!result.Success)
                 return BadRequest(result.Message);

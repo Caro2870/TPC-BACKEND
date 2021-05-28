@@ -16,7 +16,12 @@ namespace TPC_UPC.Resources
         /*public int AccountId { get; set; }*/
         public AccountResource Account { get; set; }
 =======
+<<<<<<< HEAD
+        /*public int AccountId { get; set; }*/
+        public AccountResource Account { get; set; }
+=======
 
+>>>>>>> master
 >>>>>>> master
     }
 }

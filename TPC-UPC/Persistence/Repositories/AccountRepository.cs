@@ -28,6 +28,14 @@ using System.Threading.Tasks;
                 .Include(a => a.University)
                 .FirstOrDefaultAsync(p => p.Id == id);
         }
+
+        public async Task<IEnumerable<Account>> ListAsync() =>
+               await _context.Accounts.Include(p => p.University).ToListAsync();
+=======
+<<<<<<< HEAD
+                .Include(a => a.University)
+                .FirstOrDefaultAsync(p => p.Id == id);
+        }
  
  		public async Task<IEnumerable<Account>> ListAsync()
  		{
@@ -35,6 +43,7 @@ using System.Threading.Tasks;
                 .Include(a=>a.University)
                 .ToListAsync();
  		}
+>>>>>>> master
 
         public async Task<IEnumerable<Account>> ListByUniversityIdAsync(int universityId)
         {
@@ -42,9 +51,12 @@ using System.Threading.Tasks;
                 .Where(p => p.UniversityId == universityId)
                 .Include(p => p.University)
                 .ToListAsync();
+<<<<<<< HEAD
+=======
 =======
                .Include(a => a.University)
                .FirstOrDefaultAsync(p => p.Id == id);
+>>>>>>> master
 >>>>>>> master
         }
 
