@@ -9,6 +9,5 @@ namespace TPC_UPC.Resources
     {
         public int Id { get; set; }
         public string UniversityName { get; set; }
-
     }
 }

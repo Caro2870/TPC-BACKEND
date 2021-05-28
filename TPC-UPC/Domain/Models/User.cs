@@ -13,7 +13,6 @@ namespace TPC_UPC.Domain.Models
         public string Mail { get; set; }
         public string PhoneNumber { get; set; }
 
-
         //un user tiene un account //FK
         public int AccountId { get; set; }
         public Account Account { get; set; }

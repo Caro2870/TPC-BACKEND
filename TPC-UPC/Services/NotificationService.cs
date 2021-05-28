@@ -47,6 +47,7 @@ namespace TPC_UPC.Services
 
             if (existingNotification == null)
                 return new NotificationResponse("Notification not found");
+
             return new NotificationResponse(existingNotification);
         }
 
@@ -78,6 +79,8 @@ namespace TPC_UPC.Services
                 return new NotificationResponse("Notification not found");
 
             existingNotification.Link = notification.Link;
+            existingNotification.SendDate = notification.SendDate;
+            existingNotification.NotificationTypeId = notification.NotificationTypeId;
 
             try
             {
