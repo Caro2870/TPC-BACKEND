@@ -10,9 +10,11 @@ namespace TPC_UPC.Domain.Models
         public int Id { get; set; }
         public string UniversityName { get; set; }
 
-        //relacion uno
-
         public IList<Account> Accounts { get; set; } = new List<Account>();
-        
+
+
+        /*public int AccountId { get; set; }
+        public Account Account { get; set; }*/
+
     }
 }

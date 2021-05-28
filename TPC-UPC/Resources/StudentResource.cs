@@ -8,6 +8,6 @@ namespace TPC_UPC.Resources
     public class StudentResource : UserResource
     {
         public int CycleNumber { get; set; }
-        public CareerResource CareerResource { get; set; }
+        public CareerResource Career { get; set; }
     }
 }

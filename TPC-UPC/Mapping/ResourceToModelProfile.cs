@@ -12,6 +12,7 @@ namespace TPC_UPC.Mapping
         public ResourceToModelProfile()
         {
             CreateMap<SaveUniversityResource, University>();
+            CreateMap<SaveCareerResource, Career>();
             CreateMap<SaveAccountResource, Account>();
             CreateMap<SaveUserResource, User>();
             CreateMap<SaveNotificationUserResource, NotificationUser>();

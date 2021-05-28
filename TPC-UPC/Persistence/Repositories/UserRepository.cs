@@ -22,12 +22,18 @@ using System;
  
  		public async Task<User> FindById(int id)
  		{
- 			return await _context.Users.FindAsync(id);
+            return await _context.Users
+               .Include(u => u.Account)
+               .Include(u => u.Account.University)
+               .FirstOrDefaultAsync(p => p.Id == id);
  		}
  
  		public async Task<IEnumerable<User>> ListAsync()
  		{
- 			return await _context.Users.ToListAsync();
+ 			return await _context.Users
+                .Include(u => u.Account)
+                .Include(u=>u.Account.University)
+                .ToListAsync();
  		}
  
  		public void Remove(User user)

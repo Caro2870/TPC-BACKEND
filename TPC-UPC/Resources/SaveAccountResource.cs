@@ -16,6 +16,6 @@ namespace TPC_UPC.Resources
         public string Password { get; set; }  //dudas
 
         [Required]
-        public int UniversityId { get; set; }
+        public SaveUniversityResource University { get; set; }
     }
 }

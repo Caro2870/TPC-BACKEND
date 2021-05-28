@@ -14,6 +14,7 @@ namespace TPC_UPC.Services
     {
         private readonly IAccountRepository _accountRepository;
         private IUnitOfWork _unitOfWork;
+        
         public AccountService(IAccountRepository object1, IUnitOfWork object2)
         {
             this._accountRepository = object1;
@@ -74,14 +75,16 @@ namespace TPC_UPC.Services
             }
         }
 
-        public async Task<AccountResponse> UpdateASync(int id, Account account)
+        public async Task<AccountResponse> UpdateAsync(int id, Account account)
         {
             var existingAccount = await _accountRepository.FindById(id);
 
             if (existingAccount == null)
                 return new AccountResponse("Account not found");
 
+            existingAccount.UniversityId = account.UniversityId;
             existingAccount.Password = account.Password;
+
             try
             {
                 _accountRepository.Update(existingAccount);
