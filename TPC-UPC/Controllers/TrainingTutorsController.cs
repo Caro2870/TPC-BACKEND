@@ -12,7 +12,7 @@ using TPC_UPC.Resources;
 
 namespace TPC_UPC.Controllers
 {
-    [Route("api/trainings/{trainingId}/tutors")]
+    [Route("/trainings/{trainingId}/tutors")]
     [ApiController]
     public class TrainingTutorsController : ControllerBase
     {
