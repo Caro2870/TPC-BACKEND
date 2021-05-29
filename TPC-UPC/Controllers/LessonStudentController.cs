@@ -39,7 +39,7 @@ namespace TPC_UPC.Controllers
             return Ok(nuResource);
         }
 
-        [HttpDelete("/lessons/{lessonId}/users/{userId}")]
+        [HttpDelete("/lessons/{lessonId}/students/{studentId}")]
         public async Task<IActionResult> DeleteAsync(int lessonId, int studentId)
         {
             var result = await _lessonStudentService.DeleteAsync(lessonId, studentId);
@@ -49,7 +49,7 @@ namespace TPC_UPC.Controllers
             return Ok(nuResource);
         }
 
-        [HttpPut("/lessons/{lessonsId}/users/{userId}")]
+        [HttpPut("/lessons/{lessonsId}/students/{studentId}")]
         public async Task<IActionResult> PostAsync(int lessonId, int studentId, [FromBody] SaveLessonStudentResource resource)
         {
             if (!ModelState.IsValid)
@@ -73,9 +73,9 @@ namespace TPC_UPC.Controllers
         }
 
         [HttpGet("/student/{studentId}")]
-        public async Task<IEnumerable<LessonStudentResource>> GetAllByUserIdAsync(int userId)
+        public async Task<IEnumerable<LessonStudentResource>> GetAllByStudentIdAsync(int studentId)
         {
-            var lessonStudents = await _lessonStudentService.ListByStudentIdAsync(userId);
+            var lessonStudents = await _lessonStudentService.ListByStudentIdAsync(studentId);
             var resources = _mapper.Map<IEnumerable<LessonStudent>, IEnumerable<LessonStudentResource>>(lessonStudents);
             return resources;
         }
