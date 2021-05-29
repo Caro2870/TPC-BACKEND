@@ -21,9 +21,9 @@ namespace TPC_UPC.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<LessonStudentResponse> DeleteAsync(int id)
+        public async Task<LessonStudentResponse> DeleteAsync(int lessonId, int studentId)
         {
-            var existingLessonStudent = await _lessonStudentRepository.FindById(id);
+            var existingLessonStudent = await _lessonStudentRepository.FindById(lessonId, studentId);
 
             if (existingLessonStudent == null)
                 return new LessonStudentResponse("LessonStudent not found");
@@ -41,9 +41,9 @@ namespace TPC_UPC.Services
             }
         }
 
-        public async Task<LessonStudentResponse> GetByIdAsync(int id)
+        public async Task<LessonStudentResponse> GetByIdAsync(int lessonId, int studentId)
         {
-            var existingLessonStudent = await _lessonStudentRepository.FindById(id);
+            var existingLessonStudent = await _lessonStudentRepository.FindById(lessonId, studentId);
 
             if (existingLessonStudent == null)
                 return new LessonStudentResponse("LessonStudent not found");
@@ -80,9 +80,9 @@ namespace TPC_UPC.Services
             }
         }
 
-        public async Task<LessonStudentResponse> UpdateAsync(int id, LessonStudent lessonStudent)
+        public async Task<LessonStudentResponse> UpdateAsync(int lessonId, int studentId, LessonStudent lessonStudent)
         {
-            var existingLessonStudent = await _lessonStudentRepository.FindById(id);
+            var existingLessonStudent = await _lessonStudentRepository.FindById(lessonId, studentId);
 
             if (existingLessonStudent == null)
                 return new LessonStudentResponse("LessonStudent not found");

@@ -10,13 +10,14 @@ namespace TPC_UPC.Domain.Services
 {
     public interface ILessonStudentService
     {
-        Task<IEnumerable<LessonStudent>> ListAsync();
-        Task<LessonStudentResponse> GetByIdAsync(int id);
+        Task<LessonStudentResponse> GetByIdAsync(int lessonId, int studentId);
         Task<LessonStudentResponse> SaveAsync(LessonStudent lesson);
-        Task<LessonStudentResponse> UpdateAsync(int id, LessonStudent lesson);
-        Task<LessonStudentResponse> DeleteAsync(int id);
+        Task<LessonStudentResponse> UpdateAsync(int lessonId, int studentId, LessonStudent lesson);
+        Task<LessonStudentResponse> DeleteAsync(int lessonId, int studentId);
+        Task<IEnumerable<LessonStudent>> ListAsync();
         //new
-        Task<IEnumerable<LessonStudent>> ListByStudentIdAsync(int studentId);
         Task<IEnumerable<LessonStudent>> ListStudentAssistantsByLessonIdAsync(int lessonId);
+        Task<IEnumerable<LessonStudent>> ListByStudentIdAsync(int studentId);
+       
     }
 }

@@ -21,9 +21,9 @@ using TPC_UPC.Domain.Models;
  			await _context.LessonStudents.AddAsync(lessonStudent);
  		}
  
- 		public async Task<LessonStudent> FindById(int id)
+ 		public async Task<LessonStudent> FindById(int lessonId, int studentId)
  		{
- 			return await _context.LessonStudents.FindAsync(id);
+ 			return await _context.LessonStudents.FindAsync(lessonId, studentId);
  		}
  
  		public async Task<IEnumerable<LessonStudent>> ListAsync()
@@ -66,9 +66,16 @@ using TPC_UPC.Domain.Models;
  			_context.LessonStudents.Update(lessonStudent);
  		}
 
-        public Task<IEnumerable<LessonStudent>> ListByStudentIdAsync(int studentId)
+        public async Task<IEnumerable<LessonStudent>> ListByStudentIdAsync(int studentId)
         {
-            throw new NotImplementedException();
+            return await _context.LessonStudents
+                .Where(ls => ls.StudentId == studentId)
+                .Include(ls => ls.Student)
+                .Include(ls => ls.Lesson)
+                .Include(ls => ls.Lesson.LessonType)
+                .ToListAsync();
         }
+
+       
     }
  }
