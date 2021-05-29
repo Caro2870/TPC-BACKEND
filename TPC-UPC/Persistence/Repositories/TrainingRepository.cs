@@ -25,8 +25,17 @@ using System.Threading.Tasks;
  		{
  			return await _context.Trainings.FindAsync(id);
  		}
- 
- 		public async Task<IEnumerable<Training>> ListByCoordinatorIdAsync(int coordinatorId)
+
+        public async Task<IEnumerable<Training>> ListAsync()
+        {
+            return await _context.Trainings
+                .Include(p => p.Coordinator)
+                .Include(p => p.Coordinator.Account)
+                .Include(p => p.Coordinator.Faculty)
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Training>> ListByCoordinatorIdAsync(int coordinatorId)
  		{
  			return await _context.Trainings
                 .Where(p => p.CoordinatorId == coordinatorId)

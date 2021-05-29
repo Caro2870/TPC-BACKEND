@@ -27,8 +27,12 @@ using System;
  
  		public async Task<IEnumerable<Tutor>> ListAsync()
  		{
- 			return await _context.Tutors.ToListAsync();
- 		}
+            return await _context.Tutors
+                .Include(p => p.Faculty)
+                .Include(p => p.Account)
+                .ThenInclude(a => a.University)
+                .ToListAsync();
+        }
  
  		public void Remove(Tutor tutor)
  		{

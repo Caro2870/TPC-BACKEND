@@ -16,6 +16,7 @@ namespace TPC_UPC.Domain.Services
         Task<TrainingResponse> DeleteAsync(int id);
 
         //ADDED
+        Task<IEnumerable<Training>> ListAsync();
         Task<IEnumerable<Training>> ListByCoordinatorIdAsync(int coordinatorId);
     }
 }

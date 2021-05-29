@@ -14,24 +14,34 @@ namespace TPC_UPC.Services
         private readonly ITrainingRepository _trainingRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public TrainingService(ITrainingRepository trainingRepository, IUnitOfWork unitOfWork)
+        private readonly ICoordinatorRepository _coordinatorRepository;
+
+        public TrainingService(ITrainingRepository trainingRepository, IUnitOfWork unitOfWork, ICoordinatorRepository coordinatorRepository)
         {
             _trainingRepository = trainingRepository;
             _unitOfWork = unitOfWork;
+            _coordinatorRepository = coordinatorRepository;
         }
 
         //CRUD
         public async Task<TrainingResponse> SaveAsync(Training training)
         {
-            try
+            if (_coordinatorRepository.FindById(training.CoordinatorId) != null)
             {
-                await _trainingRepository.AddAsync(training);
-                await _unitOfWork.CompleteAsync();
-                return new TrainingResponse(training);
+                try
+                {
+                    await _trainingRepository.AddAsync(training);
+                    await _unitOfWork.CompleteAsync();
+                    return new TrainingResponse(training);
+                }
+                catch (Exception e)
+                {
+                    return new TrainingResponse($"An error ocurred while saving {e.Message}");
+                }
             }
-            catch (Exception e)
+            else
             {
-                return new TrainingResponse($"An error ocurred while saving {e.Message}");
+                return new TrainingResponse($"The coordinator with id {training.CoordinatorId}, doesn't exist");
             }
         }
 
@@ -51,6 +61,12 @@ namespace TPC_UPC.Services
             if (existingTraining == null)
                 return new TrainingResponse("Training not found");
 
+            existingTraining.ScheduleId = training.ScheduleId;
+            existingTraining.StartDate = training.StartDate;
+            existingTraining.EndDate = training.EndDate;
+            existingTraining.Description = training.Description;
+            existingTraining.MeetingLink = training.MeetingLink;
+            existingTraining.ResourceLink = training.ResourceLink;
             existingTraining.CoordinatorId = training.CoordinatorId;
 
             try
@@ -87,6 +103,11 @@ namespace TPC_UPC.Services
         }
 
         //ADDED
+        public async Task<IEnumerable<Training>> ListAsync()
+        {
+            return await _trainingRepository.ListAsync();
+        }
+
         public async Task<IEnumerable<Training>> ListByCoordinatorIdAsync(int coordinatorId)
         {
             return await _trainingRepository.ListByCoordinatorIdAsync(coordinatorId);

@@ -67,6 +67,11 @@ namespace TPC_UPC.Services
             if (existingTutor == null)
                 return new TutorResponse("Tutor not found");
 
+            existingTutor.FirstName = tutor.FirstName;
+            existingTutor.LastName = tutor.LastName;
+            existingTutor.Mail = tutor.Mail;
+            existingTutor.PhoneNumber = tutor.PhoneNumber;
+            existingTutor.AccountId = tutor.AccountId;
             existingTutor.FacultyId = tutor.FacultyId;
 
             try
