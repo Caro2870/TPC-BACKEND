@@ -73,9 +73,9 @@ namespace TPC_UPC.Controllers
 
 
         [SwaggerOperation(
-            Summary = "Delete Account",
-            Description = "Delete Account by Id",
-            OperationId = "DeleteAccount")]
+            Summary = "Delete Lesson",
+            Description = "Delete Lesson by Id",
+            OperationId = "DeleteLesson")]
         [HttpDelete("{accountId}")]
         [ProducesResponseType(typeof(LessonResource), 200)]
         [ProducesResponseType(typeof(BadRequestResult), 404)]
