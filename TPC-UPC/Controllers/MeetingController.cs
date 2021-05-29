@@ -15,7 +15,7 @@ namespace TPC_UPC.Controllers
     [Route("/api/[controller]")]
     [Produces("application/json")]
     [ApiController]
-    class MeetingController : ControllerBase
+    public class MeetingController : ControllerBase
     {
         private readonly IMeetingService _meetingService;
         private readonly IMapper _mapper;
