@@ -15,7 +15,7 @@ namespace TPC_UPC.Controllers
     [Route("/api/[controller]")]
     [Produces("application/json")]
     [ApiController]
-    class MeetingController : ControllerBase
+    public class MeetingController : ControllerBase
     {
         private readonly IMeetingService _meetingService;
         private readonly IMapper _mapper;
@@ -71,6 +71,20 @@ namespace TPC_UPC.Controllers
             return Ok(meetingResource);
         }
 
-        
+        [SwaggerOperation(
+            Summary = "Delete Meeting",
+            Description = "Delete Meeting by Id",
+            OperationId = "DeleteMeeting")]
+        [HttpDelete("{accountId}")]
+        [ProducesResponseType(typeof(MeetingResource), 200)]
+        [ProducesResponseType(typeof(BadRequestResult), 404)]
+        public async Task<IActionResult> DeleteAsync(int meetingId)
+        {
+            var result = await _meetingService.DeleteAsync(meetingId);
+            if (!result.Success)
+                return BadRequest(result.Message);
+            var meetingResource = _mapper.Map<Meeting, MeetingResource>(result.Resource);
+            return Ok(meetingResource);
+        }
     }
 }

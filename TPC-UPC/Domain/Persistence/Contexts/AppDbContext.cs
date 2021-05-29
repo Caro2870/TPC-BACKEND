@@ -99,10 +99,12 @@ namespace TPC_UPC.Domain.Persistence.Contexts
 
 
             //Constraints of Lesson
-
             builder.Entity<Lesson>().Property(p => p.Vacants).IsRequired();  //GeneraKey
-            
-            
+            builder.Entity<Lesson>().Property(p => p.CourseId).IsRequired();
+            builder.Entity<Lesson>().Property(p => p.TutorId).IsRequired();
+            builder.Entity<Lesson>().Property(p => p.LessonTypeId).IsRequired();
+
+
             /*--------LUCAS------------------------------*/
             //Constraints of LessonStudent
             builder.Entity<LessonStudent>().HasKey(p => p.LessonId);   //PK
@@ -420,6 +422,7 @@ namespace TPC_UPC.Domain.Persistence.Contexts
                 (
                 new Lesson { 
                     Id = 1, Description = "", MeetingLink = "https://googlemeet.com", 
+                    
                     ResourceLink = "blob://resource.pdf", LessonTypeId = 2, TutorId=102, CourseId = 1, Vacants=30 }
                 );
             builder.Entity<Training>().HasData
