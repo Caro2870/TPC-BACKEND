@@ -20,10 +20,12 @@ namespace TPC_UPC.Controllers
     {
         private readonly ICoordinatorService _coordinatorService;
         private readonly IMapper _mapper;
-        public CoordinatorsController(ICoordinatorService coordinatorService, IMapper mapper)
+        private readonly ISuggestionService _suggestionService;
+        public CoordinatorsController(ICoordinatorService coordinatorService, IMapper mapper, ISuggestionService suggestionService = null)
         {
             _coordinatorService = coordinatorService;
             _mapper = mapper;
+            _suggestionService = suggestionService;
         }
 
         [SwaggerOperation(
@@ -104,6 +106,21 @@ namespace TPC_UPC.Controllers
 
             var coordinatorResource = _mapper.Map<Coordinator, CoordinatorResource>(result.Resource);
             return Ok(coordinatorResource);
+        }
+
+        [SwaggerOperation(
+            Summary = "List all Suggestions",
+            Description = "List of Suggestions",
+            OperationId = "ListAllSuggestions")]
+        [SwaggerResponse(200, "List of Suggestions", typeof(IEnumerable<SuggestionResource>))]
+        [HttpGet("/suggestions")]
+        [ProducesResponseType(typeof(IEnumerable<SuggestionResource>), 200)]
+        public async Task<IEnumerable<SuggestionResource>> GetAllSuggestionsAsync()
+        {
+            var suggestions = await _suggestionService.ListAsync();
+            var resources = _mapper
+                .Map<IEnumerable<Suggestion>, IEnumerable<SuggestionResource>>(suggestions);
+            return resources;
         }
     }
 }

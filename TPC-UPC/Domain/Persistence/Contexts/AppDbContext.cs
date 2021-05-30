@@ -107,8 +107,7 @@ namespace TPC_UPC.Domain.Persistence.Contexts
 
             /*--------LUCAS------------------------------*/
             //Constraints of LessonStudent
-            builder.Entity<LessonStudent>().HasKey(p => p.LessonId);   //PK
-            builder.Entity<LessonStudent>().HasKey(p => p.StudentId);   //PK
+            builder.Entity<LessonStudent>().HasKey(sr => new { sr.LessonId, sr.StudentId });
             builder.Entity<LessonStudent>().Property(p => p.Topic).IsRequired();
             builder.Entity<LessonStudent>().Property(p => p.Comment).IsRequired().HasMaxLength(200);
             builder.Entity<LessonStudent>().Property(p => p.Qualification).IsRequired();
@@ -216,10 +215,17 @@ namespace TPC_UPC.Domain.Persistence.Contexts
             */
 
             //Relationships of Lesson
-            builder.Entity<Lesson>()
-                .HasMany(a => a.LessonStudents)
-                .WithOne(b => b.Lesson)
-                .HasForeignKey(p => p.LessonId);
+            builder.Entity<LessonStudent>()
+                .HasOne(a => a.Student)
+                .WithMany(b => b.LessonStudents)
+                .HasForeignKey(a => a.StudentId);
+
+            builder.Entity<LessonStudent>()
+                .HasOne(pt => pt.Lesson)
+                .WithMany(p => p.LessonStudents)
+                .HasForeignKey(pt => pt.LessonId);
+
+
             //Relationships of LessonType
             //hemos cambiado esto
             builder.Entity<LessonType>()
@@ -439,6 +445,7 @@ namespace TPC_UPC.Domain.Persistence.Contexts
             builder.Entity<Course>().HasData
                 (
                 new Course { Id = 1, Name = "Programacion 1", Credits=6 }
+                
                 );
             builder.Entity<NotificationType>().HasData
                    (

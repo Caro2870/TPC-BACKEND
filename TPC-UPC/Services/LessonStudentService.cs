@@ -65,6 +65,11 @@ namespace TPC_UPC.Services
             return await _lessonStudentRepository.ListByStudentIdAsync(studentId);
         }
 
+        public async Task<IEnumerable<LessonStudent>> ListStudentsByLessonIdAsync(int lessonId)
+        {
+            return await _lessonStudentRepository.ListStudentsByLessonIdAsync(lessonId);
+        }
+
         public async Task<LessonStudentResponse> SaveAsync(LessonStudent lessonStudent)
         {
             try
@@ -101,5 +106,7 @@ namespace TPC_UPC.Services
                 return new LessonStudentResponse($"An error ocurred while updating the lessonStudent: {ex.Message}");
             }
         }
+
+        
     }
 }

@@ -50,7 +50,7 @@ namespace TPC_UPC.Controllers
         }
 
         [HttpPut("/lessons/{lessonsId}/students/{studentId}")]
-        public async Task<IActionResult> PostAsync(int lessonId, int studentId, [FromBody] SaveLessonStudentResource resource)
+        public async Task<IActionResult> UpdateAsync(int lessonId, int studentId, [FromBody] SaveLessonStudentResource resource)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState.GetErrorMessages());
@@ -83,7 +83,7 @@ namespace TPC_UPC.Controllers
         [HttpGet("/lessons/{lessonId}")]
         public async Task<IEnumerable<LessonStudentResource>> GetAllByLessonIdAsync(int lessonId)
         {
-            var lessonStudents = await _lessonStudentService.ListByStudentIdAsync(lessonId);
+            var lessonStudents = await _lessonStudentService.ListStudentsByLessonIdAsync(lessonId);
             var resources = _mapper.Map<IEnumerable<LessonStudent>, IEnumerable<LessonStudentResource>>(lessonStudents);
             return resources;
         }

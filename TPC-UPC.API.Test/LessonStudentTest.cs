@@ -32,7 +32,23 @@ namespace TPC_UPC.API.Test
             message.Should().Be("");
         }
 
+        [Test]
+        public async Task GetAsyncAllLessonsByStudentId()
+        {
+            var mockLessonStudentRepository = GetDefaultILessonStudentRepositoryInstance();
+            var mockIUnitOfWork = GetDefaultIUnitOfWorkInstance();
+            LessonStudent lessonStudent = new LessonStudent();
+            mockLessonStudentRepository.Setup(r => r.AddAsync(lessonStudent))
+                .Returns(Task.FromResult<LessonStudent>(lessonStudent));
+            int studentId = 1;
+            lessonStudent.LessonId = 1;
+            lessonStudent.StudentId = 1;
+            lessonStudent.Topic = "mate";
+            var service = new LessonStudentService(mockLessonStudentRepository.Object, mockIUnitOfWork.Object);
+            var message = service.ListByStudentIdAsync(studentId);
 
+            message.Should().Be("");
+        }
 
         private Mock<ILessonStudentRepository> GetDefaultILessonStudentRepositoryInstance()
         {
