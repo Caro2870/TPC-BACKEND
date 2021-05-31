@@ -110,10 +110,10 @@ namespace TPC_UPC.Domain.Persistence.Contexts
             builder.Entity<LessonStudent>().HasKey(p => p.LessonId);   //PK
             builder.Entity<LessonStudent>().HasKey(p => p.StudentId);   //PK
             builder.Entity<LessonStudent>().Property(p => p.Topic).IsRequired();
-            builder.Entity<LessonStudent>().Property(p => p.Comment).IsRequired().HasMaxLength(200);
-            builder.Entity<LessonStudent>().Property(p => p.Qualification).IsRequired();
-            builder.Entity<LessonStudent>().Property(p => p.Complaint).IsRequired();
-            builder.Entity<LessonStudent>().Property(p => p.Assistance).IsRequired();
+            builder.Entity<LessonStudent>().Property(p => p.Comment).HasMaxLength(200);
+            builder.Entity<LessonStudent>().Property(p => p.Qualification);
+            builder.Entity<LessonStudent>().Property(p => p.Complaint);
+            builder.Entity<LessonStudent>().Property(p => p.Assistance);
              //Constraints of LessonType
             builder.Entity<LessonType>().HasKey(p => p.Id);   //PK
             builder.Entity<LessonType>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();  //GeneraKey

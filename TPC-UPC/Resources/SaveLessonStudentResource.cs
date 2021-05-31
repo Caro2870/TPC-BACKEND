@@ -18,17 +18,13 @@ namespace TPC_UPC.Resources
         [MaxLength(200)]
         public string Topic { get; set; }
 
-        [Required]
         [MaxLength(500)]
         public string Comment { get; set; }
 
-        [Required]
         public int Qualification { get; set; }
 
-        [Required]
         public bool Complaint { get; set; }
         
-        [Required]
         public bool Assistance { get; set; }
     }
 }

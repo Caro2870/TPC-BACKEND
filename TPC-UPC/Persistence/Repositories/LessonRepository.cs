@@ -23,12 +23,28 @@ using System.Threading.Tasks;
  
  		public async Task<Lesson> FindById(int id)
  		{
- 			return await _context.Lessons.FindAsync(id);
- 		}
+ 		        List<Lesson> lessons = await _context.Lessons
+                .Where(l=> l.Id == id)
+                .Include(l => l.Tutor).
+                Include(t => t.Tutor.Account).
+                Include(t => t.Tutor.Faculty).
+                Include(l => l.LessonType).
+                Include(l => l.Course).
+                ToListAsync();
+
+            return lessons.First();
+
+         }
  
  		public async Task<IEnumerable<Lesson>> ListAsync()
  		{
- 			return await _context.Lessons.ToListAsync();
+            return await _context.Lessons.
+               Include(l => l.Tutor).
+               Include( t=> t.Tutor.Account).
+               Include(t=> t.Tutor.Faculty).
+               Include(l => l.LessonType).
+               Include(l => l.Course).
+               ToListAsync();
  		}
 
         public async Task<IEnumerable<Lesson>> ListByLessonTypeIdAsync(int lessonTypeId)
