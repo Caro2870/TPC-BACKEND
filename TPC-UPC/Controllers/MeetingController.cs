@@ -86,5 +86,16 @@ namespace TPC_UPC.Controllers
             var meetingResource = _mapper.Map<Meeting, MeetingResource>(result.Resource);
             return Ok(meetingResource);
         }
+
+        [HttpGet("/meetingsrange")]
+        [ProducesResponseType(typeof(MeetingResource), 200)]
+        [ProducesResponseType(typeof(BadRequestResult), 404)]
+        public async Task<IEnumerable<MeetingResource>> GetInRangeOfDatesAsync(DateTime start, DateTime end)
+        {
+            var meetings = await _meetingService.ListByRangeOfDates(start, end);
+            var resources = _mapper
+                .Map<IEnumerable<Meeting>, IEnumerable<MeetingResource>>(meetings);
+            return resources;
+        }
     }
 }

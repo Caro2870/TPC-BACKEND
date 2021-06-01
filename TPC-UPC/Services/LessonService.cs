@@ -70,6 +70,11 @@ namespace TPC_UPC.Services
             return await _lessonRepository.ListByCourseIdAsync(courseId);
         }
 
+        public async Task<IEnumerable<Lesson>> ListByRangeOfDates(DateTime start, DateTime end)
+        {
+            return await _lessonRepository.ListByRangeOfDates(start, end);
+        }
+
         public async Task<LessonResponse> SaveAsync(Lesson lesson)
         {
             lesson.Contador = 0;

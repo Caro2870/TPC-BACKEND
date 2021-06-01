@@ -18,5 +18,6 @@ using System;
 
         Task<IEnumerable<Lesson>> ListByLessonTypeIdAsync(int lessonTypeId);
         Task<IEnumerable<Lesson>> ListByTutorIdAndCourseIdAndLessonTypeIdAsync(int tutorId, int courseId, int lessonTypeId);
+        Task<IEnumerable<Lesson>> ListByRangeOfDates(DateTime start, DateTime end);
     }
  }

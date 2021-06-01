@@ -18,5 +18,6 @@ namespace TPC_UPC.Domain.Services
         //ADDED
         Task<IEnumerable<Training>> ListAsync();
         Task<IEnumerable<Training>> ListByCoordinatorIdAsync(int coordinatorId);
+        Task<IEnumerable<Training>> ListByRangeOfDates(DateTime start, DateTime end);
     }
 }

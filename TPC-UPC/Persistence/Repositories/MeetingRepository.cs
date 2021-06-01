@@ -1,6 +1,7 @@
 using System;
  using System.Collections.Generic;
- using System.Threading.Tasks;
+using System.Linq;
+using System.Threading.Tasks;
  using Microsoft.EntityFrameworkCore;
  using TPC_UPC.Domain.Models;
  using TPC_UPC.Domain.Persistence.Contexts;
@@ -39,5 +40,12 @@ using System;
  		{
  			_context.Meetings.Update(meeting);
  		}
- 	}
+
+        public async Task<IEnumerable<Meeting>> ListByRangeOfDates(DateTime start, DateTime end)
+        {
+            return await _context.Meetings
+                .Where(ls => ls.StartDate >= start && ls.StartDate <= end)
+                .ToListAsync();
+        }
+    }
  }

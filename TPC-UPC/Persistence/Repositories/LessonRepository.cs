@@ -76,6 +76,13 @@ using Microsoft.EntityFrameworkCore;
                  .ToListAsync();
         }
 
+        public async Task<IEnumerable<Lesson>> ListByRangeOfDates(DateTime start, DateTime end)
+        {
+            return await _context.Lessons
+                .Where(ls => ls.StartDate >= start && ls.StartDate <= end)
+                .ToListAsync();
+        }
+
         public void Remove(Lesson lesson)
  		{
  			_context.Lessons.Remove(lesson);

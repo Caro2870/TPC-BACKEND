@@ -19,5 +19,6 @@ namespace TPC_UPC.Domain.Services
         //new
         Task<IEnumerable<Lesson>> ListByTutorIdAsync(int tutorId);
         Task<IEnumerable<Lesson>> ListByLessonTypeIdAsync(int lessonTypeId);
+        Task<IEnumerable<Lesson>> ListByRangeOfDates(DateTime start, DateTime end);
     }
 }

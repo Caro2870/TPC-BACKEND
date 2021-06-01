@@ -93,5 +93,10 @@ namespace TPC_UPC.Services
                 return new MeetingResponse($"An error ocurred while updating meeting: {ex.Message}");
             }
         }
+
+        public async Task<IEnumerable<Meeting>> ListByRangeOfDates(DateTime start, DateTime end)
+        {
+            return await _meetingRepository.ListByRangeOfDates(start, end);
+        }
     }
 }
