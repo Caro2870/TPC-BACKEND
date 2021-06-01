@@ -62,6 +62,7 @@ namespace TPC_UPC.Services
 
         public async Task<IEnumerable<LessonStudent>> ListByStudentIdAsync(int studentId)
         {
+            
             return await _lessonStudentRepository.ListByStudentIdAsync(studentId);
         }
 

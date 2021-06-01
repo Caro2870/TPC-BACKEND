@@ -17,6 +17,7 @@ namespace TPC_UPC.Domain.Services
         Task<LessonResponse> DeleteAsync(int id);
         //new
         Task<IEnumerable<Lesson>> ListByTutorIdAsync(int tutorId);
+        Task<IEnumerable<Lesson>> ListByCourseIdAsync(int tutorId);
         Task<IEnumerable<Lesson>> ListByLessonTypeIdAsync(int lessonTypeId);
     }
 }
