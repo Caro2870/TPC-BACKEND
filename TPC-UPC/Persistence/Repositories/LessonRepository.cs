@@ -2,7 +2,8 @@ using System;
  using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
- using Microsoft.EntityFrameworkCore;
+using Microsoft.CodeAnalysis;
+using Microsoft.EntityFrameworkCore;
  using TPC_UPC.Domain.Models;
  using TPC_UPC.Domain.Persistence.Contexts;
  using TPC_UPC.Domain.Persistence.Repositories;
@@ -23,16 +24,13 @@ using System.Threading.Tasks;
  
  		public async Task<Lesson> FindById(int id)
  		{
- 		        List<Lesson> lessons = await _context.Lessons
-                .Where(l=> l.Id == id)
-                .Include(l => l.Tutor).
-                Include(t => t.Tutor.Account).
-                Include(t => t.Tutor.Faculty).
-                Include(l => l.LessonType).
-                Include(l => l.Course).
-                ToListAsync();
-
-            return lessons.First();
+           return await _context.Lessons.
+           Include(l => l.Tutor).
+           Include(t => t.Tutor.Account).
+           Include(t => t.Tutor.Faculty).
+           Include(l => l.LessonType).
+           Include(l => l.Course).
+           FirstOrDefaultAsync(l => l.Id == id);
 
          }
  

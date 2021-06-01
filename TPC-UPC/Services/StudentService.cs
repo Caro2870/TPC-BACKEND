@@ -89,13 +89,14 @@ namespace TPC_UPC.Services
                 return new StudentResponse("Student not found");
 
             existingStudent.FirstName = student.FirstName;
-
+            existingStudent.LastName = student.LastName;
+            existingStudent.PhoneNumber = student.PhoneNumber;
             try
             {
-                _studentRepository.Update(student);
+                _studentRepository.Update(existingStudent);
                 await _unitOfWork.CompleteAsync();
 
-                return new StudentResponse(student);
+                return new StudentResponse(existingStudent);
             }
             catch (Exception ex)
             {

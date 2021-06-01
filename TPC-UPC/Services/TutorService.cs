@@ -69,10 +69,7 @@ namespace TPC_UPC.Services
 
             existingTutor.FirstName = tutor.FirstName;
             existingTutor.LastName = tutor.LastName;
-            existingTutor.Mail = tutor.Mail;
             existingTutor.PhoneNumber = tutor.PhoneNumber;
-            existingTutor.AccountId = tutor.AccountId;
-            existingTutor.FacultyId = tutor.FacultyId;
 
             try
             {
