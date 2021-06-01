@@ -17,6 +17,6 @@ using System;
         Task<IEnumerable<Lesson>> ListByCourseIdAsync(int courseId);
 
         Task<IEnumerable<Lesson>> ListByLessonTypeIdAsync(int lessonTypeId);
-
+        Task<IEnumerable<Lesson>> ListByTutorIdAndCourseIdAndLessonTypeIdAsync(int tutorId, int courseId, int lessonTypeId);
     }
  }

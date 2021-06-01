@@ -67,6 +67,15 @@ using Microsoft.EntityFrameworkCore;
                  .ToListAsync();
         }
 
+        public async Task<IEnumerable<Lesson>> ListByTutorIdAndCourseIdAndLessonTypeIdAsync(int tutorId, int courseId, int lessonTypeId)
+        {
+            return await _context.Lessons
+                 .Where(ls => ls.CourseId == courseId)
+                 .Where(ls => ls.TutorId == tutorId)
+                 .Where(ls => ls.LessonTypeId == lessonTypeId)
+                 .ToListAsync();
+        }
+
         public void Remove(Lesson lesson)
  		{
  			_context.Lessons.Remove(lesson);
