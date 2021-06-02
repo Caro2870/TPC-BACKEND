@@ -88,6 +88,9 @@ namespace TPC_UPC.Services
                 return new LessonStudentResponse("LessonStudent not found");
 
             existingLessonStudent.LessonId = lessonStudent.LessonId;
+            existingLessonStudent.Comment = lessonStudent.Comment;
+            existingLessonStudent.Complaint = lessonStudent.Complaint;
+            existingLessonStudent.Qualification = lessonStudent.Qualification;
 
             try
             {
