@@ -46,7 +46,7 @@ namespace TPC_UPC.Domain.Persistence.Contexts
              builder.Entity<Coordinator     >().ToTable("Coordinators")       ;
              builder.Entity<Course          >().ToTable("Courses")            ;
              builder.Entity<Faculty         >().ToTable("Faculties")          ;
-             builder.Entity<Lesson          >().ToTable("Lessons")            ;
+             builder.Entity<Lesson>().ToTable("Lessons");            ;
              builder.Entity<LessonStudent   >().ToTable("LessonStudents")     ;
              builder.Entity<LessonType      >().ToTable("LessonTypes")        ;
              builder.Entity<MailMessage     >().ToTable("MailMessages")       ;
@@ -103,12 +103,12 @@ namespace TPC_UPC.Domain.Persistence.Contexts
             builder.Entity<Lesson>().Property(p => p.CourseId).IsRequired();
             builder.Entity<Lesson>().Property(p => p.TutorId).IsRequired();
             builder.Entity<Lesson>().Property(p => p.LessonTypeId).IsRequired();
+            builder.Entity<Lesson>().Property(p => p.Contador);
 
 
             /*--------LUCAS------------------------------*/
             //Constraints of LessonStudent
-            builder.Entity<LessonStudent>().HasKey(p => p.LessonId);   //PK
-            builder.Entity<LessonStudent>().HasKey(p => p.StudentId);   //PK
+            builder.Entity<LessonStudent>().HasKey(p => new { p.LessonId, p.StudentId});   //PK
             builder.Entity<LessonStudent>().Property(p => p.Topic).IsRequired();
             builder.Entity<LessonStudent>().Property(p => p.Comment).HasMaxLength(200);
             builder.Entity<LessonStudent>().Property(p => p.Qualification);
@@ -352,7 +352,8 @@ namespace TPC_UPC.Domain.Persistence.Contexts
                     (
                     new Account { Id = 102, AccountName = "tutor01", Password = "123122", UniversityId = 101 },
                      new Account { Id = 101, AccountName = "student01", Password = "43242", UniversityId = 101 },
-                     new Account { Id = 103, AccountName = "coordinator01", Password = "35353", UniversityId = 101 }
+                     new Account { Id = 103, AccountName = "coordinator01", Password = "35353", UniversityId = 101 },
+                     new Account { Id = 104, AccountName = "student02", Password = "5559", UniversityId = 101 }
                     );
             builder.Entity<Student>().HasData
                 (
@@ -364,6 +365,17 @@ namespace TPC_UPC.Domain.Persistence.Contexts
                     Mail = "camila@gmail.com",
                     PhoneNumber = "5698665",
                     AccountId = 101,
+                    CycleNumber = 2,
+                    CareerId = 1
+                },
+                new Student
+                {
+                    Id = 104,
+                    FirstName = "Alessandra",
+                    LastName = "Vargas",
+                    Mail = "ale@gmail.com",
+                    PhoneNumber = "51515",
+                    AccountId = 104,
                     CycleNumber = 2,
                     CareerId = 1
                 }

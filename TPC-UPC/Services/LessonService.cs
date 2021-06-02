@@ -12,7 +12,7 @@ namespace TPC_UPC.Services
 {
     public class LessonService : ILessonService
     {
-        private readonly ILessonRepository _lessonRepository;
+        private  ILessonRepository _lessonRepository;
         private readonly IUnitOfWork _unitOfWork;
 
         public LessonService(ILessonRepository lessonRepository, IUnitOfWork unitOfWork)
@@ -70,8 +70,14 @@ namespace TPC_UPC.Services
             return await _lessonRepository.ListByCourseIdAsync(courseId);
         }
 
+        public async Task<IEnumerable<Lesson>> ListByRangeOfDates(DateTime start, DateTime end)
+        {
+            return await _lessonRepository.ListByRangeOfDates(start, end);
+        }
+
         public async Task<LessonResponse> SaveAsync(Lesson lesson)
         {
+            lesson.Contador = 0;
             try
             {
                 await _lessonRepository.AddAsync(lesson);
@@ -104,6 +110,28 @@ namespace TPC_UPC.Services
             catch (Exception ex)
             {
                 return new LessonResponse($"An error ocurred while updating the lesson: {ex.Message}");
+            }
+        }
+
+        public async Task<LessonResponse> UpdateCountAsync(int id)
+        {
+            var existingLesson = await _lessonRepository.FindById(id);
+
+            if (existingLesson == null)
+                return new LessonResponse("Lesson not found");
+
+            existingLesson.Contador += 1;
+
+            try
+            {
+                _lessonRepository.Update(existingLesson);
+                await _unitOfWork.CompleteAsync();
+
+                return new LessonResponse(existingLesson);
+            }
+            catch (Exception ex)
+            {
+                return new LessonResponse($"An error ocurred while updating the count variable  lesson: {ex.Message}");
             }
         }
     }

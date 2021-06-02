@@ -18,11 +18,13 @@ namespace TPC_UPC.Controllers
     {
         private readonly ILessonStudentService  _lessonStudentService;
         private readonly IMapper _mapper;
+        private readonly ILessonService _lessonService;
 
-        public LessonStudentController(ILessonStudentService lessonStudentService, IMapper mapper)
+        public LessonStudentController(ILessonStudentService lessonStudentService, IMapper mapper, ILessonService lessonService)
         {
             _lessonStudentService = lessonStudentService;
             _mapper = mapper;
+            _lessonService = lessonService;
         }
 
         [HttpPost]
@@ -35,7 +37,9 @@ namespace TPC_UPC.Controllers
 
             if (!result.Success)
                 return BadRequest(result.Message);
+            await _lessonService.UpdateCountAsync(resource.LessonId);
             var nuResource = _mapper.Map<LessonStudent, LessonStudentResource>(result.Resource);
+            Console.WriteLine(result.Resource.Lesson.Contador);
             return Ok(nuResource);
         }
 
@@ -50,7 +54,7 @@ namespace TPC_UPC.Controllers
         }
 
         [HttpPut("/lessons/{lessonsId}/students/{studentId}")]
-        public async Task<IActionResult> PostAsync(int lessonId, int studentId, [FromBody] SaveLessonStudentResource resource)
+        public async Task<IActionResult> PutAsync(int lessonId, int studentId, [FromBody] SaveLessonStudentResource resource)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState.GetErrorMessages());
