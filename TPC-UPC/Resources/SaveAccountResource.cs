@@ -17,5 +17,6 @@ namespace TPC_UPC.Resources
 
         [Required]
         public int UniversityId { get; set; }
+        /*public SaveUniversityResource University { get; set; }*/
     }
 }

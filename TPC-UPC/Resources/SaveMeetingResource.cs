@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TPC_UPC.Resources
 {
-    public abstract class SaveMeetingResource
+    public class SaveMeetingResource
     {
         [Required]
         public int ScheduleId { get; set; }

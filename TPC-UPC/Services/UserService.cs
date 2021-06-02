@@ -13,8 +13,10 @@ namespace TPC_UPC.Services
     {
         private readonly IUserRepository _userRepository;
         private IUnitOfWork _unitOfWork;
-        public UserService(IUserRepository object1, IUnitOfWork object2)
+        private IUserCourseRepository _userCourseRepository;
+        public UserService(IUserRepository object1, IUserCourseRepository userCourseRepository, IUnitOfWork object2)
         {
+            this._userCourseRepository = userCourseRepository;
             this._userRepository = object1;
             this._unitOfWork = object2;
         }
@@ -57,12 +59,16 @@ namespace TPC_UPC.Services
         {
             throw new NotImplementedException();
         }
-
+        public  async Task<IEnumerable<User>> ListByCourseIdAsync(int courseId)
+        {
+            var userCourses = await _userCourseRepository.ListByCourseIdAsync(courseId);
+            var users = userCourses.Select(pt => pt.User).ToList();
+            return users;
+        }
         public Task<IEnumerable<User>> ListBySuggestionIdAsync(int suggestionId)
         {
             throw new NotImplementedException();
         }
-
         public async Task<UserResponse> SaveAsync(User user)
         {
             try
@@ -76,8 +82,7 @@ namespace TPC_UPC.Services
                 return new UserResponse($"An error ocurred while saving the user: {e.Message}");
             }
         }
-
-        public async Task<UserResponse> UpdateAsync(int id, User user)
+        public async Task<UserResponse> UpdateASync(int id, User user)
         {
             var existingUser = await _userRepository.FindById(id);
 
@@ -100,6 +105,11 @@ namespace TPC_UPC.Services
             {
                 return new UserResponse($"An error ocurred while updating the user: {ex.Message}");
             }
+        }
+
+        public Task<UserResponse> UpdateAsync(int id, User user)
+        {
+            throw new NotImplementedException();
         }
     }
 }

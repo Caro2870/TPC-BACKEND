@@ -20,7 +20,7 @@ namespace TPC_UPC.Controllers
         private readonly IAccountService _accountService;
         private readonly IMapper _mapper;
 
-        public AccountController(IAccountService accountService, IMapper mapper) 
+        public AccountController(IAccountService accountService, IMapper mapper)
         {
             _mapper = mapper;
             _accountService = accountService;
@@ -61,7 +61,6 @@ namespace TPC_UPC.Controllers
 
             var account = _mapper.Map<SaveAccountResource, Account>(resource);
             var result = await _accountService.UpdateAsync(accountId, account);
-
             if (!result.Success)
                 return BadRequest(result.Message);
             var accountResource = _mapper.Map<Account, AccountResource>(result.Resource);

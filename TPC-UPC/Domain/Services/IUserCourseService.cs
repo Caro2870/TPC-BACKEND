@@ -7,7 +7,7 @@ using TPC_UPC.Domain.Services.Communications;
 
 namespace TPC_UPC.Domain.Services
 {
-    interface IUserCourseService
+    public interface IUserCourseService
     {
         /*//CRUD if we add this is something mad
         Task<UserCourseResponse> SaveAsync(UserCourse usercourse);

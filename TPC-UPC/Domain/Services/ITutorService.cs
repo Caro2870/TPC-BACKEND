@@ -15,8 +15,8 @@ namespace TPC_UPC.Domain.Services
         Task<TutorResponse> UpdateAsync(int id, Tutor tutor);
         Task<TutorResponse> DeleteAsync(int id);
 
+
         //ADDED
         Task<IEnumerable<Tutor>> ListAsync();
-        Task<IEnumerable<Tutor>> ListByCourseIdAsync(int courseId);
     }
 }

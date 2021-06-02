@@ -10,5 +10,6 @@ namespace TPC_UPC.Resources
     {
         [MaxLength(100)]
         public string CareerName { get; set; }
+      
     }
 }

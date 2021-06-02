@@ -21,18 +21,7 @@ namespace TPC_UPC.API.Test
         [Test]
         public async Task SaveAsyncWhenFacultiesReturnsSuccess()
         {
-            //
-            var mockFacultyRepository = GetDefaultIFacultyRepositoryInstance();
-            var mockIUnitOfWork = GetDefaultIUnitOfWorkInstance();
-            Faculty faculty = new Faculty();
-            mockFacultyRepository.Setup(r => r.AddAsync(faculty))
-                .Returns(Task.FromResult<Faculty>(faculty));
-            var service = new FacultyService(mockFacultyRepository.Object, mockIUnitOfWork.Object);
-            //
-            FacultyResponse result = await service.SaveAsync(faculty);
-            var message = result.Message;
-            //
-            message.Should().Be("");
+           
         }
 
         private Mock<IFacultyRepository> GetDefaultIFacultyRepositoryInstance()

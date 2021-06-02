@@ -42,7 +42,7 @@ namespace TPC_UPC.Domain.Persistence.Contexts
            
             //Building Entities
              builder.Entity<Account         >().ToTable("Accounts");
-             builder.Entity<Career          >().ToTable("Carrers");
+             builder.Entity<Career          >().ToTable("Careers");
              builder.Entity<Coordinator     >().ToTable("Coordinators")       ;
              builder.Entity<Course          >().ToTable("Courses")            ;
              builder.Entity<Faculty         >().ToTable("Faculties")          ;
@@ -90,26 +90,30 @@ namespace TPC_UPC.Domain.Persistence.Contexts
             builder.Entity<Course>().HasKey(p => p.Id);   //PK
             builder.Entity<Course>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();  //GeneraKey
             builder.Entity<Course>().Property(p => p.Name).IsRequired().HasMaxLength(50);   //PK
+            builder.Entity<Course>().Property(p => p.Credits).IsRequired();
             //Constraints of Faculty
             builder.Entity<Faculty>().HasKey(p => p.Id);   //PK
             builder.Entity<Faculty>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();  //GeneraKey
             builder.Entity<Faculty>().Property(p => p.Name).IsRequired().HasMaxLength(80);
             builder.Entity<Faculty>().Property(p => p.Description).IsRequired().HasMaxLength(400);
-            
-            //Constraints of Lesson
 
+
+            //Constraints of Lesson
             builder.Entity<Lesson>().Property(p => p.Vacants).IsRequired();  //GeneraKey
-            
-            
+            builder.Entity<Lesson>().Property(p => p.CourseId).IsRequired();
+            builder.Entity<Lesson>().Property(p => p.TutorId).IsRequired();
+            builder.Entity<Lesson>().Property(p => p.LessonTypeId).IsRequired();
+
+
             /*--------LUCAS------------------------------*/
             //Constraints of LessonStudent
             builder.Entity<LessonStudent>().HasKey(p => p.LessonId);   //PK
             builder.Entity<LessonStudent>().HasKey(p => p.StudentId);   //PK
             builder.Entity<LessonStudent>().Property(p => p.Topic).IsRequired();
-            builder.Entity<LessonStudent>().Property(p => p.Comment).IsRequired().HasMaxLength(200);
-            builder.Entity<LessonStudent>().Property(p => p.Qualification).IsRequired();
-            builder.Entity<LessonStudent>().Property(p => p.Complaint).IsRequired();
-            builder.Entity<LessonStudent>().Property(p => p.Assistance).IsRequired();
+            builder.Entity<LessonStudent>().Property(p => p.Comment).HasMaxLength(200);
+            builder.Entity<LessonStudent>().Property(p => p.Qualification);
+            builder.Entity<LessonStudent>().Property(p => p.Complaint);
+            builder.Entity<LessonStudent>().Property(p => p.Assistance);
              //Constraints of LessonType
             builder.Entity<LessonType>().HasKey(p => p.Id);   //PK
             builder.Entity<LessonType>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();  //GeneraKey
@@ -121,9 +125,9 @@ namespace TPC_UPC.Domain.Persistence.Contexts
             builder.Entity<MailMessage>().Property(p => p.DocumentLink).IsRequired().HasMaxLength(150);
             //Constraints of Meeting
             builder.Entity<Meeting>().HasKey(p => p.Id);   //PK -> YATA
+            builder.Entity<Meeting>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();  //GeneraKey
             builder.Entity<Meeting>().Property(p => p.StartDate);
             builder.Entity<Meeting>().Property(p => p.EndDate);
-            builder.Entity<Meeting>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();  //GeneraKey
             builder.Entity<Meeting>().Property(p => p.Description).IsRequired().HasMaxLength(300);
             builder.Entity<Meeting>().Property(p => p.MeetingLink).IsRequired().HasMaxLength(150);
             builder.Entity<Meeting>().Property(p => p.ResourceLink).IsRequired().HasMaxLength(150);
@@ -151,26 +155,45 @@ namespace TPC_UPC.Domain.Persistence.Contexts
             builder.Entity<Suggestion>().HasKey(p => p.Id);   //PK
             builder.Entity<Suggestion>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();  //GeneraKey
             builder.Entity<Suggestion>().Property(p => p.Message).IsRequired().HasMaxLength(400);
+
             //Constraints of Training
+            builder.Entity<Training>().Property(p => p.StartDate);
+            builder.Entity<Training>().Property(p => p.EndDate);
+            builder.Entity<Training>().Property(p => p.Description).IsRequired().HasMaxLength(300);
+            builder.Entity<Training>().Property(p => p.MeetingLink).IsRequired().HasMaxLength(150);
+            builder.Entity<Training>().Property(p => p.ResourceLink).IsRequired().HasMaxLength(150);
+            builder.Entity<Training>().Property(p => p.CoordinatorId).IsRequired();
 
             //Constraints of TrainingTutor
-            builder.Entity<TrainingTutor>().HasKey(p => p.TrainingId);   //PK
-            builder.Entity<TrainingTutor>().HasKey(p => p.TutorId);   //PK
+            builder.Entity<TrainingTutor>().HasKey(p => new { p.TrainingId, p.TutorId });   //PK
+            //builder.Entity<TrainingTutor>().HasKey(p => p.TrainingId);   //PK
+            //builder.Entity<TrainingTutor>().HasKey(p => p.TutorId);   //PK
             builder.Entity<TrainingTutor>().Property(p => p.Assistance).IsRequired();
-            //Constraints of Tutor
 
+            //Constraints of Tutor
             builder.Entity<Tutor>().Property(p => p.FirstName).IsRequired().HasMaxLength(35);   //PK
             builder.Entity<Tutor>().Property(p => p.LastName).IsRequired().HasMaxLength(60);   //PK
             builder.Entity<Tutor>().Property(p => p.Mail).IsRequired();   //PK
             builder.Entity<Tutor>().Property(p => p.PhoneNumber).HasMaxLength(15);   //PK
+
             //Constraints of University
             builder.Entity<University>().HasKey(p => p.Id);   //PK
             builder.Entity<University>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();  //GeneraKey
             builder.Entity<University>().Property(p => p.UniversityName).IsRequired().HasMaxLength(50);
 
             //Constraints of UserCourse
-            builder.Entity<UserCourse>().HasKey(p => p.CourseId);   //PK
-            builder.Entity<UserCourse>().HasKey(p => p.UserId);  //GeneraKey
+            builder.Entity<UserCourse>().HasKey(pt => new { pt.UserId, pt.CourseId });   //PK
+
+            //Relationships of UserCourse
+            builder.Entity<UserCourse>()
+                .HasOne(pt => pt.User)
+                .WithMany(p => p.UserCourses)
+                .HasForeignKey(pt => pt.UserId);
+
+            builder.Entity<UserCourse>()
+                .HasOne(pt => pt.Course)
+                .WithMany(p => p.UserCourses)
+                .HasForeignKey(pt => pt.CourseId);
 
             /*
             Example of Relationship
@@ -234,7 +257,13 @@ namespace TPC_UPC.Domain.Persistence.Contexts
                 .WithOne(b => b.Career)
                 .HasForeignKey(p => p.CareerId);
 
+
             //Relationships of Faculty
+            builder.Entity<Faculty>()
+                .HasMany(a => a.Tutors)
+                .WithOne(b => b.Faculty)
+                .HasForeignKey(p => p.FacultyId);
+
             builder.Entity<Faculty>()
                 .HasMany(a => a.Coordinators)
                 .WithOne(b => b.Faculty)
@@ -243,7 +272,8 @@ namespace TPC_UPC.Domain.Persistence.Contexts
             builder.Entity<Coordinator>()
                 .HasMany(a => a.MailMessages)
                 .WithOne(b => b.Coordinator)
-                .HasForeignKey(p => p.CoordinatorId);
+                .HasForeignKey(p => p.CoordinatorId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<Coordinator>()
                 .HasMany(a => a.Trainings)
@@ -256,6 +286,25 @@ namespace TPC_UPC.Domain.Persistence.Contexts
                     .HasForeignKey(b => b.UniversityId)
                     .OnDelete(DeleteBehavior.Cascade);
 
+            builder.Entity<Faculty>()
+                .HasMany(a => a.Careers)
+                .WithOne(b => b.Faculty)
+                .HasForeignKey(b => b.FacultyId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+
+            builder.Entity<Career>()
+               .HasMany(a => a.Students)
+               .WithOne(b => b.Career)
+               .HasForeignKey(p => p.CareerId);
+            //builder.Entity<University>()
+            //        .HasMany(a => a.Faculties)
+            //        .WithOne(b => b.University)
+            //        .HasForeignKey(b => b.UniversityId);
+            builder.Entity<University>()
+                   .HasMany(a => a.Faculties)
+                   .WithOne(b => b.University)
+                   .HasForeignKey(b => b.UniversityId);
             //Relationships of User
             builder.Entity<User>()
                 .HasMany(a => a.Suggestions)
@@ -266,7 +315,6 @@ namespace TPC_UPC.Domain.Persistence.Contexts
                 .HasMany(a => a.NotificationUsers)
                 .WithOne(b => b.User)
                 .HasForeignKey(p => p.UserId);
-
             builder.Entity<User>()
                 .HasMany(a => a.UserCourses)
                 .WithOne(b => b.User)
@@ -283,15 +331,9 @@ namespace TPC_UPC.Domain.Persistence.Contexts
                 .HasForeignKey(p => p.NotificationTypeId);
             //Relationships of Course
             builder.Entity<Course>()
-               .HasMany(a => a.UserCourses)
-               .WithOne(b => b.Course)
-               .HasForeignKey(p => p.CourseId);
-            builder.Entity<Course>()
                .HasMany(a => a.Lessons)
                .WithOne(b => b.Course)
                .HasForeignKey(p => p.CourseId);
-
-
             /*builder.Entity<NotificationUser>()
                 .HasOne(a => a.User)
                 .WithMany(b => b.NotificationUsers)
@@ -300,7 +342,18 @@ namespace TPC_UPC.Domain.Persistence.Contexts
                 .HasOne(a => a.Notification)
                 .WithMany(b => b.NotificationUsers)
                 .HasForeignKey(a => a.NotificationId);*/
-
+            builder.Entity<University>().HasData
+                   (
+                   new University { Id = 101, UniversityName = "UPC" },
+                    new University { Id = 102, UniversityName = "UPN" }
+                   );
+            //a
+            builder.Entity<Account>().HasData
+                    (
+                    new Account { Id = 102, AccountName = "tutor01", Password = "123122", UniversityId = 101 },
+                     new Account { Id = 101, AccountName = "student01", Password = "43242", UniversityId = 101 },
+                     new Account { Id = 103, AccountName = "coordinator01", Password = "35353", UniversityId = 101 }
+                    );
             builder.Entity<Student>().HasData
                 (
                 new Student
@@ -325,7 +378,7 @@ namespace TPC_UPC.Domain.Persistence.Contexts
                     Mail = "jose@gmail.com",
                     PhoneNumber = "66588965",
                     AccountId = 102,
-                    FacultiesId = 1
+                    FacultyId = 1
                 }
                 ) ;
             builder.Entity<Coordinator>().HasData
@@ -343,20 +396,8 @@ namespace TPC_UPC.Domain.Persistence.Contexts
                 );
             builder.Entity<Career>().HasData
                 (
-                    new Career { Id =1, CareerName="Ingenieria de Software"}
+                    new Career { Id =1, CareerName="Ingenieria de Software",FacultyId=1}
                 );
-
-            builder.Entity<University>().HasData
-                    (
-                    new University { Id = 101, UniversityName = "UPC" },
-                     new University { Id = 102, UniversityName = "UPN" }
-                    );
-            builder.Entity<Account>().HasData
-                    (
-                    new Account { Id = 102, AccountName = "tutor01", Password = "123122", UniversityId=101 },
-                     new Account { Id = 101, AccountName = "student01", Password = "43242", UniversityId = 101 },
-                     new Account { Id = 103, AccountName = "coordinator01", Password = "35353", UniversityId = 101 }
-                    );
             builder.Entity<Suggestion>().HasData
                     (
                     new Suggestion { Id = 101, Message = "Increible clase", UserId=101 },
@@ -364,8 +405,8 @@ namespace TPC_UPC.Domain.Persistence.Contexts
                     );
             builder.Entity<Faculty>().HasData
                     (
-                    new Faculty { Id = 1, Name = "Letras", Description = "departamento de letras" },
-                     new Faculty { Id = 2, Name = "Ciencia", Description = "departamento de ciencias" }
+                    new Faculty { Id = 1, Name = "Letras", Description = "departamento de letras",UniversityId=101 },
+                     new Faculty { Id = 2, Name = "Ciencia", Description = "departamento de ciencias",UniversityId=101 }
                     );
             builder.Entity<MailMessage>().HasData
                     (
@@ -381,16 +422,28 @@ namespace TPC_UPC.Domain.Persistence.Contexts
                 (
                 new Lesson { 
                     Id = 1, Description = "", MeetingLink = "https://googlemeet.com", 
-                    ResourceLink = "blob://resource.pdf", LessonTypeId = 2, TutorId=102, CourseId = 1, Vacants=30 }
+                    
+                    ResourceLink = "blob://resource.pdf", LessonTypeId = 2, TutorId=102, CourseId = 1, Vacants=1 }
+                );
+            builder.Entity<Training>().HasData
+                (
+                new Training
+                {
+                    Id = 2,
+                    Description = "",
+                    MeetingLink = "https://googlemeet002.com",
+                    ResourceLink = "blob://resource002.pdf",
+                    CoordinatorId = 103
+                }
                 );
             builder.Entity<Course>().HasData
                 (
-                new Course { Id = 1, Name = "Programacion 1" }
+                new Course { Id = 1, Name = "Programacion 1", Credits=6 }
                 );
             builder.Entity<NotificationType>().HasData
                    (
                    new NotificationType { Id = 801, Description = "Recordatorio de que la clase esta por comenzar" },
-                   new NotificationType { Id = 802, Description = "Solicitud de confirmacion de asidtencia a una tutoria realizada por un amigo/a" },
+                   new NotificationType { Id = 802, Description = "Solicitud de confirmacion de asistencia a una tutoria realizada por un amigo/a" },
                    new NotificationType { Id = 803, Description = "Material compartido enviado por el tutor" },
                    new NotificationType { Id = 804, Description = "Modificacion de horario de una sesion" },
                    new NotificationType { Id = 806, Description = "Aviso enviado por el coordinador" }
@@ -400,13 +453,12 @@ namespace TPC_UPC.Domain.Persistence.Contexts
                     (
                     new Notification { Id = 901, NotificationTypeId = 801, Link = "Nueva notificacion" },
                     new Notification { Id = 902, NotificationTypeId = 801, Link = "dasda" },
-                    new Notification { Id = 903, NotificationTypeId = 801, Link = "cxcqscadas" }
+                    new Notification { Id = 903, NotificationTypeId = 806, Link = "google.com.meet/323" }
                     );
             builder.Entity<NotificationUser>().HasData
                     (
                     new NotificationUser { NotificationId = 901, UserId = 101 },
-                    new NotificationUser { NotificationId = 902, UserId = 101 },
-                    new NotificationUser { NotificationId = 903, UserId = 102 }
+                    new NotificationUser { NotificationId = 902, UserId = 101 }
                     );
         }
     }

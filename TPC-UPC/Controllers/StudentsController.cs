@@ -13,7 +13,6 @@ using TPC_UPC.API.Extensions;
 namespace TPC_UPC.Controllers
 {
     [Route("/api/[controller]")]
-    //el formato, devuelve en .json
     [Produces("application/json")]
     [ApiController]
     public class StudentsController : ControllerBase
@@ -28,17 +27,29 @@ namespace TPC_UPC.Controllers
 
         [SwaggerOperation(
             Summary = "List all students",
-            Description = "List of Students",
+            Description = "List of students",
             OperationId = "ListAllStudents")]
-        [SwaggerResponse(200, "List of Students", typeof(IEnumerable<StudentResource>))]
+        [SwaggerResponse(200, "List of students", typeof(IEnumerable<StudentResource>))]
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<StudentResource>), 200)]
         public async Task<IEnumerable<StudentResource>> GetAllAsync()
         {
-            var students = await _studentService.ListAsync();
+            var careears = await _studentService.ListAsync();
             var resources = _mapper
-                .Map<IEnumerable<Student>, IEnumerable<StudentResource>>(students);
+                .Map<IEnumerable<Student>, IEnumerable<StudentResource>>(careears);
             return resources;
+        }
+
+        [HttpGet("{id}")]
+        [ProducesResponseType(typeof(StudentResource), 200)]
+        [ProducesResponseType(typeof(BadRequestResult), 404)]
+        public async Task<IActionResult> GetAsync(int id)
+        {
+            var result = await _studentService.GetByIdAsync(id);
+            if (!result.Success)
+                return BadRequest(result.Message);
+            var studentResource = _mapper.Map<Student, StudentResource>(result.Resource);
+            return Ok(studentResource);
         }
 
         [HttpPost]
@@ -53,6 +64,38 @@ namespace TPC_UPC.Controllers
 
             if (!result.Success)
                 return BadRequest(result.Message);
+            var studentResource = _mapper.Map<Student, StudentResource>(result.Resource);
+            return Ok(studentResource);
+        }
+
+        [HttpPut("{id}")]
+        [ProducesResponseType(typeof(StudentResource), 200)]
+        [ProducesResponseType(typeof(BadRequestResult), 404)]
+        public async Task<IActionResult> PutAsync(int id, [FromBody] SaveStudentResource resource)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState.GetErrorMessages());
+
+            var Student = _mapper.Map<SaveStudentResource, Student>(resource);
+            var result = await _studentService.UpdateASync(id, Student);
+
+            if (!result.Success)
+                return BadRequest(result.Message);
+
+            var studentResource = _mapper.Map<Student, StudentResource>(result.Resource);
+            return Ok(studentResource);
+        }
+
+        [HttpDelete("{id}")]
+        [ProducesResponseType(typeof(StudentResource), 200)]
+        [ProducesResponseType(typeof(BadRequestResult), 404)]
+        public async Task<IActionResult> DeleteAsync(int id)
+        {
+            var result = await _studentService.DeleteAsync(id);
+
+            if (!result.Success)
+                return BadRequest(result.Message);
+
             var studentResource = _mapper.Map<Student, StudentResource>(result.Resource);
             return Ok(studentResource);
         }

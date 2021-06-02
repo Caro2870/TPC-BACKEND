@@ -14,16 +14,19 @@ namespace TPC_UPC.Services
     {
         private readonly ILessonStudentRepository _lessonStudentRepository;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly ILessonRepository _lessonRepository;
 
-        public LessonStudentService(ILessonStudentRepository lessonStudentRepository, IUnitOfWork unitOfWork)
+
+        public LessonStudentService(ILessonStudentRepository lessonStudentRepository, IUnitOfWork unitOfWork, ILessonRepository lessonRepository)
         {
             _lessonStudentRepository = lessonStudentRepository;
             _unitOfWork = unitOfWork;
+            _lessonRepository = lessonRepository;
         }
 
-        public async Task<LessonStudentResponse> DeleteAsync(int id)
+        public async Task<LessonStudentResponse> DeleteAsync(int lessonId, int studentId)
         {
-            var existingLessonStudent = await _lessonStudentRepository.FindById(id);
+            var existingLessonStudent = await _lessonStudentRepository.FindById(lessonId, studentId);
 
             if (existingLessonStudent == null)
                 return new LessonStudentResponse("LessonStudent not found");
@@ -41,9 +44,9 @@ namespace TPC_UPC.Services
             }
         }
 
-        public async Task<LessonStudentResponse> GetByIdAsync(int id)
+        public async Task<LessonStudentResponse> GetByIdAsync(int lessonId, int studentId)
         {
-            var existingLessonStudent = await _lessonStudentRepository.FindById(id);
+            var existingLessonStudent = await _lessonStudentRepository.FindById(lessonId, studentId);
 
             if (existingLessonStudent == null)
                 return new LessonStudentResponse("LessonStudent not found");
@@ -67,9 +70,34 @@ namespace TPC_UPC.Services
 
         public async Task<LessonStudentResponse> SaveAsync(LessonStudent lessonStudent)
         {
-            try
+            var lesson = await _lessonRepository.FindById(lessonStudent.LessonId);
+
+
+            if (lesson.Vacants > 0)
             {
                 await _lessonStudentRepository.AddAsync(lessonStudent);
+
+                lesson.Vacants -= 1;
+
+                await _unitOfWork.CompleteAsync();
+
+                return new LessonStudentResponse(lessonStudent);
+            }
+            else if (lesson.Vacants == 0)
+            {
+                return new LessonStudentResponse("There is no more space");
+            }
+            else
+                return new LessonStudentResponse($"An error ocurred while saving the lessonStudent");
+
+            /*
+            try
+            {
+                
+                await _lessonStudentRepository.AddAsync(lessonStudent);
+
+                lesson.Vacants -= 1;
+
                 await _unitOfWork.CompleteAsync();
 
                 return new LessonStudentResponse(lessonStudent);
@@ -77,12 +105,12 @@ namespace TPC_UPC.Services
             catch (Exception ex)
             {
                 return new LessonStudentResponse($"An error ocurred while saving the lessonStudent: {ex.Message}");
-            }
+            }*/
         }
 
-        public async Task<LessonStudentResponse> UpdateAsync(int id, LessonStudent lessonStudent)
+        public async Task<LessonStudentResponse> UpdateAsync(int lessonId, int studentId, LessonStudent lessonStudent)
         {
-            var existingLessonStudent = await _lessonStudentRepository.FindById(id);
+            var existingLessonStudent = await _lessonStudentRepository.FindById(lessonId, studentId);
 
             if (existingLessonStudent == null)
                 return new LessonStudentResponse("LessonStudent not found");

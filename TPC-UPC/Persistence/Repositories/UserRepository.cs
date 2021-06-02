@@ -34,8 +34,7 @@ using System;
                 .Include(u => u.Account)
                 .Include(u=>u.Account.University)
                 .ToListAsync();
- 		}
- 
+ 		}        
  		public void Remove(User user)
  		{
  			_context.Users.Remove(user);

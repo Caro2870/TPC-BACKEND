@@ -27,14 +27,12 @@ using System.Threading.Tasks;
                 .Include(a => a.University)
                 .FirstOrDefaultAsync(p => p.Id == id);
         }
- 
  		public async Task<IEnumerable<Account>> ListAsync()
  		{
  			return await _context.Accounts
                 .Include(a=>a.University)
                 .ToListAsync();
  		}
-
         public async Task<IEnumerable<Account>> ListByUniversityIdAsync(int universityId)
         {
             return await _context.Accounts

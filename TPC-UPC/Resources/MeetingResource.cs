@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace TPC_UPC.Resources
 {
-    public abstract class MeetingResource
+    public class MeetingResource
     {
         public int Id { get; set; }
         public DateTime StartDate { get; set; }

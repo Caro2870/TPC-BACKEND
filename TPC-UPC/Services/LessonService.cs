@@ -106,5 +106,6 @@ namespace TPC_UPC.Services
                 return new LessonResponse($"An error ocurred while updating the lesson: {ex.Message}");
             }
         }
+
     }
 }
