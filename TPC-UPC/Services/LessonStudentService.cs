@@ -107,6 +107,34 @@ namespace TPC_UPC.Services
             }
         }
 
-        
+        public async Task<LessonStudentResponse> AssignLessonStudentAsync(int lessonId, int studentId)
+        {
+            try
+            {
+                await _lessonStudentRepository.AssignLessonStudent(lessonId, studentId);
+                await _unitOfWork.CompleteAsync();
+                LessonStudent lessonStudent = await _lessonStudentRepository.FindByLessonIdAndStudentId(lessonId, studentId);
+                return new LessonStudentResponse(lessonStudent);
+            }
+            catch (Exception ex)
+            {
+                return new LessonStudentResponse($"An error ocurred while assigning Lesson to Student: {ex.Message}");
+            }
+        }
+
+        public async Task<LessonStudentResponse> UnassignLessonStudentAsync(int lessonId, int studentId)
+        {
+            try
+            {
+                LessonStudent lessonStudent = await _lessonStudentRepository.FindByLessonIdAndStudentId(lessonId, studentId);
+                _lessonStudentRepository.UnassignLessonStudent(lessonId, studentId);
+                await _unitOfWork.CompleteAsync();
+                return new LessonStudentResponse(lessonStudent);
+            }
+            catch (Exception ex)
+            {
+                return new LessonStudentResponse($"An error ocurred while unassigning Lesson to Student: {ex.Message}");
+            }
+        }
     }
 }

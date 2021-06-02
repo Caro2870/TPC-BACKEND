@@ -33,6 +33,8 @@ namespace TPC_UPC.Controllers
             var nu = _mapper.Map<SaveLessonStudentResource, LessonStudent>(resource);
             var result = await _lessonStudentService.SaveAsync(nu);
 
+
+
             if (!result.Success)
                 return BadRequest(result.Message);
             var nuResource = _mapper.Map<LessonStudent, LessonStudentResource>(result.Resource);
@@ -42,7 +44,7 @@ namespace TPC_UPC.Controllers
         [HttpDelete("/lessons/{lessonId}/students/{studentId}")]
         public async Task<IActionResult> DeleteAsync(int lessonId, int studentId)
         {
-            var result = await _lessonStudentService.DeleteAsync(lessonId, studentId);
+            var result = await _lessonStudentService.UnassignLessonStudentAsync(lessonId, studentId);
             if (!result.Success)
                 return BadRequest(result.Message);
             var nuResource = _mapper.Map<LessonStudent, LessonStudentResource>(result.Resource);

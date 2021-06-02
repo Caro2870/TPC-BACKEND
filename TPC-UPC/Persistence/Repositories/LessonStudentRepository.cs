@@ -76,6 +76,28 @@ using TPC_UPC.Domain.Models;
                 .ToListAsync();
         }
 
-       
+        public async Task AssignLessonStudent(int lessonId, int studentId)
+        {
+            LessonStudent lessonStudent = await FindByLessonIdAndStudentId(lessonId, studentId);
+            if (lessonStudent == null)
+            {
+                lessonStudent = new LessonStudent { LessonId = lessonId, StudentId = studentId };
+                await AddAsync(lessonStudent);
+            }
+        }
+
+        public async Task<LessonStudent> FindByLessonIdAndStudentId(int lessonId, int studentId)
+        {
+            return await _context.LessonStudents.FindAsync(lessonId, studentId);
+        }
+
+        public async void UnassignLessonStudent(int lessonId, int studentId)
+        {
+            LessonStudent lessonStudent = await _context.LessonStudents.FindAsync(lessonId, studentId);
+            if(lessonStudent != null)
+            {
+                Remove(lessonStudent);
+            }
+        }
     }
  }

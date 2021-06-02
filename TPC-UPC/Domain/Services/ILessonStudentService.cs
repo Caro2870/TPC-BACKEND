@@ -15,6 +15,10 @@ namespace TPC_UPC.Domain.Services
         Task<LessonStudentResponse> UpdateAsync(int lessonId, int studentId, LessonStudent lesson);
         Task<LessonStudentResponse> DeleteAsync(int lessonId, int studentId);
         Task<IEnumerable<LessonStudent>> ListAsync();
+
+        Task<LessonStudentResponse> AssignLessonStudentAsync(int lessonId, int studentId);
+        Task<LessonStudentResponse> UnassignLessonStudentAsync(int lessonId, int studentId);
+
         //new
         Task<IEnumerable<LessonStudent>> ListStudentAssistantsByLessonIdAsync(int lessonId);
         Task<IEnumerable<LessonStudent>> ListByStudentIdAsync(int studentId);
