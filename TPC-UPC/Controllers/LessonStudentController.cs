@@ -89,7 +89,7 @@ namespace TPC_UPC.Controllers
             return resources;
         }
 
-        //Added by rodrigo 6
+        //Added by rodrigo rule 6
         [HttpGet("{lessonId}")]
         public async Task<IEnumerable<LessonStudentResource>> GetStudentsAssistantsByLessonIdAsync(int lessonId)
         {

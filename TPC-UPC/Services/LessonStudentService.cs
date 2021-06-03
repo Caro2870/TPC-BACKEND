@@ -58,6 +58,7 @@ namespace TPC_UPC.Services
             return await _lessonStudentRepository.ListAsync();
         }
 
+        //Added by rodrigo rule 6
         public async Task<IEnumerable<LessonStudent>> ListStudentAssistantsByLessonIdAsync(int lessonId)
         {
             return await _lessonStudentRepository.ListStudentAssistantsByLessonIdAsync(lessonId);
@@ -68,6 +69,7 @@ namespace TPC_UPC.Services
             return await _lessonStudentRepository.ListByStudentIdAsync(studentId);
         }
 
+        //Added by rodrigo rule 10
         public async Task<LessonStudentResponse> SaveAsync(LessonStudent lessonStudent)
         {
             var lesson = await _lessonRepository.FindById(lessonStudent.LessonId);

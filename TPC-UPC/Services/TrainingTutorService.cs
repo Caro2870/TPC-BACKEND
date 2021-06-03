@@ -72,7 +72,7 @@ namespace TPC_UPC.Services
             {
                 await _trainingTutorRepository.AddAsync(trainingTutor);
 
-                //Added by rodrigo 29
+                //Added by rodrigo rule 29
                 NotificationUser nu = new NotificationUser();
                 nu.NotificationId = 903;
                 nu.UserId = trainingTutor.TutorId;

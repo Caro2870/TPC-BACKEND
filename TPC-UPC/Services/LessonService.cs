@@ -55,6 +55,7 @@ namespace TPC_UPC.Services
             return await _lessonRepository.ListAsync();
         }
 
+        //Add by rodrigo rule 11
         public async Task<IEnumerable<Lesson>> ListByLessonTypeIdAsync(int lessonTypeId)
         {
             return await _lessonRepository.ListByLessonTypeIdAsync(lessonTypeId);

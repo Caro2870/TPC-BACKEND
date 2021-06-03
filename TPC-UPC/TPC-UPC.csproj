@@ -3,15 +3,18 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <RootNamespace>TPC_UPC</RootNamespace>
+    <StartupObject>TPC_UPC.Program</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.1.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.5" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.5" />
-    <PackageReference Include="MySql.EntityFrameworkCore" Version="5.0.3" />
-    <PackageReference Include="NSwag.Annotations" Version="13.10.9" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.6" />
+    <PackageReference Include="MySql.EntityFrameworkCore" Version="5.0.3.1" />
+    <PackageReference Include="NSwag.Annotations" Version="13.11.2" />
+    <PackageReference Include="SpecFlow.Plus.LivingDocPlugin" Version="3.8.35" />
+    <PackageReference Include="SpecRun.SpecFlow" Version="3.8.12" />
     <PackageReference Include="Swashbuckle" Version="5.6.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.4" />
     <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.1.4" />
