@@ -21,6 +21,16 @@ using TPC_UPC.Domain.Models;
  			await _context.LessonStudents.AddAsync(lessonStudent);
  		}
 
+        public async Task AssignLessonStudent(int lessonId, int studentId, LessonStudent ls)
+        {
+            LessonStudent lessonStudent = await FindById(lessonId, studentId);
+            if (lessonStudent == null)
+            {
+                lessonStudent = ls;
+                await AddAsync(lessonStudent);
+            }
+        }
+
         public async Task<LessonStudent> FindById(int lessonId, int studentId)
  		{
  			return await _context.LessonStudents.FindAsync(lessonId, studentId);

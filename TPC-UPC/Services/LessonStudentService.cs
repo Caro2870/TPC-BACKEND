@@ -71,6 +71,7 @@ namespace TPC_UPC.Services
 
         public async Task<LessonStudentResponse> SaveAsync(LessonStudent lessonStudent)
         {
+
             var existingLesson = await _lessonRepository.FindById(lessonStudent.LessonId);
 
             if (existingLesson == null)
@@ -99,6 +100,7 @@ namespace TPC_UPC.Services
                 return new LessonStudentResponse($"An error ocurred while saving the lessonStudent: {ex.Message}");
             }
         }
+
 
         public async Task<LessonStudentResponse> UpdateAsync(int lessonId, int studentId, LessonStudent lessonStudent)
         {
