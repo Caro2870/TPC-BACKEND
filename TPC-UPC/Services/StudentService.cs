@@ -11,9 +11,9 @@ namespace TPC_UPC.Services
 {
     public class StudentService : IStudentService
     {
-        private readonly IStudentRepository _studentRepository;
-        private readonly ICareerRepository _careerRepository;
-        private readonly IAccountRepository _accountRepository;
+        private IStudentRepository _studentRepository;
+        private ICareerRepository _careerRepository;
+        private IAccountRepository _accountRepository;
 
         private readonly IUnitOfWork _unitOfWork;
         private IStudentRepository object1;
@@ -26,12 +26,6 @@ namespace TPC_UPC.Services
             _careerRepository = careerRepository;
             _studentRepository = studentRepository;
             _unitOfWork = unitOfWork;
-        }
-
-        public StudentService(IStudentRepository object1, IUnitOfWork object2)
-        {
-            this.object1 = object1;
-            this.object2 = object2;
         }
 
         public async Task<IEnumerable<Student>> ListAsync()

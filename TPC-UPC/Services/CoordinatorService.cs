@@ -36,7 +36,7 @@ namespace TPC_UPC.Services
             var existingCoordinator = await _coordinatorRepository.FindById(id);
 
             if (existingCoordinator == null)
-                return new CoordinatorResponse("Coodinator not found");
+                return new CoordinatorResponse("Coordinator not found");
 
             return new CoordinatorResponse(existingCoordinator);
         }

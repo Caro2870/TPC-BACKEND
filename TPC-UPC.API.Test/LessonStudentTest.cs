@@ -23,16 +23,31 @@ namespace TPC_UPC.API.Test
         {
             var mockLessonStudentRepository = GetDefaultILessonStudentRepositoryInstance();
             var mockUnityOfWork = GetDefaultIUnitOfWorkInstance();
+            var mockLessonRepository = GetDefaultILessonRepositoryInstance();
+            var mockStudentRepository = GetDefaultIStudentRepositoryInstance();
+
+
+
             LessonStudent lessonStudent = new LessonStudent();
             mockLessonStudentRepository.Setup(r => r.AddAsync(lessonStudent))
                 .Returns(Task.FromResult(lessonStudent));
-            var service = new LessonStudentService(mockLessonStudentRepository.Object, mockUnityOfWork.Object);
+            var service = new LessonStudentService(mockLessonStudentRepository.Object, mockUnityOfWork.Object, mockLessonRepository.Object,
+                mockStudentRepository.Object);
             LessonStudentResponse result = await service.SaveAsync(lessonStudent);
             var message = result.Message;
             message.Should().Be("");
         }
 
 
+        private Mock<IStudentRepository> GetDefaultIStudentRepositoryInstance()
+        {
+            return new Mock<IStudentRepository>();
+        }
+
+        private Mock<ILessonRepository> GetDefaultILessonRepositoryInstance()
+        {
+            return new Mock<ILessonRepository>();
+        }
 
         private Mock<ILessonStudentRepository> GetDefaultILessonStudentRepositoryInstance()
         {

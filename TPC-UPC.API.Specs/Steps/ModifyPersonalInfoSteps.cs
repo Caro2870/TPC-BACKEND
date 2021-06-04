@@ -12,7 +12,7 @@ using TPC_UPC.Services;
 namespace TPC_UPC.API.Specs.Steps
 {
     [Binding]
-    public class ModifyPersonalInfoSteps
+    public sealed class ModifyPersonalInfoSteps
     {
         public readonly ScenarioContext _scenarioContext;
         private Tutor _tutor = new();
