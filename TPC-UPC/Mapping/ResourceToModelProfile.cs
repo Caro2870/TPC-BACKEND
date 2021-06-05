@@ -32,6 +32,7 @@ namespace TPC_UPC.Mapping
             CreateMap<SaveMeetingResource, Meeting>();
             CreateMap<SaveTrainingResource, Training>();
             CreateMap<SaveTrainingTutorResource, TrainingTutor>();
+            CreateMap<SaveCareerCourseResource, CareerCourse>();
         }
     }
 }

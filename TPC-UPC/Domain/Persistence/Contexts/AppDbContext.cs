@@ -35,6 +35,7 @@ namespace TPC_UPC.Domain.Persistence.Contexts
         public DbSet<   University      > Universities { get; set; }
         public DbSet<   User            > Users { get; set; }
         public DbSet<   UserCourse      >  UserCourses{ get; set; }
+        public DbSet<CareerCourse> CareerCourses { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -62,6 +63,7 @@ namespace TPC_UPC.Domain.Persistence.Contexts
              builder.Entity<University>().ToTable("Universities")       ;
              builder.Entity<User>().ToTable("Users");
              builder.Entity<UserCourse>().ToTable("UserCourses");
+             builder.Entity<CareerCourse>().ToTable("CareerCourses");
 
             //Constraints of User
             builder.Entity<User>().HasKey(p => p.Id);   //PK
@@ -184,6 +186,9 @@ namespace TPC_UPC.Domain.Persistence.Contexts
             //Constraints of UserCourse
             builder.Entity<UserCourse>().HasKey(pt => new { pt.UserId, pt.CourseId });   //PK
 
+            //Constraints of CareerCourse
+            builder.Entity<CareerCourse>().HasKey(pt => new { pt.CareerId, pt.CourseId });   //PK
+
             //Relationships of UserCourse
             builder.Entity<UserCourse>()
                 .HasOne(pt => pt.User)
@@ -193,6 +198,19 @@ namespace TPC_UPC.Domain.Persistence.Contexts
             builder.Entity<UserCourse>()
                 .HasOne(pt => pt.Course)
                 .WithMany(p => p.UserCourses)
+                .HasForeignKey(pt => pt.CourseId);
+
+
+
+            //Relationships of CareerCourse
+            builder.Entity<CareerCourse>()
+                .HasOne(pt => pt.Career)
+                .WithMany(p => p.CareerCourses)
+                .HasForeignKey(pt => pt.CareerId);
+
+            builder.Entity<CareerCourse>()
+                .HasOne(pt => pt.Course)
+                .WithMany(p => p.CareerCourses)
                 .HasForeignKey(pt => pt.CourseId);
 
             /*
@@ -256,7 +274,12 @@ namespace TPC_UPC.Domain.Persistence.Contexts
                 .HasMany(a => a.Students)
                 .WithOne(b => b.Career)
                 .HasForeignKey(p => p.CareerId);
+      
 
+            builder.Entity<Career>()
+                  .HasMany(a => a.CareerCourses)
+                  .WithOne(b => b.Career)
+                  .HasForeignKey(p => p.CareerId);
 
             //Relationships of Faculty
             builder.Entity<Faculty>()
@@ -315,10 +338,12 @@ namespace TPC_UPC.Domain.Persistence.Contexts
                 .HasMany(a => a.NotificationUsers)
                 .WithOne(b => b.User)
                 .HasForeignKey(p => p.UserId);
-            builder.Entity<User>()
-                .HasMany(a => a.UserCourses)
-                .WithOne(b => b.User)
-                .HasForeignKey(p => p.UserId);
+            builder.Entity<Course>()
+                .HasMany(a => a.CareerCourses)
+                .WithOne(b => b.Course)
+                .HasForeignKey(p => p.CourseId);
+
+
             //Relationships of Notification
             builder.Entity<Notification>()
                 .HasMany(a => a.NotificationUsers)

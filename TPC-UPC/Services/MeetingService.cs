@@ -26,7 +26,7 @@ namespace TPC_UPC.Services
             var existingMeeting = await _meetingRepository.FindById(id);
 
             if (existingMeeting == null)
-                return new MeetingResponse("Tag not found");
+                return new MeetingResponse("Meeting not found");
 
             try
             {
