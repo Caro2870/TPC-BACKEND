@@ -52,5 +52,12 @@ using System.Threading.Tasks;
  		{
  			_context.Trainings.Update(training);
  		}
- 	}
+
+        public async Task<IEnumerable<Training>> ListByRangeOfDates(DateTime start, DateTime end)
+        {
+            return await _context.Trainings
+                .Where(ls => ls.StartDate >= start && ls.StartDate <= end)
+                .ToListAsync();
+        }
+    }
  }

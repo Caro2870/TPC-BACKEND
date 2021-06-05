@@ -8,6 +8,7 @@ using TPC_UPC.Domain.Services;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using TPC_UPC.Services;
+using TPC_UPC.Domain;
 
 namespace TPC_UPC.API.Test
 {
@@ -22,6 +23,8 @@ namespace TPC_UPC.API.Test
             // Arrange
             var mockAccountRepository = GetDefaultIAccountRepositoryInstance();
             var mockIUnitOfWork = GetDefaultIUnitOfWorkInstance();
+            var mockUniversityRepository = GetDefaultIUniversityRepositoryInstance();
+
 
             var accountId = 1;
             Account a = new Account();
@@ -31,7 +34,7 @@ namespace TPC_UPC.API.Test
             mockAccountRepository.Setup(r => r.FindById(accountId))
                 .Returns(Task.FromResult<Account>(a));
 
-            var service = new AccountService(mockAccountRepository.Object, mockIUnitOfWork.Object);
+            var service = new AccountService(mockAccountRepository.Object, mockUniversityRepository.Object, mockIUnitOfWork.Object);
 
             // Act
             AccountResponse result = await service.GetByIdAsync(accountId);
@@ -46,12 +49,13 @@ namespace TPC_UPC.API.Test
             // Arrange
             var mockAccountRepository = GetDefaultIAccountRepositoryInstance();
             var mockIUnitOfWork = GetDefaultIUnitOfWorkInstance();
+            var mockUniversityRepository = GetDefaultIUniversityRepositoryInstance();
 
             var accountId = 1;
             Account a = new Account();
             a.Id = accountId;
 
-            var service = new AccountService(mockAccountRepository.Object, mockIUnitOfWork.Object);
+            var service = new AccountService(mockAccountRepository.Object, mockUniversityRepository.Object, mockIUnitOfWork.Object);
 
             // Act
             AccountResponse result = await service.SaveAsync(a);
@@ -65,7 +69,9 @@ namespace TPC_UPC.API.Test
         {
             // Arrange
             var mockAccountRepository = GetDefaultIAccountRepositoryInstance();
-            var mockIUnitOfWork = GetDefaultIUnitOfWorkInstance();
+            var mockIUnitOfWork = GetDefaultIUnitOfWorkInstance(); 
+            var mockUniversityRepository = GetDefaultIUniversityRepositoryInstance();
+
 
             var accountId = 1;
             Account a = new Account();
@@ -74,7 +80,7 @@ namespace TPC_UPC.API.Test
             mockAccountRepository.Setup(r => r.FindById(accountId))
                 .Returns(Task.FromResult<Account>(a));
 
-            var service = new AccountService(mockAccountRepository.Object, mockIUnitOfWork.Object);
+            var service = new AccountService(mockAccountRepository.Object, mockUniversityRepository.Object, mockIUnitOfWork.Object);
 
             // Act
             AccountResponse result = await service.DeleteAsync(accountId);
@@ -89,6 +95,8 @@ namespace TPC_UPC.API.Test
             // Arrange
             var mockAccountRepository = GetDefaultIAccountRepositoryInstance();
             var mockIUnitOfWork = GetDefaultIUnitOfWorkInstance();
+            var mockUniversityRepository = GetDefaultIUniversityRepositoryInstance();
+
 
             var accountId = 1;
             Account a = new Account();
@@ -100,7 +108,7 @@ namespace TPC_UPC.API.Test
             mockAccountRepository.Setup(r => r.FindById(accountId))
                 .Returns(Task.FromResult<Account>(a));
 
-            var service = new AccountService(mockAccountRepository.Object, mockIUnitOfWork.Object);
+            var service = new AccountService(mockAccountRepository.Object, mockUniversityRepository.Object, mockIUnitOfWork.Object);
 
             // Act
             AccountResponse result = await service.UpdateAsync(accountId,expected);
@@ -117,12 +125,13 @@ namespace TPC_UPC.API.Test
             // Arrange
             var mockAccountRepository = GetDefaultIAccountRepositoryInstance();
             var mockIUnitOfWork = GetDefaultIUnitOfWorkInstance();
+            var mockUniversityRepository = GetDefaultIUniversityRepositoryInstance();
 
             Account a = new Account();
             var accountId = 1;
             a.Id = accountId;
 
-            var service = new AccountService(mockAccountRepository.Object, mockIUnitOfWork.Object);
+            var service = new AccountService(mockAccountRepository.Object, mockUniversityRepository.Object, mockIUnitOfWork.Object);
 
             // Act
             AccountResponse result = await service.GetByIdAsync(accountId);
@@ -136,6 +145,11 @@ namespace TPC_UPC.API.Test
         private Mock<IAccountRepository> GetDefaultIAccountRepositoryInstance()
         {
             return new Mock<IAccountRepository>();
+        }
+
+        private Mock<IUniversityRepository> GetDefaultIUniversityRepositoryInstance()
+        {
+            return new Mock<IUniversityRepository>();
         }
 
         private Mock<IUnitOfWork> GetDefaultIUnitOfWorkInstance()

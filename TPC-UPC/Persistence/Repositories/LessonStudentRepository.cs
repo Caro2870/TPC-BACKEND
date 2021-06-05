@@ -20,12 +20,41 @@ using TPC_UPC.Domain.Models;
  		{
  			await _context.LessonStudents.AddAsync(lessonStudent);
  		}
- 
- 		public async Task<LessonStudent> FindById(int lessonId, int studentId)
+
+        public async Task<LessonStudent> FindById(int lessonId, int studentId)
  		{
  			return await _context.LessonStudents.FindAsync(lessonId, studentId);
  		}
- 
+         
+        public async Task<LessonStudent> ExistsByLessonIdAndStudentId(int lessonId, int studentId)
+        {
+            //LessonStudent lessonStudent = new LessonStudent();
+            //lessonStudent = await _context.LessonStudents
+            //    .FirstAsync(l => l.LessonId == lessonId && l.StudentId == studentId);
+            //int a = 5;
+            //int b = 8;
+
+            //if(lessonStudent.LessonId == 0 && lessonStudent.StudentId == 0)
+            //{
+            //    return null;
+            //}
+
+            //else return lessonStudent;
+
+            List<LessonStudent> lessonStudents = await _context.LessonStudents
+                .Where(l => l.LessonId == lessonId)
+                .Where(l => l.StudentId == studentId)
+                .ToListAsync();
+            if (lessonStudents.Count == 0)
+            {
+                return null;
+            }
+            else
+            {
+                return  lessonStudents.First();
+            }
+                
+        }
  		public async Task<IEnumerable<LessonStudent>> ListAsync()
  		{
  			return await _context.LessonStudents.ToListAsync();

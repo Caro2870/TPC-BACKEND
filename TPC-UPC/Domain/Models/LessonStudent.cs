@@ -18,5 +18,6 @@ namespace TPC_UPC.Domain.Models
         public int Qualification { get; set; }
         public bool Complaint { get; set; }
         public bool Assistance { get; set; }
+
     }
 }

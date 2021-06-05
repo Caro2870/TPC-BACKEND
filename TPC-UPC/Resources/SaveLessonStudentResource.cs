@@ -14,7 +14,6 @@ namespace TPC_UPC.Resources
         [Required]
         public int StudentId { get; set; }
 
-        [Required]
         [MaxLength(200)]
         public string Topic { get; set; }
 

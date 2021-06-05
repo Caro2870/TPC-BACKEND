@@ -18,5 +18,6 @@ namespace TPC_UPC.Domain.Services
 
         //ADDED
         Task<IEnumerable<Tutor>> ListAsync();
+        double GetWorkshopsAverage(int tutorId, int courseId, int lessonTypeId);
     }
 }

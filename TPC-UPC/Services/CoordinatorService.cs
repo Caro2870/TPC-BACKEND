@@ -73,14 +73,22 @@ namespace TPC_UPC.Services
             if (existingCoordinator == null)
                 return new CoordinatorResponse("Coordinator not found");
 
-            existingCoordinator.FirstName = coordinator.FirstName;
+            //if (coordinator.AccountId != existingCoordinator.AccountId)
+            //    return new CoordinatorResponse("Cannot update the accountId");
 
+            //if (coordinator.Mail != existingCoordinator.Mail)
+            //    return new CoordinatorResponse("Cannot update the mail");
+
+            existingCoordinator.FirstName = coordinator.FirstName;
+            existingCoordinator.LastName = coordinator.LastName;
+            existingCoordinator.PhoneNumber = coordinator.PhoneNumber;
+            
             try
             {
-                _coordinatorRepository.Update(coordinator);
+                _coordinatorRepository.Update(existingCoordinator);
                 await _unitOfWork.CompleteAsync();
 
-                return new CoordinatorResponse(coordinator);
+                return new CoordinatorResponse(existingCoordinator);
             }
             catch (Exception ex)
             {

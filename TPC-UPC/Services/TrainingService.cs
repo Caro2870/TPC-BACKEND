@@ -112,5 +112,10 @@ namespace TPC_UPC.Services
         {
             return await _trainingRepository.ListByCoordinatorIdAsync(coordinatorId);
         }
+
+        public async Task<IEnumerable<Training>> ListByRangeOfDates(DateTime start, DateTime end)
+        {
+            return await _trainingRepository.ListByRangeOfDates(start, end);
+        }
     }
 }

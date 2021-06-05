@@ -9,6 +9,7 @@ using TPC_UPC.Domain.Services;
 using TPC_UPC.Resources;
 using TPC_UPC.Domain.Models;
 using TPC_UPC.API.Extensions;
+using System.Diagnostics.CodeAnalysis;
 
 namespace TPC_UPC.Controllers
 {
@@ -91,6 +92,28 @@ namespace TPC_UPC.Controllers
             var coordinatorResource = _mapper.Map<Coordinator, CoordinatorResource>(result.Resource);
             return Ok(coordinatorResource);
         }
+
+        [HttpPut("{id}/1")]
+        [ProducesResponseType(typeof(CoordinatorResource), 200)]
+        [ProducesResponseType(typeof(BadRequestResult), 404)]
+        public async Task<IActionResult> PutAsyncAllData(int id, [NotNull] string firstName, [NotNull] string lastName, [NotNull] string phoneNumber)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState.GetErrorMessages());
+            SaceCoordinatorResource resource = new SaceCoordinatorResource();
+            resource.FirstName = firstName;
+            resource.LastName = lastName;
+            resource.PhoneNumber = phoneNumber;
+            var Coordinator = _mapper.Map<SaceCoordinatorResource, Coordinator>(resource);
+            var result = await _coordinatorService.UpdateASync(id, Coordinator);
+
+            if (!result.Success)
+                return BadRequest(result.Message);
+
+            var coordinatorResource = _mapper.Map<Coordinator, CoordinatorResource>(result.Resource);
+            return Ok(coordinatorResource);
+        }
+
 
         [HttpDelete("{id}")]
         [ProducesResponseType(typeof(CoordinatorResource), 200)]

@@ -23,8 +23,15 @@ using System.Threading.Tasks;
  
  		public async Task<Coordinator> FindById(int id)
  		{
- 			return await _context.Coordinators.FindAsync(id);
- 		}
+            List<Coordinator> coordinators = await _context.Coordinators
+               .Where(p => p.Id == id)
+               .Include(p => p.Faculty)
+               .Include(p => p.Account)
+               .ThenInclude(a => a.University)
+               .ToListAsync();
+            return coordinators.First();
+
+         }
 
         public Task<Coordinator> FindByIdAndFacultyId(int facultyId, int id)
         {

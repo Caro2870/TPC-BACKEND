@@ -18,5 +18,6 @@ namespace TPC_UPC.Domain.Services
         //ADDED
         Task<IEnumerable<Meeting>> ListAsync();
         //new
+        Task<IEnumerable<Meeting>> ListByRangeOfDates(DateTime start, DateTime end);
     }
 }
