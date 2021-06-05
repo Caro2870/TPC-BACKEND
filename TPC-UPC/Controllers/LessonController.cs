@@ -87,5 +87,29 @@ namespace TPC_UPC.Controllers
             var lessonResource = _mapper.Map<Lesson, LessonResource>(result.Resource);
             return Ok(lessonResource);
         }
+
+
+
+        [HttpGet("/Lesson/{courseId}")]
+        public async Task<IEnumerable<LessonResource>> GetAllByCourseIdAsync(int courseId)
+        {
+            var lesson = await _lessonService.ListByCourseIdAsync(courseId);
+            var resources = _mapper.Map<IEnumerable<Lesson>, IEnumerable<LessonResource>>(lesson);
+
+            return resources;
+
+        }
+
+        [HttpGet("/lessonsrange")]
+        [ProducesResponseType(typeof(LessonResource), 200)]
+        [ProducesResponseType(typeof(BadRequestResult), 404)]
+        public async Task<IEnumerable<LessonResource>> GetInRangeOfDatesAsync(DateTime start, DateTime end)
+        {
+            var lessons = await _lessonService.ListByRangeOfDates(start, end);
+            var resources = _mapper
+                .Map<IEnumerable<Lesson>, IEnumerable<LessonResource>>(lessons);
+
+            return resources;
+        }
     }
 }

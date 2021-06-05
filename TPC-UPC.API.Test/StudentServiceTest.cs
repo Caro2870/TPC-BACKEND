@@ -24,16 +24,122 @@ namespace TPC_UPC.API.Test
             //
             var mockStudentRepository = GetDefaultIStudentRepositoryInstance();
             var mockIUnitOfWork = GetDefaultIUnitOfWorkInstance();
-            Student student = new Student();
-            mockStudentRepository.Setup(r => r.AddAsync(student))
-                .Returns(Task.FromResult<Student>(student));
+            var mockCareerRepository = GetDefaultICareerRepositoryInstance();
+            var mockAccountRepository = GetDefaultIAccountRepositoryInstance();
 
-            var service = new StudentService(mockStudentRepository.Object,  mockIUnitOfWork.Object);
+            Student coordinator = new Student();
+            mockStudentRepository.Setup(r => r.AddAsync(coordinator))
+                .Returns(Task.FromResult<Student>(coordinator));
+            var service = new StudentService(mockStudentRepository.Object,
+                mockAccountRepository.Object, mockCareerRepository.Object, mockIUnitOfWork.Object);
             //
-            StudentResponse result = await service.SaveAsync(student);
+            StudentResponse result = await service.SaveAsync(coordinator);
             var message = result.Message;
             //
             message.Should().Be("");
+        }
+
+        [Test]
+        public async Task GetAsyncTestHappy()
+        {
+            // Arrange
+            var mockStudentRepository = GetDefaultIStudentRepositoryInstance();
+            var mockIUnitOfWork = GetDefaultIUnitOfWorkInstance();
+            var mockCareerRepository = GetDefaultICareerRepositoryInstance();
+            var mockAccountRepository = GetDefaultIAccountRepositoryInstance();
+
+            Student coordinator = new Student();
+            int coordinatorId = 1;
+            coordinator.Id = coordinatorId;
+            mockStudentRepository.Setup(r => r.FindById(coordinatorId))
+                .Returns(Task.FromResult<Student>(coordinator));
+
+            var service = new StudentService(mockStudentRepository.Object,
+                mockAccountRepository.Object, mockCareerRepository.Object, mockIUnitOfWork.Object);
+
+            // Act
+            StudentResponse result = await service.GetByIdAsync(coordinatorId);
+
+            // Assert
+            Assert.AreEqual(coordinator, result.Resource);
+        }
+
+        [Test]
+        public async Task DeleteAsyncTestHappy()
+        {
+            // Arrange
+            var mockStudentRepository = GetDefaultIStudentRepositoryInstance();
+            var mockIUnitOfWork = GetDefaultIUnitOfWorkInstance();
+            var mockCareerRepository = GetDefaultICareerRepositoryInstance();
+            var mockAccountRepository = GetDefaultIAccountRepositoryInstance();
+
+            Student coordinator = new Student();
+            int coordinatorId = 1;
+            coordinator.Id = coordinatorId;
+
+            mockStudentRepository.Setup(r => r.FindById(coordinatorId))
+                .Returns(Task.FromResult<Student>(coordinator));
+
+            var service = new StudentService(mockStudentRepository.Object,
+                mockAccountRepository.Object, mockCareerRepository.Object, mockIUnitOfWork.Object);
+
+            // Act
+            StudentResponse result = await service.DeleteAsync(coordinatorId);
+
+            // Assert
+            Assert.AreEqual(coordinator, result.Resource);
+        }
+
+        [Test]
+        public async Task PutAsyncTest()
+        {
+            // Arrange
+            var mockStudentRepository = GetDefaultIStudentRepositoryInstance();
+            var mockIUnitOfWork = GetDefaultIUnitOfWorkInstance();
+            var mockCareerRepository = GetDefaultICareerRepositoryInstance();
+            var mockAccountRepository = GetDefaultIAccountRepositoryInstance();
+
+            Student coordinator = new Student();
+            int coordinatorId = 1;
+            coordinator.Id = coordinatorId;
+            coordinator.FirstName = "Ricardo";
+
+            Student coordinatorExpected = new Student();
+            coordinatorExpected.FirstName = "William";
+
+            mockStudentRepository.Setup(r => r.FindById(coordinatorId))
+                .Returns(Task.FromResult<Student>(coordinator));
+
+            var service = new StudentService(mockStudentRepository.Object,
+                mockAccountRepository.Object, mockCareerRepository.Object, mockIUnitOfWork.Object);
+
+            // Act
+            StudentResponse result = await service.UpdateASync(coordinatorId, coordinatorExpected);
+
+            // Assert
+            Assert.AreEqual(coordinatorExpected.FirstName, result.Resource.FirstName);
+        }
+
+        [Test]
+        public async Task GetAsyncTestUnhappy()
+        {
+            // Arrange
+            var mockStudentRepository = GetDefaultIStudentRepositoryInstance();
+            var mockIUnitOfWork = GetDefaultIUnitOfWorkInstance();
+            var mockCareerRepository = GetDefaultICareerRepositoryInstance();
+            var mockAccountRepository = GetDefaultIAccountRepositoryInstance();
+            int coordinatorId = 1;
+
+
+            var service = new StudentService(mockStudentRepository.Object,
+                mockAccountRepository.Object, mockCareerRepository.Object, mockIUnitOfWork.Object);
+
+            // Act
+            StudentResponse result = await service.GetByIdAsync(coordinatorId);
+            var message = result.Message;
+
+            // Assert
+            message.Should().Be("Student not found");
         }
 
         private Mock<IStudentRepository> GetDefaultIStudentRepositoryInstance()
@@ -44,6 +150,15 @@ namespace TPC_UPC.API.Test
         private Mock<IUnitOfWork> GetDefaultIUnitOfWorkInstance()
         {
             return new Mock<IUnitOfWork>();
+        }
+        private Mock<IAccountRepository> GetDefaultIAccountRepositoryInstance()
+        {
+            return new Mock<IAccountRepository>();
+        }
+
+        private Mock<ICareerRepository> GetDefaultICareerRepositoryInstance()
+        {
+            return new Mock<ICareerRepository>();
         }
     }
 }
