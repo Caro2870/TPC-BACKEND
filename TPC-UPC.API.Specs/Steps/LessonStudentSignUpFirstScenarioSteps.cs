@@ -41,21 +41,7 @@ namespace TPC_UPC.API.Specs.Steps
         public LessonStudentSignUpFirstScenarioSteps(ScenarioContext scenarioContext)
         {
             _scenarioContext = scenarioContext;
-            //_lessonService = new LessonService(_lessonRepository.Object, GetDefaultIUnitOfWorkInstance().Object);
-            //_studentService = new StudentService(_studentRepository.Object, GetDefaultIAccountRepositoryInstance().Object,
-            //GetDefaultICareerRepositoryInstance().Object, GetDefaultIUnitOfWorkInstance().Object;
         }
-
-
-        //private static Mock<ICareerRepository> GetDefaultICareerRepositoryInstance()
-        //{
-        //    return new Mock<ICareerRepository>();
-        //}
-
-        //private static Mock<IAccountRepository> GetDefaultIAccountRepositoryInstance()
-        //{
-        //    return new Mock<IAccountRepository>();
-        //}
 
         private static Mock<IUnitOfWork> GetDefaultIUnitOfWorkInstance()
         {

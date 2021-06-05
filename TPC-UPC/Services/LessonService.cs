@@ -72,7 +72,12 @@ namespace TPC_UPC.Services
 
         public async Task<IEnumerable<Lesson>> ListByRangeOfDates(DateTime start, DateTime end)
         {
-            return await _lessonRepository.ListByRangeOfDates(start, end);
+            IEnumerable<Lesson> lessons = await _lessonRepository.ListByRangeOfDates(start, end); 
+            if (lessons.Count() == 0)
+            {
+                throw new ArgumentException("You don't have any lessons in this range");
+            }
+            return lessons;
         }
 
         public async Task<LessonResponse> SaveAsync(Lesson lesson)

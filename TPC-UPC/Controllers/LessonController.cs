@@ -93,6 +93,7 @@ namespace TPC_UPC.Controllers
         [ProducesResponseType(typeof(BadRequestResult), 404)]
         public async Task<IEnumerable<LessonResource>> GetInRangeOfDatesAsync(DateTime start, DateTime end)
         {
+
             var lessons = await _lessonService.ListByRangeOfDates(start, end);
             var resources = _mapper
                 .Map<IEnumerable<Lesson>, IEnumerable<LessonResource>>(lessons);
