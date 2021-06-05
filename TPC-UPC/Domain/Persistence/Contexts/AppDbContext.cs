@@ -484,6 +484,7 @@ namespace TPC_UPC.Domain.Persistence.Contexts
                    new NotificationType { Id = 803, Description = "Material compartido enviado por el tutor" },
                    new NotificationType { Id = 804, Description = "Modificacion de horario de una sesion" },
                    new NotificationType { Id = 806, Description = "Aviso enviado por el coordinador" }
+
                    );
 
             builder.Entity<Notification>().HasData
