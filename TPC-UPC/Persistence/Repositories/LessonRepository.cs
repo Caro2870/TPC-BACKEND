@@ -31,7 +31,6 @@ using Microsoft.EntityFrameworkCore;
            Include(l => l.LessonType).
            Include(l => l.Course).
            FirstOrDefaultAsync(l => l.Id == id);
-
          }
  
  		public async Task<IEnumerable<Lesson>> ListAsync()

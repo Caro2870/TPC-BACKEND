@@ -149,7 +149,7 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.And(string.Format("the lesson is created ({0}, {1}, {2}, {3}, {4}, {5})", lessonId, scheduleId, description, tutorId, lessonTypeId, courseId), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 22
- testRunner.When(string.Format("the student signs up for the first time for this lesson {0}", text), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("the student signs up for the first time for this lesson", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 23
  testRunner.Then(string.Format("what returns should be {0}", response), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
@@ -159,11 +159,189 @@ this.ScenarioInitialize(scenarioInfo);
         }
         
         [TechTalk.SpecRun.ScenarioAttribute("Student signs up for a lesson, 1", new string[] {
-                "mytag"}, SourceLine=32)]
+                "mytag"}, SourceLine=26)]
         public virtual void StudentSignsUpForALesson_1()
         {
 #line 19
-this.StudentSignsUpForALesson("1", "Brigitte", "Mendez", "m@com.pe", "4589", "1", "1", "5", "1", "4", "1st Lesson", "1", "1", "1", "True", "text", ((string[])(null)));
+this.StudentSignsUpForALesson("1", "Brigitte", "Mendez", "m@com.pe", "4589", "1", "1", "5", "1", "4", "1st Lesson", "1", "1", "1", "True", "You are already part of this lesson", ((string[])(null)));
+#line hidden
+        }
+        
+        public virtual void StudentSignsUpForTheSameLesson(
+                    string studentId, 
+                    string firstName, 
+                    string lastName, 
+                    string mail, 
+                    string phoneNumber, 
+                    string accountId, 
+                    string careerId, 
+                    string cycleNumber, 
+                    string lessonId, 
+                    string scheduleId, 
+                    string description, 
+                    string tutorId, 
+                    string lessonTypeId, 
+                    string courseId, 
+                    string response, 
+                    string text, 
+                    string[] exampleTags)
+        {
+            string[] @__tags = new string[] {
+                    "mytag"};
+            if ((exampleTags != null))
+            {
+                @__tags = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Concat(@__tags, exampleTags));
+            }
+            string[] tagsOfScenario = @__tags;
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            argumentsOfScenario.Add("StudentId", studentId);
+            argumentsOfScenario.Add("FirstName", firstName);
+            argumentsOfScenario.Add("LastName", lastName);
+            argumentsOfScenario.Add("Mail", mail);
+            argumentsOfScenario.Add("PhoneNumber", phoneNumber);
+            argumentsOfScenario.Add("AccountId", accountId);
+            argumentsOfScenario.Add("CareerId", careerId);
+            argumentsOfScenario.Add("CycleNumber", cycleNumber);
+            argumentsOfScenario.Add("LessonId", lessonId);
+            argumentsOfScenario.Add("ScheduleId", scheduleId);
+            argumentsOfScenario.Add("Description", description);
+            argumentsOfScenario.Add("TutorId", tutorId);
+            argumentsOfScenario.Add("LessonTypeId", lessonTypeId);
+            argumentsOfScenario.Add("CourseId", courseId);
+            argumentsOfScenario.Add("response", response);
+            argumentsOfScenario.Add("text", text);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Student signs up for the same lesson", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+#line 31
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            bool isScenarioIgnored = default(bool);
+            bool isFeatureIgnored = default(bool);
+            if ((tagsOfScenario != null))
+            {
+                isScenarioIgnored = tagsOfScenario.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((this._featureTags != null))
+            {
+                isFeatureIgnored = this._featureTags.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((isScenarioIgnored || isFeatureIgnored))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 32
+ testRunner.Given(string.Format("the Student is created ({0}, {1}, {2}, {3}, {4}, {5}, {6}, {7})", studentId, firstName, lastName, mail, phoneNumber, accountId, careerId, cycleNumber), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 33
+ testRunner.And(string.Format("the lesson is created ({0}, {1}, {2}, {3}, {4}, {5})", lessonId, scheduleId, description, tutorId, lessonTypeId, courseId), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 34
+ testRunner.When("the student signs up for the second time for this lesson", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 35
+ testRunner.Then(string.Format("the returned result should be {0}", text), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [TechTalk.SpecRun.ScenarioAttribute("Student signs up for the same lesson, 1", new string[] {
+                "mytag"}, SourceLine=38)]
+        public virtual void StudentSignsUpForTheSameLesson_1()
+        {
+#line 31
+this.StudentSignsUpForTheSameLesson("1", "Brigitte", "Mendez", "m@com.pe", "4589", "1", "1", "5", "1", "4", "1st Lesson", "1", "1", "1", "True", "You are already part of this lesson", ((string[])(null)));
+#line hidden
+        }
+        
+        public virtual void StudentSignsUpForAFullLesson(
+                    string studentId, 
+                    string firstName, 
+                    string lastName, 
+                    string mail, 
+                    string phoneNumber, 
+                    string accountId, 
+                    string careerId, 
+                    string cycleNumber, 
+                    string lessonId, 
+                    string scheduleId, 
+                    string description, 
+                    string tutorId, 
+                    string lessonTypeId, 
+                    string courseId, 
+                    string response, 
+                    string text, 
+                    string[] exampleTags)
+        {
+            string[] @__tags = new string[] {
+                    "mytag"};
+            if ((exampleTags != null))
+            {
+                @__tags = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Concat(@__tags, exampleTags));
+            }
+            string[] tagsOfScenario = @__tags;
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            argumentsOfScenario.Add("StudentId", studentId);
+            argumentsOfScenario.Add("FirstName", firstName);
+            argumentsOfScenario.Add("LastName", lastName);
+            argumentsOfScenario.Add("Mail", mail);
+            argumentsOfScenario.Add("PhoneNumber", phoneNumber);
+            argumentsOfScenario.Add("AccountId", accountId);
+            argumentsOfScenario.Add("CareerId", careerId);
+            argumentsOfScenario.Add("CycleNumber", cycleNumber);
+            argumentsOfScenario.Add("LessonId", lessonId);
+            argumentsOfScenario.Add("ScheduleId", scheduleId);
+            argumentsOfScenario.Add("Description", description);
+            argumentsOfScenario.Add("TutorId", tutorId);
+            argumentsOfScenario.Add("LessonTypeId", lessonTypeId);
+            argumentsOfScenario.Add("CourseId", courseId);
+            argumentsOfScenario.Add("response", response);
+            argumentsOfScenario.Add("text", text);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Student signs up for a full lesson", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+#line 42
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            bool isScenarioIgnored = default(bool);
+            bool isFeatureIgnored = default(bool);
+            if ((tagsOfScenario != null))
+            {
+                isScenarioIgnored = tagsOfScenario.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((this._featureTags != null))
+            {
+                isFeatureIgnored = this._featureTags.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((isScenarioIgnored || isFeatureIgnored))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 43
+ testRunner.Given(string.Format("the Student is created ({0}, {1}, {2}, {3}, {4}, {5}, {6}, {7})", studentId, firstName, lastName, mail, phoneNumber, accountId, careerId, cycleNumber), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 44
+ testRunner.And(string.Format("the lesson is created ({0}, {1}, {2}, {3}, {4}, {5})", lessonId, scheduleId, description, tutorId, lessonTypeId, courseId), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 45
+ testRunner.When("the student signs up for the a lesson that is full", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 46
+ testRunner.Then(string.Format("the result for this operation should be {0}", text), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [TechTalk.SpecRun.ScenarioAttribute("Student signs up for a full lesson, 1", new string[] {
+                "mytag"}, SourceLine=49)]
+        public virtual void StudentSignsUpForAFullLesson_1()
+        {
+#line 42
+this.StudentSignsUpForAFullLesson("1", "Brigitte", "Mendez", "m@com.pe", "4589", "1", "1", "5", "1", "4", "1st Lesson", "1", "1", "1", "True", "This lesson is full", ((string[])(null)));
 #line hidden
         }
     }

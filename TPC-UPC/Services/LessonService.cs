@@ -99,6 +99,7 @@ namespace TPC_UPC.Services
                 return new LessonResponse("Lesson not found");
 
             existingLesson.Id = lesson.Id;
+            existingLesson.MeetingLink = lesson.MeetingLink;
 
             try
             {
