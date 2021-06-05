@@ -24,6 +24,7 @@ namespace TPC_UPC.API.Test
             //
             var mockStudentRepository = GetDefaultIStudentRepositoryInstance();
             var mockIUnitOfWork = GetDefaultIUnitOfWorkInstance();
+<<<<<<< HEAD
             var mockCareerRepository = GetDefaultICareerRepositoryInstance();
             var mockAccountRepository = GetDefaultIAccountRepositoryInstance();
 
@@ -35,8 +36,23 @@ namespace TPC_UPC.API.Test
             //
             StudentResponse result = await service.SaveAsync(coordinator);
             var message = result.Message;
+=======
+            var mockAccountRepository = GetDefaultIAccountRepositoryInstance();
+            var mockCareerRepository = GetDefaultICareerRepositoryInstance();
+            Student student = new Student();
+            var id = 1;
+            student.Id = id;
+
+            mockStudentRepository.Setup(r => r.AddAsync(student))
+                .Returns(Task.FromResult<Student>(student));
+
+            var service = new StudentService(mockStudentRepository.Object, mockAccountRepository.Object, 
+                mockCareerRepository.Object ,mockIUnitOfWork.Object);
             //
-            message.Should().Be("");
+            StudentResponse result = await service.SaveAsync(student);
+>>>>>>> feature/businessrulesbri
+            //
+            Assert.AreEqual(student, result.Resource);
         }
 
         [Test]
@@ -145,6 +161,16 @@ namespace TPC_UPC.API.Test
         private Mock<IStudentRepository> GetDefaultIStudentRepositoryInstance()
         {
             return new Mock<IStudentRepository>();
+        }
+
+        private Mock<IAccountRepository> GetDefaultIAccountRepositoryInstance()
+        {
+            return new Mock<IAccountRepository>();
+        }
+
+        private Mock<ICareerRepository> GetDefaultICareerRepositoryInstance()
+        {
+            return new Mock<ICareerRepository>();
         }
 
         private Mock<IUnitOfWork> GetDefaultIUnitOfWorkInstance()

@@ -54,7 +54,7 @@ namespace TPC_UPC.Services
             var existingmailMessage = await _mailMessageRepository.FindById(id);
 
             if (existingmailMessage == null)
-                return new MailMessageResponse("mailMessage not found");
+                return new MailMessageResponse("mail message not found");
 
             return new MailMessageResponse(existingmailMessage);
         }
@@ -91,7 +91,7 @@ namespace TPC_UPC.Services
             }
         }
 
-        public async Task<MailMessageResponse> UpdateASync(int id, int coordinatorId, MailMessage mailMessage)
+        public async Task<MailMessageResponse> UpdateASync(int id, int coordinadorId, MailMessage mailMessage)
         {
 
             var existingMailMessage = await _mailMessageRepository.FindById(id);
@@ -99,19 +99,16 @@ namespace TPC_UPC.Services
             if (existingMailMessage == null)
                 return new MailMessageResponse("Mail Message not found");
 
-            var existingCoordinator = await _coordinatorRepository.FindById(coordinatorId);
-
+            var existingCoordinator = await _coordinatorRepository.FindById(coordinadorId);
             if (existingCoordinator == null)
                 return new MailMessageResponse("Coordinator not found");
-
-            //aqui deberia hacer un findbyid 
 
             existingMailMessage.Message = mailMessage.Message;
             existingMailMessage.DocumentLink = mailMessage.DocumentLink;
 
             try
             {
-                existingMailMessage.CoordinatorId = coordinatorId;
+                existingMailMessage.CoordinatorId = coordinadorId;
                 _mailMessageRepository.Update(existingMailMessage);
                 await _unitOfWork.CompleteAsync();
 
