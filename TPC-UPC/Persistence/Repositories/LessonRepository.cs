@@ -49,7 +49,17 @@ using Microsoft.EntityFrameworkCore;
         {
             return await _context.Lessons
                 .Where(ls => ls.LessonTypeId == lessonTypeId)
+                .Include(lt => lt.Course)
+                .Include(lt => lt.LessonType)
+                .Include(lt => lt.Tutor)
+                .Include(lt => lt.Tutor.Account)
+                .Include(lt => lt.Tutor.Faculty)
+                .Include(lt => lt.Tutor.Account.University)
                 .ToListAsync();
+
+            /*return await _context.Lessons
+                .Where(ls => ls.LessonTypeId == lessonTypeId)
+                .ToListAsync();*/
         }
 
         public async Task<IEnumerable<Lesson>> ListByTutorIdAsync(int tutorId)

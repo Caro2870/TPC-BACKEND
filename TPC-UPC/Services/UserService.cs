@@ -83,9 +83,7 @@ namespace TPC_UPC.Services
             }
         }
 
-
-
-        public async Task<UserResponse> UpdateASync(int id, User user)
+        public async Task<UserResponse> UpdateAsync(int id, User user)
         {
             var existingUser = await _userRepository.FindById(id);
 
@@ -110,11 +108,6 @@ namespace TPC_UPC.Services
             {
                 return new UserResponse($"An error ocurred while updating the user: {ex.Message}");
             }
-        }
-
-        public Task<UserResponse> UpdateAsync(int id, User user)
-        {
-            throw new NotImplementedException();
         }
     }
 }

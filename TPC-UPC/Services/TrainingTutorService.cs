@@ -13,11 +13,13 @@ namespace TPC_UPC.Services
     {
         private readonly ITrainingTutorRepository _trainingTutorRepository;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly INotificationUserRepository _notificationUserRepository;
 
-        public TrainingTutorService(ITrainingTutorRepository trainingTutorRepository, IUnitOfWork unitOfWork)
+        public TrainingTutorService(ITrainingTutorRepository trainingTutorRepository, IUnitOfWork unitOfWork, INotificationUserRepository notificationUserRepository)
         {
             _trainingTutorRepository = trainingTutorRepository;
             _unitOfWork = unitOfWork;
+            _notificationUserRepository = notificationUserRepository;
         }
 
         public async Task<TrainingTutorResponse> DeleteAsync(int trainingId, int tutorId)
@@ -69,6 +71,15 @@ namespace TPC_UPC.Services
             try
             {
                 await _trainingTutorRepository.AddAsync(trainingTutor);
+
+                //Added by rodrigo rule 29
+                NotificationUser nu = new NotificationUser();
+                nu.NotificationId = 903;
+                nu.UserId = trainingTutor.TutorId;
+
+                await _notificationUserRepository.AddAsync(nu);
+
+
                 await _unitOfWork.CompleteAsync();
 
                 return new TrainingTutorResponse(trainingTutor);

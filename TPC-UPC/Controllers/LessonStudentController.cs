@@ -91,5 +91,14 @@ namespace TPC_UPC.Controllers
             var resources = _mapper.Map<IEnumerable<LessonStudent>, IEnumerable<LessonStudentResource>>(lessonStudents);
             return resources;
         }
+
+        //Added by rodrigo rule 6
+        [HttpGet("{lessonId}")]
+        public async Task<IEnumerable<LessonStudentResource>> GetStudentsAssistantsByLessonIdAsync(int lessonId)
+        {
+            var lessonStudents = await _lessonStudentService.ListStudentAssistantsByLessonIdAsync(lessonId);
+            var resources = _mapper.Map<IEnumerable<LessonStudent>, IEnumerable<LessonStudentResource>>(lessonStudents);
+            return resources;
+        }
     }
 }

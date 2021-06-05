@@ -11,7 +11,7 @@ using TPC_UPC.Services;
 
 namespace TPC_UPC.API.Test
 {
-    class CourseServiceTest
+    /*class CourseServiceTest
     {
         [SetUp]
         public void Setup()
@@ -73,5 +73,5 @@ namespace TPC_UPC.API.Test
         {
             return new Mock<IUnitOfWork>();
         }
-    }
+    }*/
 }
