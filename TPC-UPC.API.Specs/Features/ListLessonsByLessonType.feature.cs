@@ -19,30 +19,22 @@ namespace TPC_UPC.API.Specs.Features
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.8.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [TechTalk.SpecRun.FeatureAttribute("Calculator", Description=@"![Calculator](https://specflow.org/wp-content/uploads/2020/09/calculator.png)
-Simple calculator for adding **two** numbers
-
-Link to a feature: [Calculator](TPC-UPC.API.Specs/Features/Calculator.feature)
-***Further read***: **[Learn more about how to generate Living Documentation](https://docs.specflow.org/projects/specflow-livingdoc/en/latest/LivingDocGenerator/Generating-Documentation.html)**", SourceFile="Features\\Calculator.feature", SourceLine=0)]
-    public partial class CalculatorFeature
+    [TechTalk.SpecRun.FeatureAttribute("ListLessonByLessonType", Description="\tList Lessons by LessonType", SourceFile="Features\\ListLessonsByLessonType.feature", SourceLine=0)]
+    public partial class ListLessonByLessonTypeFeature
     {
         
         private TechTalk.SpecFlow.ITestRunner testRunner;
         
         private string[] _featureTags = ((string[])(null));
         
-#line 1 "Calculator.feature"
+#line 1 "ListLessonsByLessonType.feature"
 #line hidden
         
         [TechTalk.SpecRun.FeatureInitialize()]
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "Calculator", @"![Calculator](https://specflow.org/wp-content/uploads/2020/09/calculator.png)
-Simple calculator for adding **two** numbers
-
-Link to a feature: [Calculator](TPC-UPC.API.Specs/Features/Calculator.feature)
-***Further read***: **[Learn more about how to generate Living Documentation](https://docs.specflow.org/projects/specflow-livingdoc/en/latest/LivingDocGenerator/Generating-Documentation.html)**", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "ListLessonByLessonType", "\tList Lessons by LessonType", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -78,15 +70,21 @@ Link to a feature: [Calculator](TPC-UPC.API.Specs/Features/Calculator.feature)
             testRunner.CollectScenarioErrors();
         }
         
-        [TechTalk.SpecRun.ScenarioAttribute("Add two numbers", new string[] {
-                "mytag"}, SourceLine=8)]
-        public virtual void AddTwoNumbers()
+        public virtual void ListAllLessonsByLessonTypeId(string lessonTypeId, string lessonTypeName, string response, string[] exampleTags)
         {
-            string[] tagsOfScenario = new string[] {
+            string[] @__tags = new string[] {
                     "mytag"};
+            if ((exampleTags != null))
+            {
+                @__tags = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Concat(@__tags, exampleTags));
+            }
+            string[] tagsOfScenario = @__tags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Add two numbers", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 9
+            argumentsOfScenario.Add("LessonTypeId", lessonTypeId);
+            argumentsOfScenario.Add("LessonTypeName", lessonTypeName);
+            argumentsOfScenario.Add("Response", response);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("List all lessons by LessonTypeId", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+#line 5
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -106,20 +104,44 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 10
- testRunner.Given("the first number is 50", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 6
+ testRunner.Given("I want to see detailed information of the lessons by a determinated lesson type", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 11
- testRunner.And("the second number is 70", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 7
+ testRunner.When(string.Format("I choose one lessontype ({0}, {1})", lessonTypeId, lessonTypeName), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 12
- testRunner.When("the two numbers are added", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 13
- testRunner.Then("the result should be 120", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 8
+ testRunner.Then(string.Format("the system returns list of lessons by lessontype {0}", response), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
+        }
+        
+        [TechTalk.SpecRun.ScenarioAttribute("List all lessons by LessonTypeId, 1", new string[] {
+                "mytag"}, SourceLine=11)]
+        public virtual void ListAllLessonsByLessonTypeId_1()
+        {
+#line 5
+this.ListAllLessonsByLessonTypeId("1", "Tutoria", "True", ((string[])(null)));
+#line hidden
+        }
+        
+        [TechTalk.SpecRun.ScenarioAttribute("List all lessons by LessonTypeId, 2", new string[] {
+                "mytag"}, SourceLine=11)]
+        public virtual void ListAllLessonsByLessonTypeId_2()
+        {
+#line 5
+this.ListAllLessonsByLessonTypeId("2", "Taller", "True", ((string[])(null)));
+#line hidden
+        }
+        
+        [TechTalk.SpecRun.ScenarioAttribute("List all lessons by LessonTypeId, 3", new string[] {
+                "mytag"}, SourceLine=11)]
+        public virtual void ListAllLessonsByLessonTypeId_3()
+        {
+#line 5
+this.ListAllLessonsByLessonTypeId("3", "BadLessonType", "False", ((string[])(null)));
+#line hidden
         }
     }
 }

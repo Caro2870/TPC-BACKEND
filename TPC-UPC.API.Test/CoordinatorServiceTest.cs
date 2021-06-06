@@ -30,8 +30,8 @@ namespace TPC_UPC.API.Test
             Coordinator coordinator = new Coordinator();
             mockCoordinatorRepository.Setup(r => r.AddAsync(coordinator))
                 .Returns(Task.FromResult<Coordinator>(coordinator));
-            var service = new CoordinatorService(mockCoordinatorRepository.Object, 
-                mockAccountRepository.Object , mockFacultyRepository.Object, mockIUnitOfWork.Object);
+            var service = new CoordinatorService(mockCoordinatorRepository.Object,
+                mockAccountRepository.Object, mockFacultyRepository.Object, mockIUnitOfWork.Object);
             //
             CoordinatorResponse result = await service.SaveAsync(coordinator);
             var message = result.Message;

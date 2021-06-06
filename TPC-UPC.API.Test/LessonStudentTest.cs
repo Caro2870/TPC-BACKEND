@@ -13,7 +13,7 @@ namespace TPC_UPC.API.Test
 {
     class LessonStudentTest
     {
-        [SetUp]
+        /*[SetUp]
         public void Setup()
         {
         }
@@ -110,6 +110,6 @@ namespace TPC_UPC.API.Test
         private Mock<IUnitOfWork> GetDefaultIUnitOfWorkInstance()
         {
             return new Mock<IUnitOfWork>();
-        }
+        }*/
     }
 }

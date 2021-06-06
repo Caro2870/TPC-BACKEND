@@ -18,7 +18,7 @@ namespace TPC_UPC.Domain.Services
         Task<LessonResponse> UpdateCountAsync(int id);
         //new
         Task<IEnumerable<Lesson>> ListByTutorIdAsync(int tutorId);
-        Task<IEnumerable<Lesson>> ListByCourseIdAsync(int tutorId);
+        Task<IEnumerable<Lesson>> ListByCourseIdAsync(int courseId);
         Task<IEnumerable<Lesson>> ListByLessonTypeIdAsync(int lessonTypeId);
         Task<IEnumerable<Lesson>> ListByRangeOfDates(DateTime start, DateTime end);
     }

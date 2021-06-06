@@ -14,8 +14,6 @@ namespace TPC_UPC.Services
         private readonly ICareerRepository _careerRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IFacultyRepository _facultyRepository;
-       
-  
 
         public CareerService(ICareerRepository careerRepository, IFacultyRepository facultyRepository, IUnitOfWork unitOfWork)
         {

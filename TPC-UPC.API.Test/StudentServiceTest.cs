@@ -1,4 +1,4 @@
-﻿using NUnit.Framework;
+﻿/*using NUnit.Framework;
 using Moq;
 using FluentAssertions;
 using TPC_UPC.Domain.Models;
@@ -188,3 +188,4 @@ namespace TPC_UPC.API.Test
         }
     }
 }
+*/
