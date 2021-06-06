@@ -28,6 +28,14 @@ namespace TPC_UPC.Services
             _lessonStudentRepository = lessonStudentRepository;
         }
 
+        public TutorService(ITutorRepository object1, IAccountRepository accountRepository, IFacultyRepository facultyRepository, IUnitOfWork object2)
+        {
+            this._tutorRepository = object1;
+            this._unitOfWork = object2;
+            this._facultyRepository = facultyRepository;
+            this._accountRepository = accountRepository;
+        }
+
         //CRUD
         public async Task<TutorResponse> SaveAsync(Tutor tutor) {
 

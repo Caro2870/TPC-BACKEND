@@ -12,7 +12,7 @@ using TPC_UPC.Resources;
 
 namespace TPC_UPC.Controllers
 {
-    [Route("/trainings/{trainingId}/tutors")]
+    [Route("api/[controller]")]
     [ApiController]
     public class TrainingTutorsController : ControllerBase
     {
@@ -70,7 +70,7 @@ namespace TPC_UPC.Controllers
             return Ok(trainingTutorResource);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("/trainings/{trainingId}/tutors/{tutorId}")]
         [ProducesResponseType(typeof(TrainingTutorResource), 200)]
         [ProducesResponseType(typeof(BadRequestResult), 404)]
         public async Task<IActionResult> PutAsync(int trainingId, int tutorId, [FromBody] SaveTrainingTutorResource resource)
@@ -86,7 +86,7 @@ namespace TPC_UPC.Controllers
             return Ok(trainingTutorResource);
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("/trainings/{trainingId}/tutors/{tutorId}")]
         [ProducesResponseType(typeof(TrainingTutorResource), 200)]
         [ProducesResponseType(typeof(BadRequestResult), 404)]
         public async Task<IActionResult> DeleteAsync(int trainingId, int tutorId)

@@ -99,6 +99,7 @@ namespace TPC_UPC.Services
 
             existingTrainingTutor.TrainingId = trainingTutor.TrainingId;
             existingTrainingTutor.TutorId = trainingTutor.TutorId;
+            existingTrainingTutor.Assistance = trainingTutor.Assistance;
 
             try
             {
