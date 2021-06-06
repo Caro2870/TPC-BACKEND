@@ -14,5 +14,7 @@ namespace TPC_UPC.Domain.Models
 
         public int FacultyId { get; set; }
         public Faculty Faculty { get; set; }
+
+        public List<CareerCourse> CareerCourses { get; set; }
     }
 }

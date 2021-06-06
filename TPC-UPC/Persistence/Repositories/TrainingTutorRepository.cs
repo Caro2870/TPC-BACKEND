@@ -1,6 +1,7 @@
 using System;
  using System.Collections.Generic;
- using System.Threading.Tasks;
+using System.Linq;
+using System.Threading.Tasks;
  using Microsoft.EntityFrameworkCore;
  using TPC_UPC.Domain.Models;
  using TPC_UPC.Domain.Persistence.Contexts;
@@ -29,11 +30,37 @@ using System;
  		{
             return await _context.TrainingTutors
                .Include(pt => pt.Training)
+               .ThenInclude(a => a.Coordinator)
+               .ThenInclude(b => b.Account)
                .Include(pt => pt.Tutor)
+               .ThenInclude(a => a.Account)
+               .ThenInclude(b => b.University)
                .ToListAsync();
         }
- 
- 		public void Remove(TrainingTutor trainingTutor)
+
+        public async Task<IEnumerable<TrainingTutor>> ListByTrainingIdAsync(int trainingId)
+        {
+            return await _context.TrainingTutors
+                .Where(pt => pt.TrainingId == trainingId)
+                .Include(pt => pt.Training)
+                .ThenInclude(a => a.Coordinator)
+                .Include(pt => pt.Tutor)
+                .ThenInclude(a => a.Account)
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<TrainingTutor>> ListByTutorIdAsync(int tutorId)
+        {
+            return await _context.TrainingTutors
+               .Where(pt => pt.TutorId == tutorId)
+               .Include(pt => pt.Training)
+               .ThenInclude(a => a.Coordinator)
+               .Include(pt => pt.Tutor)
+               .ThenInclude(a => a.Account)
+               .ToListAsync();
+        }
+
+        public void Remove(TrainingTutor trainingTutor)
  		{
  			_context.TrainingTutors.Remove(trainingTutor);
  		}

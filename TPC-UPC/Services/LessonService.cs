@@ -12,7 +12,7 @@ namespace TPC_UPC.Services
 {
     public class LessonService : ILessonService
     {
-        private readonly ILessonRepository _lessonRepository;
+        private  ILessonRepository _lessonRepository;
         private readonly IUnitOfWork _unitOfWork;
 
         public LessonService(ILessonRepository lessonRepository, IUnitOfWork unitOfWork)
@@ -50,6 +50,9 @@ namespace TPC_UPC.Services
             return new LessonResponse(existingLesson);
         }
 
+
+
+
         public async Task<IEnumerable<Lesson>> ListAsync()
         {
             return await _lessonRepository.ListAsync();
@@ -70,8 +73,19 @@ namespace TPC_UPC.Services
             return await _lessonRepository.ListByCourseIdAsync(courseId);
         }
 
+        public async Task<IEnumerable<Lesson>> ListByRangeOfDates(DateTime start, DateTime end)
+        {
+            IEnumerable<Lesson> lessons = await _lessonRepository.ListByRangeOfDates(start, end); 
+            if (lessons.Count() == 0)
+            {
+                throw new ArgumentException("You don't have any lessons in this range");
+            }
+            return lessons;
+        }
+
         public async Task<LessonResponse> SaveAsync(Lesson lesson)
         {
+            lesson.Contador = 0;
             try
             {
                 await _lessonRepository.AddAsync(lesson);
@@ -93,6 +107,7 @@ namespace TPC_UPC.Services
                 return new LessonResponse("Lesson not found");
 
             existingLesson.Id = lesson.Id;
+            existingLesson.MeetingLink = lesson.MeetingLink;
 
             try
             {
@@ -104,6 +119,28 @@ namespace TPC_UPC.Services
             catch (Exception ex)
             {
                 return new LessonResponse($"An error ocurred while updating the lesson: {ex.Message}");
+            }
+        }
+
+        public async Task<LessonResponse> UpdateCountAsync(int id)
+        {
+            var existingLesson = await _lessonRepository.FindById(id);
+
+            if (existingLesson == null)
+                return new LessonResponse("Lesson not found");
+
+            existingLesson.Contador += 1;
+
+            try
+            {
+                _lessonRepository.Update(existingLesson);
+                await _unitOfWork.CompleteAsync();
+
+                return new LessonResponse(existingLesson);
+            }
+            catch (Exception ex)
+            {
+                return new LessonResponse($"An error ocurred while updating the count variable  lesson: {ex.Message}");
             }
         }
     }

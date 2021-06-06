@@ -14,16 +14,20 @@ namespace TPC_UPC.Services
     {
         private readonly ILessonStudentRepository _lessonStudentRepository;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly ILessonRepository _lessonRepository;
+        private IStudentRepository _studentRepository;
 
-        public LessonStudentService(ILessonStudentRepository lessonStudentRepository, IUnitOfWork unitOfWork)
+        public LessonStudentService(ILessonStudentRepository lessonStudentRepository, IUnitOfWork unitOfWork, ILessonRepository lessonRepository, IStudentRepository studentRepository)
         {
             _lessonStudentRepository = lessonStudentRepository;
             _unitOfWork = unitOfWork;
+            _lessonRepository = lessonRepository;
+            _studentRepository = studentRepository;
         }
 
-        public async Task<LessonStudentResponse> DeleteAsync(int id)
+        public async Task<LessonStudentResponse> DeleteAsync(int lessonId, int studentId)
         {
-            var existingLessonStudent = await _lessonStudentRepository.FindById(id);
+            var existingLessonStudent = await _lessonStudentRepository.FindById(lessonId, studentId);
 
             if (existingLessonStudent == null)
                 return new LessonStudentResponse("LessonStudent not found");
@@ -41,9 +45,9 @@ namespace TPC_UPC.Services
             }
         }
 
-        public async Task<LessonStudentResponse> GetByIdAsync(int id)
+        public async Task<LessonStudentResponse> GetByIdAsync(int lessonId, int studentId)
         {
-            var existingLessonStudent = await _lessonStudentRepository.FindById(id);
+            var existingLessonStudent = await _lessonStudentRepository.FindById(lessonId, studentId);
 
             if (existingLessonStudent == null)
                 return new LessonStudentResponse("LessonStudent not found");
@@ -62,16 +66,34 @@ namespace TPC_UPC.Services
 
         public async Task<IEnumerable<LessonStudent>> ListByStudentIdAsync(int studentId)
         {
+            
             return await _lessonStudentRepository.ListByStudentIdAsync(studentId);
         }
 
         public async Task<LessonStudentResponse> SaveAsync(LessonStudent lessonStudent)
         {
+
+            var existingLesson = await _lessonRepository.FindById(lessonStudent.LessonId);
+
+            if (existingLesson == null)
+                return new LessonStudentResponse("Lesson not found");
+
+            var existingStudent = await _studentRepository.FindById(lessonStudent.StudentId);
+
+            Console.WriteLine(existingLesson.LessonStudents.Count);
+            if (existingLesson.Contador== existingLesson.LessonType.StudentsQuantity)
+                return new LessonStudentResponse("This lesson is full");
+
+            if (existingStudent == null)
+                return new LessonStudentResponse("Student not found");
+
+            if (_lessonStudentRepository.ExistsByLessonIdAndStudentId(lessonStudent.LessonId, lessonStudent.StudentId).Result != null)
+                return new LessonStudentResponse("You are already part of this lesson");
+
             try
             {
                 await _lessonStudentRepository.AddAsync(lessonStudent);
-                await _unitOfWork.CompleteAsync();
-
+                await _unitOfWork.CompleteAsync(); 
                 return new LessonStudentResponse(lessonStudent);
             }
             catch (Exception ex)
@@ -80,9 +102,10 @@ namespace TPC_UPC.Services
             }
         }
 
-        public async Task<LessonStudentResponse> UpdateAsync(int id, LessonStudent lessonStudent)
+
+        public async Task<LessonStudentResponse> UpdateAsync(int lessonId, int studentId, LessonStudent lessonStudent)
         {
-            var existingLessonStudent = await _lessonStudentRepository.FindById(id);
+            var existingLessonStudent = await _lessonStudentRepository.FindById(lessonId, studentId);
 
             if (existingLessonStudent == null)
                 return new LessonStudentResponse("LessonStudent not found");

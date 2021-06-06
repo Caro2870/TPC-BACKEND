@@ -15,7 +15,20 @@ namespace TPC_UPC.Services
         private readonly IUnitOfWork _unitOfWork;
         private readonly IAccountRepository _accountRepository;
         private readonly IFacultyRepository _facultyRepository;
-        public TutorService (ITutorRepository object1, IFacultyRepository facultyRepository , IAccountRepository accountRepository,  IUnitOfWork object2)
+        private readonly ILessonRepository _lessonRepository;
+        private readonly ILessonStudentRepository _lessonStudentRepository;
+
+        public TutorService(ITutorRepository object1, IFacultyRepository facultyRepository, IAccountRepository accountRepository, IUnitOfWork object2, ILessonRepository lessonRepository, ILessonStudentRepository lessonStudentRepository)
+        {
+            this._tutorRepository = object1;
+            this._unitOfWork = object2;
+            this._facultyRepository = facultyRepository;
+            this._accountRepository = accountRepository;
+            _lessonRepository = lessonRepository;
+            _lessonStudentRepository = lessonStudentRepository;
+        }
+
+        public TutorService(ITutorRepository object1, IAccountRepository accountRepository, IFacultyRepository facultyRepository, IUnitOfWork object2)
         {
             this._tutorRepository = object1;
             this._unitOfWork = object2;
@@ -67,7 +80,9 @@ namespace TPC_UPC.Services
             if (existingTutor == null)
                 return new TutorResponse("Tutor not found");
 
-            existingTutor.FacultyId = tutor.FacultyId;
+            existingTutor.FirstName = tutor.FirstName;
+            existingTutor.LastName = tutor.LastName;
+            existingTutor.PhoneNumber = tutor.PhoneNumber;
 
             try
             {
@@ -104,6 +119,33 @@ namespace TPC_UPC.Services
         //ADDED
         public async Task<IEnumerable<Tutor>> ListAsync() {
             return await _tutorRepository.ListAsync();
+        }
+
+        public double GetWorkshopsAverage(int tutorId, int courseId, int lessonTypeId)
+        {
+            double sum = 0;
+            int quantity = 0;
+            List<Lesson> lessons =  _lessonRepository.ListByTutorIdAndCourseIdAndLessonTypeIdAsync(tutorId, courseId, lessonTypeId).Result.ToList();
+            if (lessons.Count == 0) return 0.0;
+
+            List<LessonStudent> lessonStudents;
+            foreach(Lesson lesson in lessons)
+            {
+                lessonStudents = _lessonStudentRepository.ListStudentsByLessonIdAsync(lesson.Id).Result.ToList();
+                if (lessonStudents.Count != 0)
+                {
+                    foreach (LessonStudent lessonStudent in lessonStudents)
+                    {
+                        sum += lessonStudent.Qualification;
+                        quantity += 1;
+                    }
+                }
+                else
+                {
+                    continue;
+                }
+            }
+            return (sum / quantity);
         }
     }
 }

@@ -7,7 +7,10 @@ namespace TPC_UPC.Domain.Models
 {
     public class Student : User
     {
+        public Student()
+        {
 
+        }
         public int CycleNumber { get; set; }
 
         public int CareerId { get; set; }

@@ -15,6 +15,7 @@ namespace TPC_UPC.Services
         private readonly ICourseRepository _courseRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IUserCourseRepository _userCourseRepository;
+        private readonly ICareerCourseRepository _careerCourseRepository;
 
         public CourseService(ICourseRepository courseRepository, IUnitOfWork unitOfWork, IUserCourseRepository userCourseRepository )
         {
@@ -63,6 +64,15 @@ namespace TPC_UPC.Services
             var courses = userCourses.Select(pt => pt.Course).ToList();
             return courses;
         }
+
+
+        public async Task<IEnumerable<Course>> ListByCareerIdAsync(int careerId)
+        {
+            var careerCourses = await _careerCourseRepository.ListByCareerIdAsync(careerId);
+            var courses = careerCourses.Select(pt => pt.Course).ToList();
+            return courses;
+        }
+
 
         public async Task<CourseResponse> SaveAsync(Course course)
         {

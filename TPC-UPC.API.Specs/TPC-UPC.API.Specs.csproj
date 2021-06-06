@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <RootNamespace>TPC_UPC.API.Specs</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <SpecFlowObsoleteCodeBehindFiles Remove="Features\ListLessonsByLessonType.feature.cs" />
+    <SpecFlowObsoleteCodeBehindFiles Remove="Features\ListStudentsAssistantsByLesson.feature.cs" />
+    <SpecFlowObsoleteCodeBehindFiles Remove="Features\NotificationUserResultsOfTrainingUser.feature.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
+    <PackageReference Include="Moq" Version="4.16.1" />
+    <PackageReference Include="NUnit" Version="3.12.0" />
+    <PackageReference Include="SpecFlow.Plus.LivingDocPlugin" Version="3.8.35" />
+    <PackageReference Include="SpecRun.SpecFlow" Version="3.8.12" />
+    <PackageReference Include="FluentAssertions" Version="5.10.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Drivers\" />
+    <Folder Include="Hooks\" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\TPC-UPC\TPC-UPC.csproj" />
+  </ItemGroup>
+
+</Project>

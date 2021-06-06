@@ -100,5 +100,16 @@ namespace TPC_UPC.Controllers
             var trainingResource = _mapper.Map<Training, TrainingResource>(result.Resource);
             return Ok(trainingResource);
         }
+
+        [HttpGet("/trainingrange")]
+        [ProducesResponseType(typeof(TrainingResource), 200)]
+        [ProducesResponseType(typeof(BadRequestResult), 404)]
+        public async Task<IEnumerable<TrainingResource>> GetInRangeOfDatesAsync(DateTime start, DateTime end)
+        {
+            var trainings = await _trainingService.ListByRangeOfDates(start, end);
+            var resources = _mapper
+                .Map<IEnumerable<Training>, IEnumerable<TrainingResource>>(trainings);
+            return resources;
+        }
     }
 }

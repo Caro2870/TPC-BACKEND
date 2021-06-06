@@ -15,5 +15,7 @@ using System;
 
         //ADDED
         Task<IEnumerable<TrainingTutor>> ListAsync();
+        Task<IEnumerable<TrainingTutor>> ListByTrainingIdAsync(int trainingId);
+        Task<IEnumerable<TrainingTutor>> ListByTutorIdAsync(int tutorId);
     }
  }

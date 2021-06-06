@@ -12,5 +12,6 @@ using System;
          Task<Meeting> FindById(int id);
          void Update(Meeting meeting);
          void Remove(Meeting meeting);
+        Task<IEnumerable<Meeting>> ListByRangeOfDates(DateTime start, DateTime end);
     }
  }

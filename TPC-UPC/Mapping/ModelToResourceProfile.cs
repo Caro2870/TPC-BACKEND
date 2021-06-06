@@ -33,6 +33,7 @@ namespace TPC_UPC.Mapping
             CreateMap<University, UniversityResource>();
             CreateMap<User, UserResource>();
             CreateMap<UserCourse, UserCourseResource>();
+            CreateMap<CareerCourse, CareerCourseResource>();
         }
     }
 }

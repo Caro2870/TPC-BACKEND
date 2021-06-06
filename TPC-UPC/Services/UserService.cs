@@ -82,19 +82,22 @@ namespace TPC_UPC.Services
                 return new UserResponse($"An error ocurred while saving the user: {e.Message}");
             }
         }
-        public async Task<UserResponse> UpdateASync(int id, User user)
+
+        public async Task<UserResponse> UpdateAsync(int id, User user)
         {
             var existingUser = await _userRepository.FindById(id);
 
             if (existingUser == null)
                 return new UserResponse("User not found");
+            if(user.AccountId!= existingUser.AccountId)
+            {
+                return new UserResponse("Cannot update the accountId");
+            }
 
             existingUser.FirstName = user.FirstName;
             existingUser.LastName = user.LastName;
             existingUser.Mail = user.Mail;
             existingUser.PhoneNumber = user.PhoneNumber;
-            existingUser.AccountId = user.AccountId;
-
             try
             {
                 _userRepository.Update(existingUser);
@@ -105,11 +108,6 @@ namespace TPC_UPC.Services
             {
                 return new UserResponse($"An error ocurred while updating the user: {ex.Message}");
             }
-        }
-
-        public Task<UserResponse> UpdateAsync(int id, User user)
-        {
-            throw new NotImplementedException();
         }
     }
 }

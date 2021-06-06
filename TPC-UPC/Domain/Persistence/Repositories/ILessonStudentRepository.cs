@@ -7,14 +7,17 @@ namespace TPC_UPC.Domain.Persistence.Repositories
 {
     public interface ILessonStudentRepository
     {
-        Task<IEnumerable<LessonStudent>> ListAsync();
         Task AddAsync(LessonStudent lessonStudent);
-        Task<LessonStudent> FindById(int id);
+        Task<LessonStudent> FindById(int lessonId, int studentId);
+        
+        void Update(LessonStudent lessonStudent);
+        void Remove(LessonStudent lessonStudent);
+
+        Task<IEnumerable<LessonStudent>> ListAsync();
+        Task<IEnumerable<LessonStudent>> ListByStudentIdAsync(int studentId);
         Task<IEnumerable<LessonStudent>> ListStudentsByLessonIdAsync(int lessonId);
         Task<IEnumerable<LessonStudent>> ListStudentAssistantsByLessonIdAsync(int lessonId);
         Task<IEnumerable<LessonStudent>> ListMissingStudentByLessonIdAsync(int lessonId);
-        void Update(LessonStudent lessonStudent);
-        void Remove(LessonStudent lessonStudent);
-        Task<IEnumerable<LessonStudent>> ListByStudentIdAsync(int studentId);
+        Task<LessonStudent> ExistsByLessonIdAndStudentId(int lessonId, int studentId);
     }
 }

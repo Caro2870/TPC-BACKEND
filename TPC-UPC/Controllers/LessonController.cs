@@ -15,7 +15,7 @@ namespace TPC_UPC.Controllers
     [Produces("application/json")]
     [Route("/api/[controller]")]
     [ApiController]
-    class LessonController : ControllerBase
+    public class LessonController : ControllerBase
     {
         private readonly ILessonService _lessonService;
         private readonly IMapper _mapper;
@@ -27,12 +27,13 @@ namespace TPC_UPC.Controllers
         }
 
 
-        [HttpGet("{id}")]
         [SwaggerOperation(
             Summary = "List all Lessons",
             Description = "List of Lessons",
             OperationId = "ListAllLessons")]
-        [SwaggerResponse(200, "List of lessons", typeof(IEnumerable<LessonResource>))]
+        [ProducesResponseType(typeof(AccountResource), 200)]
+        [ProducesResponseType(typeof(BadRequestResult), 404)]
+        [HttpGet]
         public async Task<IEnumerable<LessonResource>> GetAllAsync()
         {
             var lessons = await _lessonService.ListAsync();
@@ -41,18 +42,30 @@ namespace TPC_UPC.Controllers
             return resources;
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{lessonId}")]
         [ProducesResponseType(typeof(LessonResource), 200)]
         [ProducesResponseType(typeof(BadRequestResult), 404)]
-        public async Task<IActionResult> GetAsync(int id)
+        public async Task<IActionResult> GetAsync(int lessonId)
         {
-            var result = await _lessonService.GetByIdAsync(id);
+            var result = await _lessonService.GetByIdAsync(lessonId);
             if (!result.Success)
                 return BadRequest(result.Message);
             var lessonResource = _mapper
                 .Map<Lesson, LessonResource>(result.Resource);//de Entity a Resource
             return Ok(lessonResource);
         }
+
+        [HttpGet("{courseId}")]
+        [ProducesResponseType(typeof(LessonResource), 200)]
+        [ProducesResponseType(typeof(BadRequestResult), 404)]
+        public async Task<IEnumerable<LessonResource>> ListByCourseIdAsyncx(int courseId)
+        {
+            var lessons = await _lessonService.ListByCourseIdAsync(courseId);
+            var resource = _mapper
+                .Map<IEnumerable<Lesson>, IEnumerable<LessonResource>>(lessons);
+            return resource;
+        }
+
 
         [HttpPost]
         [ProducesResponseType(typeof(LessonResource), 200)]
@@ -68,6 +81,48 @@ namespace TPC_UPC.Controllers
                 return BadRequest(result.Message);
             var lessonResource = _mapper.Map<Lesson, LessonResource>(result.Resource);
             return Ok(lessonResource);
+        }
+
+
+        [SwaggerOperation(
+            Summary = "Delete Lesson",
+            Description = "Delete Lesson by Id",
+            OperationId = "DeleteLesson")]
+        [HttpDelete("{lessonId}")]
+        [ProducesResponseType(typeof(LessonResource), 200)]
+        [ProducesResponseType(typeof(BadRequestResult), 404)]
+        public async Task<IActionResult> DeleteAsync(int lessonId)
+        {
+            var result = await _lessonService.DeleteAsync(lessonId);
+            if (!result.Success)
+                return BadRequest(result.Message);
+            var lessonResource = _mapper.Map<Lesson, LessonResource>(result.Resource);
+            return Ok(lessonResource);
+        }
+
+
+
+        [HttpGet("/Lesson/{courseId}")]
+        public async Task<IEnumerable<LessonResource>> GetAllByCourseIdAsync(int courseId)
+        {
+            var lesson = await _lessonService.ListByCourseIdAsync(courseId);
+            var resources = _mapper.Map<IEnumerable<Lesson>, IEnumerable<LessonResource>>(lesson);
+
+            return resources;
+
+        }
+
+        [HttpGet("/lessonsrange")]
+        [ProducesResponseType(typeof(LessonResource), 200)]
+        [ProducesResponseType(typeof(BadRequestResult), 404)]
+        public async Task<IEnumerable<LessonResource>> GetInRangeOfDatesAsync(DateTime start, DateTime end)
+        {
+
+            var lessons = await _lessonService.ListByRangeOfDates(start, end);
+            var resources = _mapper
+                .Map<IEnumerable<Lesson>, IEnumerable<LessonResource>>(lessons);
+
+            return resources;
         }
     }
 }

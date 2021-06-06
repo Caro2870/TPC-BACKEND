@@ -24,13 +24,14 @@ namespace TPC_UPC.API.Test
             var mockLessonRepository = GetDefaultILessonRepositoryInstance();
             var mockUnityOfWork = GetDefaultIUnitOfWorkInstance();
             Lesson lesson = new Lesson();
+            lesson.Id = 1;
             mockLessonRepository.Setup(r => r.AddAsync(lesson))
                 .Returns(Task.FromResult<Lesson>(lesson));
             var service = new LessonService(mockLessonRepository.Object, mockUnityOfWork.Object);
             LessonResponse result = await service.SaveAsync(lesson);
             var message = result.Message;
-
-            message.Should().Be("");
+            var id = result.Resource.Id;
+            id.Should().Be(1);
         }
 
         [Test]

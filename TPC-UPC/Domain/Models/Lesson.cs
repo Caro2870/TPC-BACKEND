@@ -18,6 +18,13 @@ namespace TPC_UPC.Domain.Models
 
         public int Vacants { get; set; }
 
-        public List<LessonStudent> LessonStudents { get; set; }
+        public Lesson()
+        {
+            Contador = 0;
+        }
+
+        public int Contador { get; set; } = 0;
+
+        public List<LessonStudent> LessonStudents { get; set; } = new List<LessonStudent>();
     }
 }

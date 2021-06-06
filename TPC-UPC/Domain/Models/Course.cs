@@ -13,5 +13,7 @@ namespace TPC_UPC.Domain.Models
 
         public IList<Lesson> Lessons { get; set; } = new List<Lesson>();
         public List<UserCourse> UserCourses { get; set; }
+
+        public List<CareerCourse> CareerCourses { get; set; }
     }
 }

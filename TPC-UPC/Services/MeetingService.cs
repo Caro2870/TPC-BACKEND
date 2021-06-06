@@ -26,7 +26,7 @@ namespace TPC_UPC.Services
             var existingMeeting = await _meetingRepository.FindById(id);
 
             if (existingMeeting == null)
-                return new MeetingResponse("Tag not found");
+                return new MeetingResponse("Meeting not found");
 
             try
             {
@@ -92,6 +92,11 @@ namespace TPC_UPC.Services
             {
                 return new MeetingResponse($"An error ocurred while updating meeting: {ex.Message}");
             }
+        }
+
+        public async Task<IEnumerable<Meeting>> ListByRangeOfDates(DateTime start, DateTime end)
+        {
+            return await _meetingRepository.ListByRangeOfDates(start, end);
         }
     }
 }
