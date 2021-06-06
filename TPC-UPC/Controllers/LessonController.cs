@@ -55,6 +55,18 @@ namespace TPC_UPC.Controllers
             return Ok(lessonResource);
         }
 
+        [HttpGet("{courseId}")]
+        [ProducesResponseType(typeof(LessonResource), 200)]
+        [ProducesResponseType(typeof(BadRequestResult), 404)]
+        public async Task<IEnumerable<LessonResource>> ListByCourseIdAsyncx(int courseId)
+        {
+            var lessons = await _lessonService.ListByCourseIdAsync(courseId);
+            var resource = _mapper
+                .Map<IEnumerable<Lesson>, IEnumerable<LessonResource>>(lessons);
+            return resource;
+        }
+
+
         [HttpPost]
         [ProducesResponseType(typeof(LessonResource), 200)]
         [ProducesResponseType(typeof(BadRequestResult), 404)]
@@ -76,7 +88,7 @@ namespace TPC_UPC.Controllers
             Summary = "Delete Lesson",
             Description = "Delete Lesson by Id",
             OperationId = "DeleteLesson")]
-        [HttpDelete("{accountId}")]
+        [HttpDelete("{lessonId}")]
         [ProducesResponseType(typeof(LessonResource), 200)]
         [ProducesResponseType(typeof(BadRequestResult), 404)]
         public async Task<IActionResult> DeleteAsync(int lessonId)
