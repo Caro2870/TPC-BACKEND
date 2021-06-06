@@ -11,7 +11,7 @@ using TPC_UPC.Services;
 
 namespace TPC_UPC.API.Test
 {
-    class CoordinatorServiceTest
+    /*class CoordinatorServiceTest
     {
         [SetUp]
         public void Setup()
@@ -151,6 +151,7 @@ namespace TPC_UPC.API.Test
         {
             return new Mock<IUnitOfWork>();
         }
+<<<<<<< HEAD
         private Mock<IAccountRepository> GetDefaultIAccountRepositoryInstance()
         {
             return new Mock<IAccountRepository>();
@@ -161,4 +162,7 @@ namespace TPC_UPC.API.Test
             return new Mock<IFacultyRepository>();
         }
     }
+=======
+    }*/
+>>>>>>> feature/businessrules-rodrigo
 }

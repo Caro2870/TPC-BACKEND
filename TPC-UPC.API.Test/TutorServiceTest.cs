@@ -9,6 +9,7 @@
 //using System.Collections.Generic;
 //using TPC_UPC.Services;
 
+<<<<<<< HEAD
 //namespace TPC_UPC.API.Test
 //{
 //    class TutorServiceTest
@@ -17,6 +18,16 @@
 //        public void Setup()
 //        {
 //        }
+=======
+namespace TPC_UPC.API.Test
+{
+    class TutorServiceTest
+    {
+        /*[SetUp]
+        public void Setup()
+        {
+        }
+>>>>>>> feature/businessrules-rodrigo
 
 //        [Test]
 //        public async Task SaveAsyncWhenTutorsReturnsSuccess()
@@ -40,9 +51,18 @@
 //            return new Mock<ITutorRepository>();
 //        }
 
+<<<<<<< HEAD
 //        private Mock<IUnitOfWork> GetDefaultIUnitOfWorkInstance()
 //        {
 //            return new Mock<IUnitOfWork>();
 //        }
 //    }
 //}
+=======
+        private Mock<IUnitOfWork> GetDefaultIUnitOfWorkInstance()
+        {
+            return new Mock<IUnitOfWork>();
+        }*/
+    }
+}
+>>>>>>> feature/businessrules-rodrigo
