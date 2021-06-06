@@ -39,7 +39,8 @@ namespace TPC_UPC
 
             services.AddDbContext<AppDbContext>(options =>
             {
-                options.UseMySQL(Configuration.GetConnectionString("DefaultConnection"));
+                //options.UseMySQL(Configuration.GetConnectionString("DefaultConnection"));
+                options.UseMySQL(Configuration.GetConnectionString("AzureMySqlConnection"));
             });
 
             //Dependency Injection Configuration
