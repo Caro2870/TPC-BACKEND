@@ -92,7 +92,9 @@ namespace TPC_UPC.Services
             if (existingAccount == null)
                 return new AccountResponse("Account not found");
 
-            existingAccount.UniversityId = account.UniversityId;
+            if (existingAccount.Password == account.Password)
+                return new AccountResponse("You have entered your current password. Please enter a different one.");
+
             existingAccount.Password = account.Password;
 
             try

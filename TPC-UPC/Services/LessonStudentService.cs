@@ -124,5 +124,38 @@ namespace TPC_UPC.Services
                 return new LessonStudentResponse($"An error ocurred while updating the lessonStudent: {ex.Message}");
             }
         }
+
+        public async Task<LessonStudentResponse> SaveFeedbackAsync(int lessonId, int studentId, LessonStudent lessonStudent)
+        {
+            var existingLessonStudent = await _lessonStudentRepository.FindById(lessonId, studentId);
+
+            if (existingLessonStudent == null)
+                return new LessonStudentResponse("LessonStudent not found");
+
+            if (lessonStudent.Qualification == 0)
+                return new LessonStudentResponse("It’s necessary to assign number of starts");
+            existingLessonStudent.Qualification = lessonStudent.Qualification;
+
+            existingLessonStudent.Comment = lessonStudent.Comment;
+
+            if (lessonStudent.Complaint == true)
+            {
+                if (lessonStudent.Comment == "" || lessonStudent.Comment == "-")
+                    return new LessonStudentResponse("Write a comment");
+            }
+            existingLessonStudent.Complaint = lessonStudent.Complaint;
+
+            try
+            {
+                _lessonStudentRepository.Update(existingLessonStudent);
+                await _unitOfWork.CompleteAsync();
+
+                return new LessonStudentResponse(existingLessonStudent);
+            }
+            catch (Exception ex)
+            {
+                return new LessonStudentResponse($"An error ocurred while updating the lessonStudent: {ex.Message}");
+            }
+        }
     }
 }
