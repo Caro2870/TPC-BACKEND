@@ -483,14 +483,16 @@ namespace TPC_UPC.Domain.Persistence.Contexts
                    new NotificationType { Id = 802, Description = "Solicitud de confirmacion de asistencia a una tutoria realizada por un amigo/a" },
                    new NotificationType { Id = 803, Description = "Material compartido enviado por el tutor" },
                    new NotificationType { Id = 804, Description = "Modificacion de horario de una sesion" },
-                   new NotificationType { Id = 806, Description = "Aviso enviado por el coordinador" }
-                   );
+                   new NotificationType { Id = 806, Description = "Aviso enviado por el coordinador" },
+                   new NotificationType { Id = 807, Description = "Reserva cancelada" }//NEW
+                   );;
 
             builder.Entity<Notification>().HasData
                     (
                     new Notification { Id = 901, NotificationTypeId = 801, Link = "Nueva notificacion" },
                     new Notification { Id = 902, NotificationTypeId = 801, Link = "dasda" },
-                    new Notification { Id = 903, NotificationTypeId = 801, Link = "cxcqscadas" }
+                    new Notification { Id = 903, NotificationTypeId = 801, Link = "cxcqscadas" },
+                    new Notification { Id = 904, NotificationTypeId = 807, Link = "unlink" }//NEW
                     );
             builder.Entity<NotificationUser>().HasData
                     (

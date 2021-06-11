@@ -67,6 +67,21 @@ namespace TPC_UPC.Controllers
             return Ok(nuResource);
         }
 
+        //Business rule #3
+        [HttpPut("/lessons/{lessonsId}/students/{studentId}/save-feedback")]
+        public async Task<IActionResult> SaveFeedbackAsync(int lessonId, int studentId, [FromBody] SaveLessonStudentResource resource)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState.GetErrorMessages());
+            var nu = _mapper.Map<SaveLessonStudentResource, LessonStudent>(resource);
+            var result = await _lessonStudentService.SaveFeedbackAsync(lessonId, studentId, nu);
+
+            if (!result.Success)
+                return BadRequest(result.Message);
+            var nuResource = _mapper.Map<LessonStudent, LessonStudentResource>(result.Resource);
+            return Ok(nuResource);
+        }
+
         //Lists
         [HttpGet]
         public async Task<IEnumerable<LessonStudentResource>> GetAllAsync()

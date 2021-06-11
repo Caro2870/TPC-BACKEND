@@ -63,6 +63,7 @@ namespace TPC_UPC.API.Specs.Steps
             //Lesson
             int lessonId = Int32.Parse(p0);
             _lesson.Id = lessonId;
+            _lesson.StartDate = DateTime.Parse("7/31/2021 12:00:00");
             _lesson.LessonType = _lessonType;
             _lesson.LessonTypeId = _lessonType.Id;
 
@@ -85,7 +86,33 @@ namespace TPC_UPC.API.Specs.Steps
 
             Assert.AreEqual(_lessonStudent, _response.Result.Resource);
         }
-        
+
+        [Given(@"that the student wants to cancel reservation late\((.*), (.*)\)")]
+        public void GivenThatTheStudentWantsToCancelReservationLate(string p0, string p1)
+        {
+            //Student
+            int studentId = Int32.Parse(p1);
+            _student.Id = studentId;
+
+            //LessonType
+            _lessonType.Id = 1;
+
+            //Lesson
+            int lessonId = Int32.Parse(p0);
+            _lesson.Id = lessonId;
+            _lesson.StartDate = DateTime.Parse("6/10/2021 21:15:00");
+            _lesson.LessonType = _lessonType;
+            _lesson.LessonTypeId = _lessonType.Id;
+
+            _lessonStudent.StudentId = _student.Id;
+            _lessonStudent.Student = _student;
+            _lessonStudent.LessonId = _lesson.Id;
+            _lessonStudent.Lesson = _lesson;
+
+            _lessonStudentRepository.Setup(r => r.FindById(lessonId, studentId))
+               .Returns(Task.FromResult<LessonStudent>(_lessonStudent));
+        }
+
         [When(@"the student tries to cancel his reservation after the allowed cancellation time\((.*), (.*)\)")]
         public void WhenTheStudentTriesToCancelHisReservationAfterTheAllowedCancellationTime(string p0, string p1)
         {

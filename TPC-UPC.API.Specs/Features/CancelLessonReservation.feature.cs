@@ -225,7 +225,7 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 24
-testRunner.Given(string.Format("that the student wants to cancel reservation({0}, {1})", lessonId, studentId), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+testRunner.Given(string.Format("that the student wants to cancel reservation late({0}, {1})", lessonId, studentId), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 25
 testRunner.When(string.Format("the student tries to cancel his reservation after the allowed cancellation time({" +

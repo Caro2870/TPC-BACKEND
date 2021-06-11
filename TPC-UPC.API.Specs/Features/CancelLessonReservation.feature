@@ -21,7 +21,7 @@ Examples:
 
 @mytag
 Scenario: Cancel reservation returns error
-Given that the student wants to cancel reservation(<LessonId>, <StudentId>)
+Given that the student wants to cancel reservation late(<LessonId>, <StudentId>)
 When the student tries to cancel his reservation after the allowed cancellation time(<SameLessonId>, <SameStudentId>)
 Then the student displays an error message indicating that the cancellation was not completed due to time constraints<response>
 Examples: 
