@@ -25,15 +25,9 @@ namespace TPC_UPC.API.Specs.Steps
             return new Mock<IUnitOfWork>();
         }
 
-        private static Mock<IStudentRepository> GetDefaultIStudentRepositoryInstance()
-        {
-            return new Mock<IStudentRepository>();
-        }
+        private static Mock<IStudentRepository> _studentRepository = new Mock<IStudentRepository>();
 
-        private static Mock<ILessonRepository> GetDefaultILessonRepositoryInstance()
-        {
-            return new Mock<ILessonRepository>();
-        }
+        private static Mock<ILessonRepository> _lessonRepository = new Mock<ILessonRepository>();
 
         public CancelLessonReservationSteps(ScenarioContext scenarioContext)
         {
@@ -45,18 +39,27 @@ namespace TPC_UPC.API.Specs.Steps
         private LessonStudentService _lessonStudentService = new LessonStudentService(
             _lessonStudentRepository.Object,
             GetDefaultIUnitOfWorkInstance().Object,
-            GetDefaultILessonRepositoryInstance().Object,
-            GetDefaultIStudentRepositoryInstance().Object
+            _lessonRepository.Object,
+            _studentRepository.Object
             );
 
-        //Escenario 1, 2 y 3
-        [Given(@"that the student wants to cancel reservation\((.*), (.*)\)")]
-        public void GivenThatTheStudentWantsToCancelReservation(string p0, string p1)
+        //Escenarios "First step"
+        [Given(@"a student exist\((.*)\)")]
+        public void GivenAStudentExist(string p0)
         {
-            //Student
-            int studentId = Int32.Parse(p1);
+            int studentId = Int32.Parse(p0);
             _student.Id = studentId;
 
+            _studentRepository.Setup(r => r.FindById(_student.Id))
+               .Returns(Task.FromResult<Student>(_student));
+        }
+
+
+        //Escenarios "Second step"
+        //Escenario 1
+        [Given(@"a workshop lesson exist\((.*)\)")]
+        public void GivenAWorkshopLessonExist(string p0)
+        {
             //LessonType
             _lessonType.Id = 1;
 
@@ -67,15 +70,69 @@ namespace TPC_UPC.API.Specs.Steps
             _lesson.LessonType = _lessonType;
             _lesson.LessonTypeId = _lessonType.Id;
 
+            _lessonType.Lessons.Add(_lesson);
+
+            _lessonRepository.Setup(r => r.FindById(_lesson.Id))
+               .Returns(Task.FromResult<Lesson>(_lesson));
+        }
+
+        //Escenario 2
+        [Given(@"a tutoring lesson exist\((.*)\)")]
+        public void GivenATutoringLessonExist(string p0)
+        {
+            //LessonType
+            _lessonType.Id = 1;
+
+            //Lesson
+            int lessonId = Int32.Parse(p0);
+            _lesson.Id = lessonId;
+            _lesson.StartDate = DateTime.Parse("7/31/2021 12:00:00");
+            _lesson.LessonType = _lessonType;
+            _lesson.LessonTypeId = _lessonType.Id;
+
+            _lessonType.Lessons.Add(_lesson);
+
+            _lessonRepository.Setup(r => r.FindById(_lesson.Id))
+               .Returns(Task.FromResult<Lesson>(_lesson));
+        }
+
+        //Escenario 3
+        [Given(@"a lesson exist\((.*)\)")]
+        public void GivenALessonExist(string p0)
+        {
+            //LessonType
+            _lessonType.Id = 1;
+
+            //Lesson
+            int lessonId = Int32.Parse(p0);
+            _lesson.Id = lessonId;
+            _lesson.StartDate = DateTime.Parse("6/10/2021 21:15:00");
+            _lesson.LessonType = _lessonType;
+            _lesson.LessonTypeId = _lessonType.Id;
+
+            _lessonType.Lessons.Add(_lesson);
+
+            _lessonRepository.Setup(r => r.FindById(_lesson.Id))
+               .Returns(Task.FromResult<Lesson>(_lesson));
+        }
+
+
+        //Escenarios "Third step"
+        [Given(@"that the student have a reservation")]
+        public void GivenThatTheStudentHaveAReservation()
+        {
             _lessonStudent.StudentId = _student.Id;
             _lessonStudent.Student = _student;
             _lessonStudent.LessonId = _lesson.Id;
             _lessonStudent.Lesson = _lesson;
 
-            _lessonStudentRepository.Setup(r => r.FindById(lessonId, studentId))
+            _lessonStudentRepository.Setup(r => r.FindById(_lessonStudent.LessonId, _lessonStudent.StudentId))
                .Returns(Task.FromResult<LessonStudent>(_lessonStudent));
         }
-        
+
+
+        //Escenarios "Fourth and final step"
+        //Escenarios 1 y 2
         [When(@"the student cancels the reservation before the allowed cancellation time\((.*), (.*)\)")]
         public void WhenTheStudentCancelsTheReservationBeforeTheAllowedCancellationTime(string p0, string p1)
         {
@@ -87,32 +144,14 @@ namespace TPC_UPC.API.Specs.Steps
             Assert.AreEqual(_lessonStudent, _response.Result.Resource);
         }
 
-        [Given(@"that the student wants to cancel reservation late\((.*), (.*)\)")]
-        public void GivenThatTheStudentWantsToCancelReservationLate(string p0, string p1)
+        [Then(@"the system deletes the reservation(.*)")]
+        public void ThenTheSystemDeletesTheReservation(string actualResponse)
         {
-            //Student
-            int studentId = Int32.Parse(p1);
-            _student.Id = studentId;
-
-            //LessonType
-            _lessonType.Id = 1;
-
-            //Lesson
-            int lessonId = Int32.Parse(p0);
-            _lesson.Id = lessonId;
-            _lesson.StartDate = DateTime.Parse("6/10/2021 21:15:00");
-            _lesson.LessonType = _lessonType;
-            _lesson.LessonTypeId = _lessonType.Id;
-
-            _lessonStudent.StudentId = _student.Id;
-            _lessonStudent.Student = _student;
-            _lessonStudent.LessonId = _lesson.Id;
-            _lessonStudent.Lesson = _lesson;
-
-            _lessonStudentRepository.Setup(r => r.FindById(lessonId, studentId))
-               .Returns(Task.FromResult<LessonStudent>(_lessonStudent));
+            string a = _response.Result.Success.ToString();
+            Assert.AreEqual(a, actualResponse);
         }
 
+        //Escenario 3
         [When(@"the student tries to cancel his reservation after the allowed cancellation time\((.*), (.*)\)")]
         public void WhenTheStudentTriesToCancelHisReservationAfterTheAllowedCancellationTime(string p0, string p1)
         {
@@ -121,19 +160,16 @@ namespace TPC_UPC.API.Specs.Steps
 
             _response = _lessonStudentService.DeleteAsync(sameLessonId, sameStudentId);
         }
-        
-        [Then(@"the system deletes the reservation(.*)")]
-        public void ThenTheSystemDeletesTheReservation(string actualResponse)
-        {
-            string a = _response.Result.Success.ToString();
-            Assert.AreEqual(a, actualResponse);
-        }
-        
+
         [Then(@"the student displays an error message indicating that the cancellation was not completed due to time constraints(.*)")]
         public void ThenTheStudentDisplaysAnErrorMessageIndicatingThatTheCancellationWasNotCompletedDueToTimeConstraints(string actualResponse)
         {
             string a = _response.Result.Message;
             Assert.AreEqual(a, actualResponse);
         }
+
+        
+
+
     }
 }

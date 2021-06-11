@@ -107,13 +107,19 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 6
-testRunner.Given(string.Format("that the student wants to cancel reservation({0}, {1})", lessonId, studentId), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+testRunner.Given(string.Format("a student exist({0})", studentId), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 7
+testRunner.And(string.Format("a workshop lesson exist({0})", lessonId), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 8
+testRunner.And("that the student have a reservation", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 9
 testRunner.When(string.Format("the student cancels the reservation before the allowed cancellation time({0}, {1}" +
                             ")", sameLessonId, sameStudentId), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 8
+#line 10
 testRunner.Then(string.Format("the system deletes the reservation{0}", response), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
@@ -121,7 +127,7 @@ testRunner.Then(string.Format("the system deletes the reservation{0}", response)
         }
         
         [TechTalk.SpecRun.ScenarioAttribute("Cancel workshop reservation, 1", new string[] {
-                "mytag"}, SourceLine=10)]
+                "mytag"}, SourceLine=12)]
         public virtual void CancelWorkshopReservation_1()
         {
 #line 5
@@ -145,7 +151,7 @@ this.CancelWorkshopReservation("1", "1", "1", "1", "True", ((string[])(null)));
             argumentsOfScenario.Add("SameStudentId", sameStudentId);
             argumentsOfScenario.Add("response", response);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Cancel tutoring reservation", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 14
+#line 16
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -165,26 +171,32 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 15
-testRunner.Given(string.Format("that the student wants to cancel reservation({0}, {1})", lessonId, studentId), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 17
+testRunner.Given(string.Format("a student exist({0})", studentId), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 16
+#line 18
+testRunner.And(string.Format("a tutoring lesson exist({0})", lessonId), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 19
+testRunner.And("that the student have a reservation", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 20
 testRunner.When(string.Format("the student cancels the reservation before the allowed cancellation time({0}, {1}" +
                             ")", sameLessonId, sameStudentId), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 17
+#line 21
 testRunner.Then(string.Format("the system deletes the reservation{0}", response), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [TechTalk.SpecRun.ScenarioAttribute("Cancel tutoring reservation, 1", new string[] {
-                "mytag"}, SourceLine=19)]
-        public virtual void CancelTutoringReservation_1()
+        [TechTalk.SpecRun.ScenarioAttribute("Cancel tutoring reservation, 2", new string[] {
+                "mytag"}, SourceLine=23)]
+        public virtual void CancelTutoringReservation_2()
         {
-#line 14
-this.CancelTutoringReservation("1", "1", "1", "1", "True", ((string[])(null)));
+#line 16
+this.CancelTutoringReservation("2", "1", "2", "1", "True", ((string[])(null)));
 #line hidden
         }
         
@@ -204,7 +216,7 @@ this.CancelTutoringReservation("1", "1", "1", "1", "True", ((string[])(null)));
             argumentsOfScenario.Add("SameStudentId", sameStudentId);
             argumentsOfScenario.Add("response", response);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Cancel reservation returns error", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 23
+#line 27
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -224,14 +236,20 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 24
-testRunner.Given(string.Format("that the student wants to cancel reservation late({0}, {1})", lessonId, studentId), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 28
+testRunner.Given(string.Format("a student exist({0})", studentId), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 25
+#line 29
+testRunner.And(string.Format("a lesson exist({0})", lessonId), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 30
+testRunner.And("that the student have a reservation", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 31
 testRunner.When(string.Format("the student tries to cancel his reservation after the allowed cancellation time({" +
                             "0}, {1})", sameLessonId, sameStudentId), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 26
+#line 32
 testRunner.Then(string.Format("the student displays an error message indicating that the cancellation was not co" +
                             "mpleted due to time constraints{0}", response), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
@@ -239,12 +257,12 @@ testRunner.Then(string.Format("the student displays an error message indicating 
             this.ScenarioCleanup();
         }
         
-        [TechTalk.SpecRun.ScenarioAttribute("Cancel reservation returns error, 1", new string[] {
-                "mytag"}, SourceLine=28)]
-        public virtual void CancelReservationReturnsError_1()
+        [TechTalk.SpecRun.ScenarioAttribute("Cancel reservation returns error, 3", new string[] {
+                "mytag"}, SourceLine=34)]
+        public virtual void CancelReservationReturnsError_3()
         {
-#line 23
-this.CancelReservationReturnsError("1", "1", "1", "1", "The time to cancel the reservation has expired", ((string[])(null)));
+#line 27
+this.CancelReservationReturnsError("3", "1", "3", "1", "The time to cancel the reservation has expired", ((string[])(null)));
 #line hidden
         }
     }

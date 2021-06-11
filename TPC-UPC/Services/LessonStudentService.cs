@@ -15,7 +15,6 @@ namespace TPC_UPC.Services
         private readonly ILessonStudentRepository _lessonStudentRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILessonRepository _lessonRepository;
-        private readonly INotificationUserRepository _notificationUserRepository;
         private IStudentRepository _studentRepository;
 
         public LessonStudentService(ILessonStudentRepository lessonStudentRepository, IUnitOfWork unitOfWork, ILessonRepository lessonRepository, IStudentRepository studentRepository)
@@ -34,8 +33,10 @@ namespace TPC_UPC.Services
                 return new LessonStudentResponse("LessonStudent not found");
 
             //Business rule #24
+            var existingLesson = await _lessonRepository.FindById(existingLessonStudent.LessonId);
+
+            DateTime startDate = existingLesson.StartDate;
             DateTime fechaActual = DateTime.Now;
-            DateTime startDate = existingLessonStudent.Lesson.StartDate;
 
             if (fechaActual.AddMinutes(15) >= startDate)
                 return new LessonStudentResponse("The time to cancel the reservation has expired");
@@ -44,11 +45,11 @@ namespace TPC_UPC.Services
             {
                 _lessonStudentRepository.Remove(existingLessonStudent);
 
-                //if (lesson.Result.LessonTypeId == 2)
+                //if (existingLesson.LessonTypeId == 2)
                 //{
                 //    NotificationUser nu = new NotificationUser();
                 //    nu.NotificationId = 904;
-                //    nu.UserId = lesson.Result.TutorId;
+                //    nu.UserId = existingLesson.TutorId;
 
                 //    await _notificationUserRepository.AddAsync(nu);
                 //}
